@@ -35,6 +35,6 @@ void addFileToTree(char *url);
 bool isMp3File(char *url);
 
 TREE_NODE_T *getRootNode();
-
+void printCompleteFileTree(bool printCompleteUrl);
 void printTree(TREE_NODE_T *parentNode, char *spacing, bool printCompleteUrl);
 #endif /*FYLE_SYSTEM_MANAGER_H*/

@@ -66,11 +66,13 @@ void testFileTree()
     addFileToTree(filename3);
     addFileToTree(filename4);
     addFileToTree(filename5);
-    printTree(getRootNode(), "", true);
+    printCompleteFileTree(true);
     if (isMp3File("/dir0/archivo0.mp3"))
 		printf("archivo0 es mp3");
 	if (isMp3File("/dir0/archivo1.xls"))
 		printf("archivo1 es mp3");
+	if (isMp3File("/dir0"))
+		printf("dir0 es mp3");
 }
 
 void addFileToTree(char *url)
@@ -115,6 +117,10 @@ void printTree(TREE_NODE_T *parentNode, char *spacing, bool printCompleteUrl)
     {
         printTree(parentNode->rightSiblingNode, spacing, printCompleteUrl);
     }
+}
+
+void printCompleteFileTree(bool printCompleteUrl){
+	printTree(&rootNode, "" , printCompleteUrl);
 }
 
 /*******************************************************************************
