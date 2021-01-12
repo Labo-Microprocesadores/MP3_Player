@@ -9,7 +9,7 @@
 
 
 #include <stdbool.h>
-
+#define STR_SIZE	255
 /*******************************************************************************
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
  ******************************************************************************/
@@ -22,8 +22,8 @@ struct TREE_NODE_T
     TREE_NODE_T *childNode;
     TREE_NODE_T *rightSiblingNode;
     TREE_NODE_T *leftSiblingNode;
-    char url[255];
-    char nodeName[255];
+    char url[STR_SIZE];
+    char nodeName[STR_SIZE];
 };
 
 /*******************************************************************************
@@ -31,7 +31,6 @@ struct TREE_NODE_T
  ******************************************************************************/
 
 void testFileTree();
-
 void addFileToTree(char *url);
 bool isMp3File(char *url);
 

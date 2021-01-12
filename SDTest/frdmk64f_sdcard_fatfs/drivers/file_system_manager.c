@@ -13,6 +13,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+
+#define NODE_ARRAY_SIZE	200
 /*******************************************************************************
  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
  ******************************************************************************/
@@ -23,6 +25,9 @@ static TREE_NODE_T *accessNode(char *url, TREE_NODE_T *parentNode);
  * PRIVATE VARIABLES WITH FILE LEVEL SCOPE
  ******************************************************************************/
 TREE_NODE_T rootNode = {.url = "", .nodeName = ""};
+
+TREE_NODE_T  nodes [NODE_ARRAY_SIZE] = {};
+int nodeCount = 0;
 
 /*******************************************************************************
  *******************************************************************************
@@ -62,7 +67,6 @@ void testFileTree()
     addFileToTree(filename4);
     addFileToTree(filename5);
     printTree(getRootNode(), "", true);
-
     if (isMp3File("/dir0/archivo0.mp3"))
 		printf("archivo0 es mp3");
 	if (isMp3File("/dir0/archivo1.xls"))
@@ -71,7 +75,7 @@ void testFileTree()
 
 void addFileToTree(char *url)
 {
-    char str[255];
+    char str[STR_SIZE];
     strcpy(str, url);
     char *pch;
     pch = strtok(str, "/");
@@ -79,7 +83,7 @@ void addFileToTree(char *url)
     while (pch != NULL)
     {
         //printf("%s\n", pch);
-        char path[255];
+        char path[STR_SIZE];
         strcpy(path, pch);
         parentNode = accessNode(path, parentNode);
         pch = strtok(NULL, "/");
@@ -87,7 +91,7 @@ void addFileToTree(char *url)
 }
 void printTree(TREE_NODE_T *parentNode, char *spacing, bool printCompleteUrl)
 {
-    char printableUrl[255];
+    char printableUrl[STR_SIZE];
     strcpy(printableUrl, spacing);
     if (printCompleteUrl)
     {
@@ -102,7 +106,7 @@ void printTree(TREE_NODE_T *parentNode, char *spacing, bool printCompleteUrl)
     printf("\n");
     if (parentNode->childNode != NULL)
     {
-        char newSpacing[255];
+        char newSpacing[STR_SIZE];
         strcpy(newSpacing, spacing);
         strcat(newSpacing, "**");
         printTree(parentNode->childNode, newSpacing, printCompleteUrl);
@@ -121,7 +125,7 @@ void printTree(TREE_NODE_T *parentNode, char *spacing, bool printCompleteUrl)
 static TREE_NODE_T *accessNode(char *url, TREE_NODE_T *parentNode)
 {
     TREE_NODE_T *childNode = parentNode->childNode;
-    char completeUrl[255];
+    char completeUrl[STR_SIZE];
     strcpy(completeUrl, parentNode->url);
 
     strcat(completeUrl, "/");
@@ -150,25 +154,29 @@ static TREE_NODE_T *accessNode(char *url, TREE_NODE_T *parentNode)
 
 static TREE_NODE_T *createNode(char *completeUrl, char *nodeName, TREE_NODE_T *parentNode, TREE_NODE_T *leftSibling)
 {
+	nodeCount++;
     if (leftSibling == NULL)
     {
         //FIRST CHILD
-        TREE_NODE_T *newNode = calloc(1, sizeof(TREE_NODE_T));
-        strcpy(newNode->url, completeUrl);
-        strcpy(newNode->nodeName, nodeName);
-        newNode->parentNode = parentNode;
-        parentNode->childNode = newNode;
-        return newNode;
+    	TREE_NODE_T * node = &nodes[nodeCount];
+        strcpy(node->url, completeUrl);
+        strcpy(node->nodeName, nodeName);
+        node->parentNode = parentNode;
+        parentNode->childNode = node;
+        return node;
     }
     else
     {
         //ADD SIBLING
-        TREE_NODE_T *newNode = calloc(1, sizeof(TREE_NODE_T));
-        strcpy(newNode->url, completeUrl);
-        strcpy(newNode->nodeName, nodeName);
-        newNode->parentNode = parentNode;
-        newNode->leftSiblingNode = leftSibling;
-        leftSibling->rightSiblingNode = newNode;
-        return newNode;
+    	TREE_NODE_T *node = &nodes[nodeCount];
+        strcpy(node->url, completeUrl);
+        strcpy(node->nodeName, nodeName);
+        node->parentNode = parentNode;
+        node->leftSiblingNode = leftSibling;
+        leftSibling->rightSiblingNode = node;
+        return node;
     }
+
 }
+
+
