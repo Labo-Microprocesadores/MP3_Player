@@ -1,4 +1,0 @@
-fsl_sysmpu.h:268:20:SYSMPU_Enable	16	static
-sdcard_fatfs.c:75:6:scan_files	360	static
-sdcard_fatfs.c:117:5:main	968	static
-sdcard_fatfs.c:264:17:sdcardWaitCardInsert	8	static

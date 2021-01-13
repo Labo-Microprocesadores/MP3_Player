@@ -1,0 +1,7 @@
+fsl_clock.h:668:20:CLOCK_EnableClock	24	static
+fsl_port.h:243:20:PORT_SetPinConfig	32	static
+fsl_sysmpu.h:268:20:SYSMPU_Enable	16	static
+memory_manager.c:63:6:Mm_Init	16	static
+memory_manager.c:126:13:Mm_Callback	16	static
+memory_manager.c:134:13:Mm_OnConnection	688	static
+memory_manager.c:176:13:Mm_ScanFiles	368	static
