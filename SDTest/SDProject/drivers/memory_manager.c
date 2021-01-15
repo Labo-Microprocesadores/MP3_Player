@@ -45,7 +45,7 @@
 static bool SD_connected = false;
 static bool SD_error = false;
 static bool SD_HostInitDone = false;
-static TREE_NODE_T * rootNode, currNode;
+static TREE_NODE_T * rootNode, * currNode;
 
 /*******************************************************************************
  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
@@ -165,7 +165,7 @@ bool Mm_CanGoInDir(void)
 
 bool Mm_CanGoOutDir(void)
 {
-	return (currNode->childNode != NULL);
+	return (currNode->parentNode != NULL);
 }
 
 /*******************************************************************************
