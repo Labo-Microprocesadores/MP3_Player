@@ -103,17 +103,18 @@
 * External Input and Output buffer Declarations for FFT Bin Example
 * ------------------------------------------------------------------- */
 extern float32_t testInput_f32_10khz[TEST_LENGTH_SAMPLES];
-static float32_t testOutput[TEST_LENGTH_SAMPLES/2];
+static float32_t testOutput2[TEST_LENGTH_SAMPLES/2];
+static float32_t testOutput[512];
 
 float32_t new_input[1024];
-float32_t new_output[2048];
+float32_t new_output[1024];
 
 /* ------------------------------------------------------------------
 * Global variables for FFT Bin Example
 * ------------------------------------------------------------------- */
 uint32_t fftSize = 1024;
 uint32_t ifftFlag = 0;
-uint32_t doBitReverse = 1;
+uint32_t doBitReverse = 0;
 
 /* Reference index at which max energy of bin ocuurs */
 uint32_t refIndex = 213, testIndex = 0;
@@ -132,27 +133,40 @@ int32_t main(void)
   status = ARM_MATH_SUCCESS;
 
   /* Process the data through the CFFT/CIFFT module */
-  arm_cfft_f32(&arm_cfft_sR_f32_len1024, testInput_f32_10khz, ifftFlag, doBitReverse);
+ //arm_cfft_f32(&arm_cfft_sR_f32_len1024, testInput_f32_10khz, ifftFlag, doBitReverse);
+ //arm_cmplx_mag_f32(testInput_f32_10khz, testOutput2, fftSize);
 
   uint16_t fftLen = 1024;
 
-
-
-  /*
+  float32_t baja[1024];
+  float32_t alta[1024];
+  float32_t otra[1024];
+  float32_t signal[1024];
   int i;
+  for(i=0; i<1024; i++){
+         baja[i] = 1.2f*arm_sin_f32(2*3.1415926f*50*i/1000)+1;
+         alta[i] = 10.0f*arm_sin_f32(2*3.1415926f*10*i/1000)+1;
+         otra[i] = 20.0f*arm_sin_f32(2*3.1415926f*100*i/1000)+1;
+         signal[i] = baja[i]+alta[i]+otra[i];
+     }
+
+  //int i;
   for(i=0;i<1024;i++)
   {
 	  new_input[i] = testInput_f32_10khz[2*i];
   }
 
   arm_rfft_fast_init_f32(&rfft_fast_instance, fftLen);
-  arm_rfft_fast_f32(&rfft_fast_instance, new_input, new_output, ifftFlag);
-*/
+  //arm_rfft_fast_f32(&rfft_fast_instance, new_input, new_output, ifftFlag);
+  arm_rfft_fast_f32(&rfft_fast_instance, signal, new_output, ifftFlag);
+
 
   /* Process the data through the Complex Magnitude Module for
   calculating the magnitude at each bin */
   //arm_cmplx_mag_f32(testInput_f32_10khz, testOutput, fftSize);
   arm_cmplx_mag_f32(new_output, testOutput, fftSize);
+
+
 
   /* Calculates maxValue and returns corresponding BIN value */
   arm_max_f32(testOutput, fftSize, &maxValue, &testIndex);
