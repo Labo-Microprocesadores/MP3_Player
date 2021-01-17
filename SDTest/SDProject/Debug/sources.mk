@@ -23,5 +23,6 @@ drivers/SDK/SD \
 drivers/SDK \
 drivers \
 source \
+source/fsm \
 startup \
 
