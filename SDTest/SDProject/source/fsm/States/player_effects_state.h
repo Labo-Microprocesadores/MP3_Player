@@ -1,10 +1,10 @@
 /***************************************************************************/ /**
-  @file     main_effects_state.h
-  @brief    Main Effects state
+  @file     player_effects_state.h
+  @brief    Player Effects state
   @author   Grupo 2 - Lab de Micros
  ******************************************************************************/
-#ifndef MAIN_EFFECTS_STATE_H
-#define MAIN_EFFECTS_STATE_H
+#ifndef PLAYER_EFFECTS_STATE_H
+#define PLAYER_EFFECTS_STATE_H
 
 /*******************************************************************************
  * INCLUDE HEADER FILES
@@ -16,9 +16,9 @@
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
 /**
- * @brief Initializes the main effects state
+ * @brief Initializes the player effects state
  */
-void maineffects_initState(void);
+void playereffects_initState(void);
 
 
-#endif /* MAIN_EFFECTS_STATE_H */
+#endif /* PLAYER_EFFECTS_STATE_H */
