@@ -273,15 +273,6 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
-					<folderInfo id="com.crt.advproject.config.exe.debug.1939197963.1777356316" name="/" resourcePath="source/fsm/States/control_access_states">
-						<toolChain id="com.crt.advproject.toolchain.exe.debug.700203707" name="NXP MCU Tools" superClass="com.crt.advproject.toolchain.exe.debug" unusedChildren="">
-							<tool id="com.crt.advproject.cpp.exe.debug.1284046945" name="MCU C++ Compiler" superClass="com.crt.advproject.cpp.exe.debug.1795761460"/>
-							<tool id="com.crt.advproject.gcc.exe.debug.1493601733" name="MCU C Compiler" superClass="com.crt.advproject.gcc.exe.debug.2089581164"/>
-							<tool id="com.crt.advproject.gas.exe.debug.574015192" name="MCU Assembler" superClass="com.crt.advproject.gas.exe.debug.1276794700"/>
-							<tool id="com.crt.advproject.link.cpp.exe.debug.1070660151" name="MCU C++ Linker" superClass="com.crt.advproject.link.cpp.exe.debug.1114865747"/>
-							<tool id="com.crt.advproject.link.exe.debug.1254036525" name="MCU Linker" superClass="com.crt.advproject.link.exe.debug.1320780276"/>
-						</toolChain>
-					</folderInfo>
 					<sourceEntries>
 						<entry flags="LOCAL|VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="CMSIS"/>
 						<entry flags="LOCAL|VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="board"/>

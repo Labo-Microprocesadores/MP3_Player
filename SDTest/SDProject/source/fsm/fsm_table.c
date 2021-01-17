@@ -96,6 +96,7 @@ STATE player[] =
 	{LKP_EV, 				player, 				NULL},
 	{ST_OUT_EV, 			main_menu, 				NULL},
 	{CHANGE_FILE_EV,		file_selection, 		NULL},
+	{TIMEOUT_EV,			idle,	 				NULL},
 	{EFF_EV, 				player_effects, 		NULL},
 	{FIN_TABLA, 			player, 				do_nothing}
 };

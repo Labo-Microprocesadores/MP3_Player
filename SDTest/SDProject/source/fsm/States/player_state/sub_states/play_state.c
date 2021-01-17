@@ -1,19 +1,23 @@
 /***************************************************************************/ /**
-  @file     idle_state.c
-  @brief    Idle state functions.
+  @file     play_state.c
+  @brief    Play state functions.
   @author   Grupo 2 - Lab de Micros
  ******************************************************************************/
 
 /*******************************************************************************
  * INCLUDE HEADER FILES
  ******************************************************************************/
-#include "idle_state.h"
+#include "play_state.h"
 #include "queue.h"
 
 /*******************************************************************************
  * FUNCTIONS WITH GLOBAL SCOPE
  ******************************************************************************/
-void showIdleAnimation(void)
+void play_showAnimation(void)
+{
+
+}
+void play_initState(void)
 {
 
 }
