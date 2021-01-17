@@ -20,11 +20,11 @@
  */
 void mainmenu_initState(void);
 /**
- * @brief Changes the current position of the ID array to the next character following CHAR ORDER.
+ * @brief Changes the current position of the options array to the next one.
  */
 void mainmenu_nextOption(void);
 /**
- * @brief Shows the next welcome option.
+ * @brief  Changes the current position of the options array to the previous one.
  */
 void mainmenu_previousOption(void);
 
