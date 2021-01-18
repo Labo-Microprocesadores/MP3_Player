@@ -1,0 +1,2 @@
+vumeterRefresh.c:14:6:vumeterRefresh_init	8	static
+vumeterRefresh.c:22:5:vumeterRefresh_fft	200	static

@@ -16,20 +16,26 @@ void vumeterRefresh_init()
     arm_rfft_fast_init_f32(&rfft_fast_instance, SAMPLE_LENGTH);
 }
 
+float32_t output[SAMPLE_LENGTH / 2];
+float32_t outputFft[SAMPLE_LENGTH / 2];
 
-int vumeterRefresh_fft(float32_t * inputSignal, float32_t sampleRate, float32_t *samples, float32_t lowerFreqBand, float32_t higherFreqBand)
+int vumeterRefresh_fft(float32_t * inputSignal, float32_t sampleRate, int lowerFreqBand, int higherFreqBand)
 { 
     float32_t vumeterValues[NUMBER_OF_BANDS];
     int vumeterMatrix[NUMBER_OF_BANDS];
     float32_t nyquistFreq = sampleRate / 2;
     double binWidth = sampleRate / SAMPLE_LENGTH;
-    unsigned int usableBins = roof(SAMPLE_LENGTH / 2 - 1);
+    unsigned int usableBins = ceil(SAMPLE_LENGTH / 2 - 1);
     float32_t realHigherFreqBand = higherFreqBand  < nyquistFreq * 0.99 ? higherFreqBand :  nyquistFreq * 0.99; 
-    float32_t freqMultiplierPerBand = pow((higherFreqBand / lowerFreqBand), (1 / (NUMBER_OF_BANDS - 1 )));
+    double base = higherFreqBand / lowerFreqBand;
+    double exp = 1.0f / (NUMBER_OF_BANDS - 1.0f );
+    double base2 = 20000/80;
+    float32_t base3 = 20000/80;
+    int base4 = 20000/80;
+    float32_t freqMultiplierPerBand = pow(base,exp);
 
    
-    float32_t output[SAMPLE_LENGTH / 2];
-    float32_t outputFft[SAMPLE_LENGTH / 2];
+
     arm_rfft_fast_f32(&rfft_fast_instance, inputSignal, output, 0);
     /* Process the data through the Complex Magnitude Module for
     calculating the magnitude at each bin */
@@ -38,14 +44,16 @@ int vumeterRefresh_fft(float32_t * inputSignal, float32_t sampleRate, float32_t 
     //unsigned int binFreq[NUMBER_OF_BANDS];
     float32_t currentBinFreq;
     float32_t nextBinFreq;
-    unsigned int currentCenterBin;
-    unsigned int nextCenterBin;
-    unsigned int lowerBin = 0;
-    unsigned int higherBin;
+    float32_t currentCenterBin;
+    float32_t nextCenterBin;
+    float32_t lowerBin = 0;
+    float32_t higherBin;
     for (size_t i = 0; i < NUMBER_OF_BANDS; i++)
     {
         currentBinFreq = lowerFreqBand * pow(freqMultiplierPerBand, i);
+        nextBinFreq = lowerFreqBand * pow(freqMultiplierPerBand, i+1);
         currentCenterBin = currentBinFreq / binWidth;
+        nextCenterBin = nextBinFreq / binWidth;
         lowerBin = i ? higherBin : 0;
         higherBin = (nextCenterBin-currentCenterBin)/2 + currentCenterBin;//calcular higherBin!!!
         
@@ -59,6 +67,7 @@ int vumeterRefresh_fft(float32_t * inputSignal, float32_t sampleRate, float32_t 
         int roundedHeight = floor(vumeterValues[i]/MAX_AMPLITUDE);
         vumeterMatrix[i] = roundedHeight > VUMETER_HEIGHT ? VUMETER_HEIGHT : roundedHeight;   
     } 
+}
     //TODO
 
     //write_to_matrix(vumeterMatrix)
