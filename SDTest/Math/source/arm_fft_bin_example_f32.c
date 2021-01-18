@@ -141,13 +141,19 @@ int32_t main(void)
   float32_t baja[1024];
   float32_t alta[1024];
   float32_t otra[1024];
+  float32_t otra2[1024];
+  float32_t otra3[1024];
+  float32_t otra4[1024];
   float32_t signal[1024];
   int i;
   for(i=0; i<1024; i++){
-         baja[i] = 1.2f*arm_sin_f32(2*3.1415926f*50*i/1000)+1;
-         alta[i] = 10.0f*arm_sin_f32(2*3.1415926f*10*i/1000)+1;
-         otra[i] = 20.0f*arm_sin_f32(2*3.1415926f*100*i/1000)+1;
-         signal[i] = baja[i]+alta[i]+otra[i];
+         baja[i] = 1.2f*arm_sin_f32(2*3.1415926f*50*i/1024);
+         alta[i] = 10.0f*arm_sin_f32(2*3.1415926f*10*i/1024);
+         otra[i] = 20.0f*arm_sin_f32(2*3.1415926f*100*i/1024);
+         otra2[i] = 30.0f*arm_sin_f32(2*3.1415926f*200*i/1024);
+         otra3[i] = 30.0f*arm_sin_f32(2*3.1415926f*300*i/1024);
+         otra4[i] = 30.0f*arm_sin_f32(2*3.1415926f*500*i/1024);
+         signal[i] = baja[i]+alta[i]+otra[i]+otra2[i]+otra3[i]+otra4[i];
      }
 
   //int i;
