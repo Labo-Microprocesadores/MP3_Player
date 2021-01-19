@@ -1,5 +1,6 @@
 #include "arm_math.h"
 #include "math.h"
+#include "matrix_display.h"
 
 #define SAMPLE_LENGTH       1024
 #define NUMBER_OF_BANDS     8  
@@ -40,6 +41,7 @@ int vumeterRefresh_fft(float32_t * inputSignal, float32_t sampleRate, int lowerF
     /* Process the data through the Complex Magnitude Module for
     calculating the magnitude at each bin */
     arm_cmplx_mag_f32(output, outputFft, SAMPLE_LENGTH);
+    outputFft[0] = 0; //Removing DC
 
     //unsigned int binFreq[NUMBER_OF_BANDS];
     float32_t currentBinFreq;
@@ -57,18 +59,23 @@ int vumeterRefresh_fft(float32_t * inputSignal, float32_t sampleRate, int lowerF
         lowerBin = i ? higherBin : 0;
         higherBin = (nextCenterBin-currentCenterBin)/2 + currentCenterBin;//calcular higherBin!!!
         vumeterValues[i] = 0;
-        for (size_t j = floor(lowerBin); j < floor(higherBin); j++)
+        for (size_t j = floor(lowerBin); ((j < floor(higherBin))&&(j < usableBins)); j++)
         {
-
            if(outputFft[j] > NOISE)  
            {
             vumeterValues[i] += outputFft[j]; 
            }
         }
         int roundedHeight = floor(vumeterValues[i]/MAX_AMPLITUDE);
+        //int roundedHeight = floor((vumeterValues[i]/(higherBin - lowerBin))/1000);
         vumeterMatrix[i] = roundedHeight > VUMETER_HEIGHT ? VUMETER_HEIGHT : roundedHeight;   
     } 
+    vumeterRefresh_writeToMatrix(vumeterMatrix);
 }
     //TODO
 
-    //write_to_matrix(vumeterMatrix)
+
+void vumeterRefresh_writeToMatrix(int * vumeterMatrix)
+{
+
+}
