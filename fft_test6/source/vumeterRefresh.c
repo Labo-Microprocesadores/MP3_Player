@@ -70,12 +70,46 @@ int vumeterRefresh_fft(float32_t * inputSignal, float32_t sampleRate, int lowerF
         //int roundedHeight = floor((vumeterValues[i]/(higherBin - lowerBin))/1000);
         vumeterMatrix[i] = roundedHeight > VUMETER_HEIGHT ? VUMETER_HEIGHT : roundedHeight;   
     } 
-    vumeterRefresh_writeToMatrix(vumeterMatrix);
+    vumeterRefresh_write_to_matrix(vumeterMatrix);
 }
     //TODO
 
 
-void vumeterRefresh_writeToMatrix(int * vumeterMatrix)
+void vumeterRefresh_write_to_matrix(int * vumeterMatrix)
 {
+    pixel_t redPixel = {.R = 1, .G = 0, .B = 0};
+    pixel_t yellowPixel = {.R = 1, .G = 1, .B = 0};
+    pixel_t greenPixel = {.R = 0, .G = 1, .B = 0};
+    pixel_t blackPixel = {.R = 0, .G = 0, .B = 0};
+    pixel_t auxMatrix[VUMETER_HEIGHT * NUMBER_OF_BANDS];
 
+/*
+    for(int i = 0 ; i < NUMBER_OF_BANDS ; i++)
+    {
+        for(int j = 0 ; j < vumeterMatrix[i] ; j++)
+        {
+            auxMatrix[i * (VUMETER_HEIGHT - vumeterMatrix[i] + j)] = ;
+        }
+    }
+    */
+
+    for(int i = 0 ; i < VUMETER_HEIGHT ; i++)
+    {
+        for(int j = 0 ; j < NUMBER_OF_BANDS ; j++)
+        {
+            if(vumeterMatrix[i] == (VUMETER_HEIGHT - i))
+            {
+                if(i < (1 * VUMETER_HEIGHT / 8))
+                    auxMatrix[VUMETER_HEIGHT * i + j] = redPixel; 
+                else if(i < (4 * VUMETER_HEIGHT / 8))
+                    auxMatrix[VUMETER_HEIGHT * i + j] = yellowPixel; 
+                else 
+                    auxMatrix[VUMETER_HEIGHT * i + j] = greenPixel; 
+            }
+            else
+                auxMatrix[VUMETER_HEIGHT * i + j] = blackPixel;
+        }
+    }
+    //md_writeBuffer(auxMatrix);
 }
+
