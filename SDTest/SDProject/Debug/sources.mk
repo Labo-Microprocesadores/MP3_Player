@@ -23,5 +23,9 @@ drivers/SDK/SD \
 drivers/SDK \
 drivers \
 source \
+source/fsm/States \
+source/fsm/States/player_state \
+source/fsm/States/player_state/sub_states \
+source/fsm \
 startup \
 

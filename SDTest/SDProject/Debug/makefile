@@ -9,6 +9,10 @@ RM := rm -rf
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include startup/subdir.mk
+-include source/fsm/States/player_state/sub_states/subdir.mk
+-include source/fsm/States/player_state/subdir.mk
+-include source/fsm/States/subdir.mk
+-include source/fsm/subdir.mk
 -include source/subdir.mk
 -include drivers/SDK/SD/subdir.mk
 -include drivers/SDK/subdir.mk
