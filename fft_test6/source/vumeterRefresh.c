@@ -1,6 +1,15 @@
 #include "arm_math.h"
 #include "math.h"
-#include "matrix_display.h"
+//#include "matrix_display.h"
+#include <stdbool.h>
+
+
+typedef struct
+{
+  bool R;
+  bool G;
+  bool B;
+} pixel_t;
 
 #define SAMPLE_LENGTH       1024
 #define NUMBER_OF_BANDS     8  
@@ -97,7 +106,7 @@ void vumeterRefresh_write_to_matrix(int * vumeterMatrix)
     {
         for(int j = 0 ; j < NUMBER_OF_BANDS ; j++)
         {
-            if(vumeterMatrix[i] == (VUMETER_HEIGHT - i))
+            if(vumeterMatrix[j] >= (VUMETER_HEIGHT - i))
             {
                 if(i < (1 * VUMETER_HEIGHT / 8))
                     auxMatrix[VUMETER_HEIGHT * i + j] = redPixel; 
