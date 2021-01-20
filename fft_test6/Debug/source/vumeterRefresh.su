@@ -1,3 +1,4 @@
-vumeterRefresh.c:24:6:vumeterRefresh_init	8	static
-vumeterRefresh.c:32:5:vumeterRefresh_fft	200	static
-vumeterRefresh.c:87:6:vumeterRefresh_write_to_matrix	232	static
+vumeterRefresh.c:29:6:vumeterRefresh_init	8	static
+vumeterRefresh.c:36:5:vumeterRefresh_fft	112	static
+vumeterRefresh.c:97:6:vumeterRefresh_write_to_matrix	232	static
+vumeterRefresh.c:136:11:fpowf	24	static
