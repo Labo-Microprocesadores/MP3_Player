@@ -8,10 +8,12 @@
 #ifndef SPI_WRAPPER_H_
 #define SPI_WRAPPER_H_
 
+#include "stdint.h"
+
 typedef enum {
-  SPI_0,
-  SPI_1,
-  SPI_2,
+  SPI_0_ID,
+  SPI_1_ID,
+  SPI_2_ID,
 } spi_id_t;
 
 typedef enum {
@@ -24,5 +26,7 @@ typedef enum {
 } spi_slave_t;
 
 void SPI_Init(spi_id_t id, spi_slave_t slave, uint32_t baudrate);
+
+void SPI_Send(spi_id_t id, spi_slave_t slave, const char * msg, uint16_t len);
 
 #endif /* SPI_WRAPPER_H_ */

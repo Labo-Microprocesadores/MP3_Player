@@ -50,6 +50,7 @@ volatile bool isTransferCompleted = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
+#ifdef TEST
 
 void SPI0_IRQHandler(void)
 {
@@ -84,16 +85,16 @@ void SPI0_IRQHandler(void)
                 break;
             }
 
-            /* Try to clear the TFFF; if the TX FIFO is full this will clear */
+            // Try to clear the TFFF; if the TX FIFO is full this will clear
             DSPI_ClearStatusFlags(EXAMPLE_DSPI_MASTER_BASEADDR, kDSPI_TxFifoFillRequestFlag);
         }
     }
 
-    /* Check if we're done with this transfer.*/
+    // Check if we're done with this transfer.
     if ((masterTxCount == TRANSFER_SIZE) && (masterRxCount == TRANSFER_SIZE))
     {
     	isTransferCompleted = true;
-        /* Complete the transfer and disable the interrupts */
+        // Complete the transfer and disable the interrupts
         DSPI_DisableInterrupts(EXAMPLE_DSPI_MASTER_BASEADDR,
                                kDSPI_RxFifoDrainRequestInterruptEnable | kDSPI_TxFifoFillRequestInterruptEnable);
     }
@@ -221,3 +222,4 @@ int main(void)
     {
     }
 }
+#endif

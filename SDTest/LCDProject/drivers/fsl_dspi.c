@@ -272,9 +272,9 @@ void DSPI_MasterGetDefaultConfig(dspi_master_config_t *masterConfig)
     masterConfig->ctarConfig.cpha         = kDSPI_ClockPhaseFirstEdge;
     masterConfig->ctarConfig.direction    = kDSPI_MsbFirst;
 
-    masterConfig->ctarConfig.pcsToSckDelayInNanoSec        = 1000;
-    masterConfig->ctarConfig.lastSckToPcsDelayInNanoSec    = 1000;
-    masterConfig->ctarConfig.betweenTransferDelayInNanoSec = 1000;
+    masterConfig->ctarConfig.pcsToSckDelayInNanoSec        = 2000;
+    masterConfig->ctarConfig.lastSckToPcsDelayInNanoSec    = 2000;
+    masterConfig->ctarConfig.betweenTransferDelayInNanoSec = 2000;
 
     masterConfig->whichPcs           = kDSPI_Pcs0;
     masterConfig->pcsActiveHighOrLow = kDSPI_PcsActiveLow;

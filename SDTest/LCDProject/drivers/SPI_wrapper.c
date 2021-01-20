@@ -8,17 +8,21 @@
 #include "fsl_common.h"
 #include "fsl_port.h"
 #include "fsl_dspi.h"
+#include "SPI_wrapper.h"
+#include "hardware.h"
 
 #define MAX_SIZE 200
-#define MSG_LEN(r,f,m) (((r)+(m)-(f)) % ((m) - 1 )) // MSG_LEN(rear, front, max_len)
+#define MSG_LEN(rear,front,max) (((rear)+(max)-(front)) % ((max) - 1 )) // MSG_LEN(rear, front, max_len)
+#define BUFFER_FULL(rear, front, max) ((((rear)+2)%((max)-1)) == (front))
 
 static SPI_Type * p_spi[] = SPI_BASE_PTRS;
 
-static uint8_t buffer_out[MAX_SIZE] = {0U};
-static uint8_t p_out_rear = 0, p_out_front = 1;
-static uint32_t masterCommand;
-static uint32_t masterFifoSize;
+static uint32_t buffer_out[MAX_SIZE] = {0U};
+static uint16_t p_out_rear = 0, p_out_front = 1;
+static uint16_t msg_size = 0;
 
+//static uint32_t masterFifoSize; // necesario??
+static uint32_t masterCommand;
 
 void SPI_Init(spi_id_t id, spi_slave_t slave, uint32_t baudrate)
 {
@@ -65,7 +69,7 @@ void SPI_Init(spi_id_t id, spi_slave_t slave, uint32_t baudrate)
 	masterConfig.whichPcs = 1<<slave;
 	masterConfig.ctarConfig.baudRate = baudrate;
 
-	uint32_t srcClock_Hz = CLOCK_GetFreq(BUS_CLK);
+	uint32_t srcClock_Hz = __CORE_CLOCK__ / 2; // Bus Clock
 	DSPI_MasterInit(p_spi[id], &masterConfig, srcClock_Hz);
 
 	/* Enable the NVIC for DSPI peripheral. */
@@ -73,6 +77,7 @@ void SPI_Init(spi_id_t id, spi_slave_t slave, uint32_t baudrate)
 
 	/* Start master transfer*/
 	dspi_command_data_config_t commandData;
+
 	commandData.isPcsContinuous    = false;
 	commandData.whichCtar          = kDSPI_Ctar0;
 	commandData.whichPcs           = 1<<slave;;
@@ -81,14 +86,61 @@ void SPI_Init(spi_id_t id, spi_slave_t slave, uint32_t baudrate)
 
 	masterCommand = DSPI_MasterGetFormattedCommand(&commandData);
 
-	masterFifoSize = FSL_FEATURE_DSPI_FIFO_SIZEn(port_spi_n);
+//	masterFifoSize = FSL_FEATURE_DSPI_FIFO_SIZEn(port_spi_n);
 
-	DSPI_StopTransfer(port_spi_n);
-	DSPI_FlushFifo(port_spi_n, true, true);
-	DSPI_ClearStatusFlags(port_spi_n, (uint32_t)kDSPI_AllStatusFlag);
+	DSPI_StopTransfer(p_spi[id]);
+	DSPI_FlushFifo(p_spi[id], true, true);
+	DSPI_ClearStatusFlags(p_spi[id], (uint32_t)kDSPI_AllStatusFlag);
 
 }
 
+
+void SPI_Send(spi_id_t id, spi_slave_t slave, const char * msg, uint16_t len)
+{
+	/**
+	 * static uint32_t buffer_out[MAX_SIZE] = {0U};
+	 * static uint16_t p_out_rear = 0, p_out_front = 1;
+	 */
+	uint16_t i=0;
+
+	if (slave < 5 && slave > 0)
+		slave = 5 - slave;
+	else if (slave != 0)
+		slave = 5;
+
+	masterCommand = (masterCommand & ~SPI_PUSHR_PCS_MASK) | SPI_PUSHR_PCS(1<<slave);
+
+	while((len > i) && !BUFFER_FULL(p_out_rear, p_out_front, MAX_SIZE))
+	{
+		p_out_rear = (p_out_rear + 1)%(MAX_SIZE - 1);
+		buffer_out[p_out_rear] = masterCommand | msg[i];
+		i++;
+	}
+	msg_size += len;
+
+    /*Fill up the master Tx data*/
+    while (DSPI_GetStatusFlags(p_spi[id]) & kDSPI_TxFifoFillRequestFlag)
+    {
+        if (msg_size != 0)
+        {
+            p_spi[id]->PUSHR = buffer_out[p_out_front];
+            p_out_front = (p_out_front + 1) % (MAX_SIZE - 1);
+            --msg_size;
+        }
+        else
+        {
+            break;
+        }
+
+        /* Try to clear the TFFF; if the TX FIFO is full this will clear */
+        DSPI_ClearStatusFlags(p_spi[id], kDSPI_TxFifoFillRequestFlag);
+    }
+
+    /*Enable master RX interrupt*/
+	DSPI_EnableInterrupts(p_spi[id], kDSPI_TxFifoFillRequestInterruptEnable);
+    /* Start DSPI transafer.*/
+    DSPI_StartTransfer(p_spi[id]);
+}
 void SPI0_IRQHandler(void)
 {
     /*if (masterRxCount < TRANSFER_SIZE)
@@ -107,33 +159,29 @@ void SPI0_IRQHandler(void)
         }
     }*/
 
-    if (MSG_LEN(p_out_rear, p_out_front, MAX_SIZE) != 0)
-    {
-        while ((DSPI_GetStatusFlags(p_spi[0]) & kDSPI_TxFifoFillRequestFlag) &&
-               ((masterTxCount - masterRxCount) < masterFifoSize))
-        {
-            if (masterTxCount < TRANSFER_SIZE)
-            {
-                EXAMPLE_DSPI_MASTER_BASEADDR->PUSHR = masterCommand | masterTxData[masterTxCount];
-                ++masterTxCount;
-            }
-            else
-            {
-                break;
-            }
+	while (DSPI_GetStatusFlags(p_spi[0]) & kDSPI_TxFifoFillRequestFlag)
+	{
+		if (msg_size != 0)
+		{
+			p_spi[0]->PUSHR = buffer_out[p_out_front];
+			p_out_front = (p_out_front + 1) % (MAX_SIZE - 1);
+			--msg_size;
+		}
+		else
+		{
+			break;
+		}
 
-            /* Try to clear the TFFF; if the TX FIFO is full this will clear */
-            DSPI_ClearStatusFlags(EXAMPLE_DSPI_MASTER_BASEADDR, kDSPI_TxFifoFillRequestFlag);
-        }
-    }
+		/* Try to clear the TFFF; if the TX FIFO is full this will clear */
+		DSPI_ClearStatusFlags(p_spi[0], kDSPI_TxFifoFillRequestFlag);
+	}
 
     /* Check if we're done with this transfer.*/
-    if ((masterTxCount == TRANSFER_SIZE) && (masterRxCount == TRANSFER_SIZE))
+    if (msg_size == 0)
     {
-    	isTransferCompleted = true;
+    	//isTransferCompleted = true;
         /* Complete the transfer and disable the interrupts */
-        DSPI_DisableInterrupts(EXAMPLE_DSPI_MASTER_BASEADDR,
-                               kDSPI_RxFifoDrainRequestInterruptEnable | kDSPI_TxFifoFillRequestInterruptEnable);
+        DSPI_DisableInterrupts(p_spi[0],kDSPI_TxFifoFillRequestInterruptEnable);
     }
     SDK_ISR_EXIT_BARRIER;
 }
