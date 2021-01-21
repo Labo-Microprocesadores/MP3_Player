@@ -9,9 +9,7 @@
  ******************************************************************************/
 #include "storage_read_state.h"
 #include <stdbool.h>
-//#include "MplxLed.h"
 #include "queue.h"
-//#include "Timer.h"
 
 /*******************************************************************************
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
@@ -34,7 +32,14 @@ void onStorageOk(void);
  ******************************************************************************/
 void storageread_Read(void)
 {
-	//Show animation while reading
+	//TODO: Show animation while reading
+	//TODO: read
+	/*
+	 * if (readingOk)
+	 * 	onStorageOk();
+	 * else
+	 *	onStorageError();
+	 */
 }
 
 
@@ -46,15 +51,16 @@ void storageread_Read(void)
 
 void onStorageError(void)
 {
-	//Show error title
+	//TODO: Show error title or red led.
 	emitEvent(ST_FAIL_EV);
 }
 
 void onStorageOk(void)
 {
-	//Show ok title
+	//TODO: Show ok title or green led.
 	emitEvent(ST_OK_EV);
 }
+
 
 /*******************************************************************************
  ******************************************************************************/

@@ -316,28 +316,24 @@ Discarded input sections
  .bss           0x00000000        0x0 ./source/fsm/States/file_selection_state.o
  .bss.showingTitle
                 0x00000000        0x1 ./source/fsm/States/file_selection_state.o
- .bss.showingErrorIndication
-                0x00000000        0x1 ./source/fsm/States/file_selection_state.o
  .data.titleTimerID
                 0x00000000        0x4 ./source/fsm/States/file_selection_state.o
- .data.errorIndicationTimerID
-                0x00000000        0x4 ./source/fsm/States/file_selection_state.o
  .text.fileselection_initState
-                0x00000000       0x18 ./source/fsm/States/file_selection_state.o
+                0x00000000        0xc ./source/fsm/States/file_selection_state.o
  .text.fileselection_goIn
-                0x00000000       0x2c ./source/fsm/States/file_selection_state.o
+                0x00000000       0x18 ./source/fsm/States/file_selection_state.o
  .text.fileselection_goOut
-                0x00000000       0x2c ./source/fsm/States/file_selection_state.o
+                0x00000000       0x18 ./source/fsm/States/file_selection_state.o
  .text.showTitle
-                0x00000000        0xe ./source/fsm/States/file_selection_state.o
+                0x00000000       0x2c ./source/fsm/States/file_selection_state.o
  .text.stopShowingTitle
-                0x00000000        0xe ./source/fsm/States/file_selection_state.o
+                0x00000000       0x18 ./source/fsm/States/file_selection_state.o
  .text.userInteractionStopsTitle
+                0x00000000       0x24 ./source/fsm/States/file_selection_state.o
+ .text.showFiles
                 0x00000000        0xe ./source/fsm/States/file_selection_state.o
- .text.userInteractionStopsErrorIndication
-                0x00000000        0xe ./source/fsm/States/file_selection_state.o
- .debug_info    0x00000000      0x266 ./source/fsm/States/file_selection_state.o
- .debug_abbrev  0x00000000       0xde ./source/fsm/States/file_selection_state.o
+ .debug_info    0x00000000      0x268 ./source/fsm/States/file_selection_state.o
+ .debug_abbrev  0x00000000      0x122 ./source/fsm/States/file_selection_state.o
  .debug_aranges
                 0x00000000       0x50 ./source/fsm/States/file_selection_state.o
  .debug_ranges  0x00000000       0x40 ./source/fsm/States/file_selection_state.o
@@ -349,10 +345,10 @@ Discarded input sections
  .debug_macro   0x00000000      0x5b2 ./source/fsm/States/file_selection_state.o
  .debug_macro   0x00000000       0xd8 ./source/fsm/States/file_selection_state.o
  .debug_macro   0x00000000       0x22 ./source/fsm/States/file_selection_state.o
- .debug_line    0x00000000      0x20a ./source/fsm/States/file_selection_state.o
- .debug_str     0x00000000     0x4a16 ./source/fsm/States/file_selection_state.o
+ .debug_line    0x00000000      0x203 ./source/fsm/States/file_selection_state.o
+ .debug_str     0x00000000     0x49ed ./source/fsm/States/file_selection_state.o
  .comment       0x00000000       0x7f ./source/fsm/States/file_selection_state.o
- .debug_frame   0x00000000       0xe4 ./source/fsm/States/file_selection_state.o
+ .debug_frame   0x00000000       0xd8 ./source/fsm/States/file_selection_state.o
  .ARM.attributes
                 0x00000000       0x39 ./source/fsm/States/file_selection_state.o
  .group         0x00000000        0xc ./source/fsm/States/idle_state.o
@@ -407,15 +403,15 @@ Discarded input sections
  .data.titleTimerID
                 0x00000000        0x4 ./source/fsm/States/main_effects_state.o
  .text.maineffects_initState
-                0x00000000       0x18 ./source/fsm/States/main_effects_state.o
+                0x00000000        0xc ./source/fsm/States/main_effects_state.o
  .text.showTitle
-                0x00000000        0xe ./source/fsm/States/main_effects_state.o
+                0x00000000       0x2c ./source/fsm/States/main_effects_state.o
  .text.stopShowingTitle
-                0x00000000        0xe ./source/fsm/States/main_effects_state.o
+                0x00000000       0x18 ./source/fsm/States/main_effects_state.o
  .text.userInteractionStopsTitle
-                0x00000000        0xe ./source/fsm/States/main_effects_state.o
- .debug_info    0x00000000      0x211 ./source/fsm/States/main_effects_state.o
- .debug_abbrev  0x00000000       0xde ./source/fsm/States/main_effects_state.o
+                0x00000000       0x24 ./source/fsm/States/main_effects_state.o
+ .debug_info    0x00000000      0x247 ./source/fsm/States/main_effects_state.o
+ .debug_abbrev  0x00000000       0xf6 ./source/fsm/States/main_effects_state.o
  .debug_aranges
                 0x00000000       0x38 ./source/fsm/States/main_effects_state.o
  .debug_ranges  0x00000000       0x28 ./source/fsm/States/main_effects_state.o
@@ -427,10 +423,10 @@ Discarded input sections
  .debug_macro   0x00000000       0xd8 ./source/fsm/States/main_effects_state.o
  .debug_macro   0x00000000       0x22 ./source/fsm/States/main_effects_state.o
  .debug_macro   0x00000000       0x22 ./source/fsm/States/main_effects_state.o
- .debug_line    0x00000000      0x1c2 ./source/fsm/States/main_effects_state.o
- .debug_str     0x00000000     0x4997 ./source/fsm/States/main_effects_state.o
+ .debug_line    0x00000000      0x1c8 ./source/fsm/States/main_effects_state.o
+ .debug_str     0x00000000     0x49c7 ./source/fsm/States/main_effects_state.o
  .comment       0x00000000       0x7f ./source/fsm/States/main_effects_state.o
- .debug_frame   0x00000000       0x8c ./source/fsm/States/main_effects_state.o
+ .debug_frame   0x00000000       0x80 ./source/fsm/States/main_effects_state.o
  .ARM.attributes
                 0x00000000       0x39 ./source/fsm/States/main_effects_state.o
  .group         0x00000000        0xc ./source/fsm/States/main_menu_state.o
@@ -458,7 +454,7 @@ Discarded input sections
  .text.mainmenu_selectOption
                 0x00000000       0x48 ./source/fsm/States/main_menu_state.o
  .text.showTitle
-                0x00000000       0x24 ./source/fsm/States/main_menu_state.o
+                0x00000000       0x2c ./source/fsm/States/main_menu_state.o
  .text.setCurrentOption
                 0x00000000       0x28 ./source/fsm/States/main_menu_state.o
  .text.stopShowingTitle
@@ -478,7 +474,7 @@ Discarded input sections
  .debug_macro   0x00000000       0xd8 ./source/fsm/States/main_menu_state.o
  .debug_macro   0x00000000       0x22 ./source/fsm/States/main_menu_state.o
  .debug_macro   0x00000000       0x22 ./source/fsm/States/main_menu_state.o
- .debug_line    0x00000000      0x27b ./source/fsm/States/main_menu_state.o
+ .debug_line    0x00000000      0x27c ./source/fsm/States/main_menu_state.o
  .debug_str     0x00000000     0x4ac6 ./source/fsm/States/main_menu_state.o
  .comment       0x00000000       0x7f ./source/fsm/States/main_menu_state.o
  .debug_frame   0x00000000      0x104 ./source/fsm/States/main_menu_state.o
@@ -501,13 +497,13 @@ Discarded input sections
  .text.playereffects_initState
                 0x00000000       0x18 ./source/fsm/States/player_effects_state.o
  .text.showTitle
-                0x00000000        0xe ./source/fsm/States/player_effects_state.o
+                0x00000000       0x2c ./source/fsm/States/player_effects_state.o
  .text.stopShowingTitle
                 0x00000000        0xe ./source/fsm/States/player_effects_state.o
  .text.userInteractionStopsTitle
                 0x00000000        0xe ./source/fsm/States/player_effects_state.o
- .debug_info    0x00000000      0x211 ./source/fsm/States/player_effects_state.o
- .debug_abbrev  0x00000000       0xde ./source/fsm/States/player_effects_state.o
+ .debug_info    0x00000000      0x223 ./source/fsm/States/player_effects_state.o
+ .debug_abbrev  0x00000000      0x10c ./source/fsm/States/player_effects_state.o
  .debug_aranges
                 0x00000000       0x38 ./source/fsm/States/player_effects_state.o
  .debug_ranges  0x00000000       0x28 ./source/fsm/States/player_effects_state.o
@@ -519,10 +515,10 @@ Discarded input sections
  .debug_macro   0x00000000       0xd8 ./source/fsm/States/player_effects_state.o
  .debug_macro   0x00000000       0x22 ./source/fsm/States/player_effects_state.o
  .debug_macro   0x00000000       0x22 ./source/fsm/States/player_effects_state.o
- .debug_line    0x00000000      0x1c6 ./source/fsm/States/player_effects_state.o
- .debug_str     0x00000000     0x499d ./source/fsm/States/player_effects_state.o
+ .debug_line    0x00000000      0x1c8 ./source/fsm/States/player_effects_state.o
+ .debug_str     0x00000000     0x49af ./source/fsm/States/player_effects_state.o
  .comment       0x00000000       0x7f ./source/fsm/States/player_effects_state.o
- .debug_frame   0x00000000       0x8c ./source/fsm/States/player_effects_state.o
+ .debug_frame   0x00000000       0x88 ./source/fsm/States/player_effects_state.o
  .ARM.attributes
                 0x00000000       0x39 ./source/fsm/States/player_effects_state.o
  .group         0x00000000        0xc ./source/fsm/States/storage_read_state.o
@@ -554,7 +550,7 @@ Discarded input sections
  .debug_macro   0x00000000       0xd8 ./source/fsm/States/storage_read_state.o
  .debug_macro   0x00000000      0x5b2 ./source/fsm/States/storage_read_state.o
  .debug_macro   0x00000000       0x22 ./source/fsm/States/storage_read_state.o
- .debug_line    0x00000000      0x1b0 ./source/fsm/States/storage_read_state.o
+ .debug_line    0x00000000      0x1b2 ./source/fsm/States/storage_read_state.o
  .debug_str     0x00000000     0x49c8 ./source/fsm/States/storage_read_state.o
  .comment       0x00000000       0x7f ./source/fsm/States/storage_read_state.o
  .debug_frame   0x00000000       0x68 ./source/fsm/States/storage_read_state.o
@@ -619,7 +615,7 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x30 ./source/fsm/fsm_table.o
  .debug_ranges  0x00000000       0x20 ./source/fsm/fsm_table.o
- .debug_macro   0x00000000       0xa9 ./source/fsm/fsm_table.o
+ .debug_macro   0x00000000       0xd1 ./source/fsm/fsm_table.o
  .debug_macro   0x00000000      0xa96 ./source/fsm/fsm_table.o
  .debug_macro   0x00000000       0x10 ./source/fsm/fsm_table.o
  .debug_macro   0x00000000      0x12d ./source/fsm/fsm_table.o
@@ -627,8 +623,8 @@ Discarded input sections
  .debug_macro   0x00000000      0x5b2 ./source/fsm/fsm_table.o
  .debug_macro   0x00000000       0x22 ./source/fsm/fsm_table.o
  .debug_macro   0x00000000       0x22 ./source/fsm/fsm_table.o
- .debug_line    0x00000000      0x1dc ./source/fsm/fsm_table.o
- .debug_str     0x00000000     0x4a89 ./source/fsm/fsm_table.o
+ .debug_line    0x00000000      0x240 ./source/fsm/fsm_table.o
+ .debug_str     0x00000000     0x4ade ./source/fsm/fsm_table.o
  .comment       0x00000000       0x7f ./source/fsm/fsm_table.o
  .debug_frame   0x00000000       0x70 ./source/fsm/fsm_table.o
  .ARM.attributes
@@ -4830,8 +4826,13 @@ SystemCoreClockUpdate                             ./device/system_MK64F12.o
 SystemInit                                        ./device/system_MK64F12.o
                                                   ./startup/startup_mk64f12.o
 SystemInitHook                                    ./device/system_MK64F12.o
-Timer_AddCallback                                 ./source/fsm/States/main_menu_state.o
+Timer_AddCallback                                 ./source/fsm/States/player_effects_state.o
+                                                  ./source/fsm/States/main_menu_state.o
+                                                  ./source/fsm/States/main_effects_state.o
+                                                  ./source/fsm/States/file_selection_state.o
 Timer_Delete                                      ./source/fsm/States/main_menu_state.o
+                                                  ./source/fsm/States/main_effects_state.o
+                                                  ./source/fsm/States/file_selection_state.o
 UART0_DriverIRQHandler                            ./drivers/SDK/fsl_uart.o
 UART0_ERR_DriverIRQHandler                        ./startup/startup_mk64f12.o
 UART0_ERR_IRQHandler                              ./startup/startup_mk64f12.o
@@ -5090,6 +5091,7 @@ file_selection                                    ./source/fsm/fsm_table.o
 fileselection_goIn                                ./source/fsm/States/file_selection_state.o
 fileselection_goOut                               ./source/fsm/States/file_selection_state.o
 fileselection_initState                           ./source/fsm/States/file_selection_state.o
+                                                  ./source/fsm/fsm_table.o
 fputs                                             c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(fputs.o)
                                                   c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_semihost_nf.a(_cr_assert.o)
 free                                              c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(alloc.o)
@@ -5120,6 +5122,7 @@ hw_Init                                           ./startup/hardware.o
                                                   ./startup/main.o
 idle                                              ./source/fsm/fsm_table.o
 idle_initState                                    ./source/fsm/States/idle_state.o
+                                                  ./source/fsm/fsm_table.o
 idle_onUserInteraction                            ./source/fsm/States/idle_state.o
                                                   ./source/fsm/fsm_table.o
 initQueue                                         ./source/queue.o
@@ -5131,6 +5134,7 @@ main_effects                                      ./source/fsm/fsm_table.o
 main_menu                                         ./source/fsm/fsm_table.o
 main_task                                         ./component/osa/fsl_os_abstraction_bm.o
 maineffects_initState                             ./source/fsm/States/main_effects_state.o
+                                                  ./source/fsm/fsm_table.o
 mainmenu_initState                                ./source/fsm/States/main_menu_state.o
                                                   ./source/fsm/fsm_table.o
 mainmenu_nextOption                               ./source/fsm/States/main_menu_state.o
@@ -5174,6 +5178,7 @@ player_onPress                                    ./source/fsm/States/player_sta
 player_onStorageOut                               ./source/fsm/States/player_state/player_state.o
 player_onTimeOut                                  ./source/fsm/States/player_state/player_state.o
 playereffects_initState                           ./source/fsm/States/player_effects_state.o
+                                                  ./source/fsm/fsm_table.o
 printCompleteFileTree                             ./drivers/file_system_manager.o
 printTree                                         ./drivers/file_system_manager.o
                                                   ./drivers/memory_manager.o
@@ -5195,10 +5200,12 @@ sd_disk_status                                    ./component/fatfs/fsl_sd_disk/
                                                   ./component/fatfs/diskio.o
 sd_disk_write                                     ./component/fatfs/fsl_sd_disk/fsl_sd_disk.o
                                                   ./component/fatfs/diskio.o
+setCurrentOption                                  ./source/fsm/States/main_effects_state.o
 setvbuf                                           c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(setvbuf.o)
                                                   c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(initio.o)
 storage_read                                      ./source/fsm/fsm_table.o
 storageread_Read                                  ./source/fsm/States/storage_read_state.o
+                                                  ./source/fsm/fsm_table.o
 strcat                                            c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(strcat.o)
                                                   ./drivers/file_system_manager.o
 strcmp                                            c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(strcmp.o)

@@ -128,6 +128,7 @@ void mainmenu_selectOption(void)
 static void showTitle(void)
 {
 	//TODO: show Title "Menu".
+	showingTitle = true;
 	titleTimerID = Timer_AddCallback(&stopShowingTitle,TITLE_TIME, true );
 }
 

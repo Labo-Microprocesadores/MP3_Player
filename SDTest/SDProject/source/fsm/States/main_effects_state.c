@@ -30,16 +30,16 @@ static int titleTimerID = -1;
  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
  ******************************************************************************/
 /**
- * @brief Show the title of the state in the display. If the user interacts with the system, the title will stop showing and the input will start.
+ * @brief Show the title of the state on the display. If the user interacts with the system, the title will stop showing.
  */
 static void showTitle(void);
 /**
- * @brief Stops showing the title of the state in the display. The input starts.
+ * @brief Stops showing the title of the state on the display.
  */
 static void stopShowingTitle(void);
 
 /**
- * @brief Stops showing the title of the state in the display due to a user's interaction. The input starts.
+ * @brief Stops showing the title of the state on the display due to a user's interaction.
  */
 static void userInteractionStopsTitle(void);
 /*******************************************************************************
@@ -48,7 +48,6 @@ static void userInteractionStopsTitle(void);
 
 void maineffects_initState(void)
 {
-    showingTitle = false;
     showTitle();
 }
 
@@ -59,28 +58,23 @@ void maineffects_initState(void)
  ******************************************************************************/
 static void showTitle(void)
 {
-//    SevenSegDisplay_EraseScreen();
-//    SevenSegDisplay_CursorOff();
-//    SevenSegDisplay_SetPos(0);
-//    SevenSegDisplay_WriteBufferAndMove("EFFECTS", 6, 0, BOUNCE);
-//    Led_Off(LED_BLUE);
-//    Led_InfiniteBlink(LED_GREEN, NORMAL);
-//    titleTimerID = Timer_AddCallback(&stopShowingTitle,TITLE_TIME, true );
+	//TODO: show Title "Effects".
+	showingTitle = true;
+	titleTimerID = Timer_AddCallback(&stopShowingTitle,TITLE_TIME, true );
 }
 
 
 static void stopShowingTitle(void)
 {
-//    SevenSegDisplay_EraseScreen();
-//    showingTitle = false;
-//    setCurrentOption();
-//    Led_StopInfiniteBlink(LED_GREEN);
-//    Led_On(LED_BLUE);
+	    showingTitle = false;
+	    //   TODO: erase screen
+	    setCurrentOption();
+
 }
 
 static void userInteractionStopsTitle(void)
 {
-//    Timer_Delete(titleTimerID);
-//    titleTimerID = -1;
-//    stopShowingTitle();
+		Timer_Delete(titleTimerID);
+		titleTimerID = -1;
+		stopShowingTitle();
 }
