@@ -18,9 +18,9 @@
  ******************************************************************************/
 typedef enum
 {
+	READ_ST,
     EFFECTS,
 	EXIT,
-	READ_ST,
 } options_t;
 /*******************************************************************************
  * GLOBAL VARIABLES WITH FILE LEVEL SCOPE
@@ -103,8 +103,7 @@ void mainmenu_selectOption(void)
         userInteractionStopsTitle();
     else
     {
-//        SevenSegDisplay_EraseScreen();
-//        SevenSegDisplay_SetPos(0);
+    	//TODO: erase screen
         switch (currentOptionIndex)
         {
             case EXIT:
@@ -128,45 +127,40 @@ void mainmenu_selectOption(void)
  ******************************************************************************/
 static void showTitle(void)
 {
-//    SevenSegDisplay_EraseScreen();
-//    SevenSegDisplay_CursorOff();
-//    SevenSegDisplay_SetPos(0);
-//    SevenSegDisplay_WriteBuffer("MENU", 4, 0);
-//    Led_Off(LED_BLUE);
-//    Led_InfiniteBlink(LED_GREEN, NORMAL);
-//    titleTimerID = Timer_AddCallback(&stopShowingTitle,TITLE_TIME, true );
+	//TODO: show Title "Menu".
+	titleTimerID = Timer_AddCallback(&stopShowingTitle,TITLE_TIME, true );
 }
 
 static void setCurrentOption(void)
 {
-//    SevenSegDisplay_EraseScreen();
-//    SevenSegDisplay_SetPos(0);
-//    switch (currentOptionIndex)
-//    {
-//    case EXIT:
-//        SevenSegDisplay_WriteBuffer("EXIT", 4, 0);
-//        break;
-//    case EFFECTS:
-//        SevenSegDisplay_WriteBufferAndMove("EFFECTS", 6, 0, BOUNCE);
-//        break;
-//    case READ_ST:
-//    	SevenSegDisplay_WriteBuffer("READ", 4, 0);
-//        break;
-//    }
+	//TODO: erase screen.
+    switch (currentOptionIndex)
+    {
+    case EXIT:
+    	//TODO: show option on the display
+        break;
+    case EFFECTS:
+    	//TODO: show option on the display
+        break;
+    case READ_ST:
+    	//TODO: show option on the display
+        break;
+    }
+
+
 }
 
 static void stopShowingTitle(void)
 {
-//    SevenSegDisplay_EraseScreen();
-//    showingTitle = false;
-//    setCurrentOption();
-//    Led_StopInfiniteBlink(LED_GREEN);
-//    Led_On(LED_BLUE);
+	    showingTitle = false;
+	    //   TODO: erase screen
+	    setCurrentOption();
+
 }
 
 static void userInteractionStopsTitle(void)
 {
-//    Timer_Delete(titleTimerID);
-//    titleTimerID = -1;
-//    stopShowingTitle();
+		Timer_Delete(titleTimerID);
+		titleTimerID = -1;
+		stopShowingTitle();
 }

@@ -16,9 +16,14 @@
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
 /**
- * @brief Initializes the main effects state
+ * @brief Initializes the idle state
  */
 void idle_initState(void);
+
+/**
+ * @brief Stop showing the time when the user interacts with the system.
+ */
+void idle_onUserInteraction(void);
 
 
 #endif /* IDLE_STATE_H */

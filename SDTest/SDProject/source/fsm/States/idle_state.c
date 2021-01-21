@@ -19,37 +19,38 @@
 /*******************************************************************************
  * GLOBAL VARIABLES WITH FILE LEVEL SCOPE
  ******************************************************************************/
-static bool showingTitle;
-static int titleTimerID = -1;
+
 /*******************************************************************************
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
  ******************************************************************************/
-#define TITLE_TIME  2000
 
 /*******************************************************************************
  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
  ******************************************************************************/
 /**
- * @brief Show the title of the state in the display. If the user interacts with the system, the title will stop showing and the input will start.
+ * @brief Show the current time on the display. If the user interacts with the system, the time will stop showing.
  */
-static void showTitle(void);
+static void showTime(void);
 /**
- * @brief Stops showing the title of the state in the display. The input starts.
+ * @brief Stops showing the time on the display.
  */
-static void stopShowingTitle(void);
-
-/**
- * @brief Stops showing the title of the state in the display due to a user's interaction. The input starts.
- */
-static void userInteractionStopsTitle(void);
+static void stopShowingTime(void);
 /*******************************************************************************
  * FUNCTIONS WITH GLOBAL SCOPE
  ******************************************************************************/
 
 void idle_initState(void)
 {
-    showingTitle = false;
-    showTitle();
+
+    showTime();
+    //TODO: enter low energy consumption mode.
+}
+
+void idle_onUserInteraction(void)
+{
+	//TODO: enter high energy consumption mode.
+	stopShowingTime();
+	emitEvent(START_EV);
 }
 
 /*******************************************************************************
@@ -57,30 +58,14 @@ void idle_initState(void)
                         LOCAL FUNCTION DEFINITIONS
  *******************************************************************************
  ******************************************************************************/
-static void showTitle(void)
+static void showTime(void)
 {
-//    SevenSegDisplay_EraseScreen();
-//    SevenSegDisplay_CursorOff();
-//    SevenSegDisplay_SetPos(0);
-//    SevenSegDisplay_WriteBufferAndMove("EFFECTS", 6, 0, BOUNCE);
-//    Led_Off(LED_BLUE);
-//    Led_InfiniteBlink(LED_GREEN, NORMAL);
-//    titleTimerID = Timer_AddCallback(&stopShowingTitle,TITLE_TIME, true );
+	//TODO: fetch current time and show it on the display.
 }
 
 
-static void stopShowingTitle(void)
+static void stopShowingTime(void)
 {
-//    SevenSegDisplay_EraseScreen();
-//    showingTitle = false;
-//    setCurrentOption();
-//    Led_StopInfiniteBlink(LED_GREEN);
-//    Led_On(LED_BLUE);
+	//When the user interacts with the system, stop showing the time
 }
 
-static void userInteractionStopsTitle(void)
-{
-//    Timer_Delete(titleTimerID);
-//    titleTimerID = -1;
-//    stopShowingTitle();
-}

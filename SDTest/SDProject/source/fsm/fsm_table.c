@@ -10,7 +10,8 @@
 #include <stdio.h>
 #include "fsm.h"
 #include "fsm_table.h"
-
+#include "States/idle_state.h"
+#include "States/main_menu_state.h"
 #include "queue.h"
 
 
@@ -39,7 +40,9 @@ extern STATE file_selection[];
 
  STATE idle[]=
 {
-	{START_EV, 				main_menu, 				NULL},
+	{PRESS_EV,				idle, 					idle_onUserInteraction},
+	{LKP_EV,				idle, 					idle_onUserInteraction},
+	{START_EV, 				main_menu, 				mainmenu_initState},
 	{ST_IN_EV, 				storage_read, 			NULL},
   	{FIN_TABLA, 			idle, 					do_nothing}
 };
