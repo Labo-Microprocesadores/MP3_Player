@@ -9,7 +9,6 @@
 /*******************************************************************************
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
-void pause_showAnimation(void);
-
-void pause_initState(void);
+void pause_Pause(void);
+void pause_changeEffects(void);
 #endif /* PAUSE_STATE_H */

@@ -15,6 +15,7 @@
 #include "States/storage_read_state.h"
 #include "States/file_selection_state.h"
 #include "States/main_effects_state.h"
+#include "States/player_state/player_state.h"
 #include "States/player_effects_state.h"
 #include "queue.h"
 
@@ -99,8 +100,8 @@ STATE file_selection[] =
 /*** Player State ***/
 STATE player[] =
 {
-	{PRESS_EV,				player, 				NULL},
-	{LKP_EV, 				player, 				NULL},
+	{PRESS_EV,				player, 				player_onPress},
+	{LKP_EV, 				player, 				player_onLKP},
 	{ST_OUT_EV, 			main_menu, 				mainmenu_initState},
 	{CHANGE_FILE_EV,		file_selection, 		fileselection_initState},
 	{TIMEOUT_EV,			idle,	 				idle_initState},

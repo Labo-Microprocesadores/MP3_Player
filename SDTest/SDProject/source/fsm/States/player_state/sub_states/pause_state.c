@@ -13,11 +13,14 @@
 /*******************************************************************************
  * FUNCTIONS WITH GLOBAL SCOPE
  ******************************************************************************/
-void pause_showAnimation(void)
+void pause_Pause(void)
 {
-
+	//TODO: pause mp3 file
+	//TODO: show "pause" message on the display
 }
-void pause_initState(void)
-{
 
+void pause_changeEffects(void)
+{
+	pause_Pause();
+	emitEvent(EFF_EV);
 }

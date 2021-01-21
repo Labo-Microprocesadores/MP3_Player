@@ -67,16 +67,15 @@ static void showTitle(void)
 
 static void stopShowingTitle(void)
 {
-//    SevenSegDisplay_EraseScreen();
-//    showingTitle = false;
-//    setCurrentOption();
-//    Led_StopInfiniteBlink(LED_GREEN);
-//    Led_On(LED_BLUE);
+	    showingTitle = false;
+	    //   TODO: erase screen
+	    setCurrentOption();
+
 }
 
 static void userInteractionStopsTitle(void)
 {
-//    Timer_Delete(titleTimerID);
-//    titleTimerID = -1;
-//    stopShowingTitle();
+		Timer_Delete(titleTimerID);
+		titleTimerID = -1;
+		stopShowingTitle();
 }

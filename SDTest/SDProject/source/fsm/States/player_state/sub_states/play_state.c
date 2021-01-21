@@ -13,11 +13,9 @@
 /*******************************************************************************
  * FUNCTIONS WITH GLOBAL SCOPE
  ******************************************************************************/
-void play_showAnimation(void)
-{
 
-}
 void play_initState(void)
 {
-
+	//TODO: play mp3 file
+	//TODO: show "pause" message on the display
 }

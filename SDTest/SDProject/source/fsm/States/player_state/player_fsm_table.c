@@ -11,7 +11,6 @@
 extern STATE play[];
 extern STATE pause[];
 
-// prototipos
 static void do_nothing(void);
 
 /*** tablas de estado ***/
@@ -19,9 +18,9 @@ static void do_nothing(void);
 /*** Play ***/
 STATE play[]=
 {
-    {PRESS_EV, 						pause, 					NULL},
-	{LKP_EV, 						pause, 					NULL},
-	{EFF_EV, 						pause, 					NULL},
+    {PRESS_EV, 						pause, 					pause_Pause},
+	{LKP_EV, 						pause, 					pause_Pause},
+	{EFF_EV, 						pause, 					pause_changeEffects},
 	{FIN_TABLA, 					play, 					do_nothing}
 };
 
@@ -29,8 +28,8 @@ STATE play[]=
 
 STATE pause[]=
 {
-	{PRESS_EV, 						play, 					NULL},
-	{LKP_EV, 						play, 					NULL},
+	{PRESS_EV, 						play, 					play_initState},
+	{LKP_EV, 						play, 					play_initState},
 	{FIN_TABLA,						pause,					do_nothing},
 };
 
@@ -40,13 +39,13 @@ STATE pause[]=
 //========interfaz=================
 
 
-STATE *subFSM_GetInitState(void) // cambiar nombre
+STATE *subFSM_GetInitState(void)
 {
 	return(play);
 }
 
 ///=========Rutinas de accion===============
-void subFSM_StartInitState() // cambiar nombre
+void subFSM_StartInitState()
 {
 	play_initState();
 }

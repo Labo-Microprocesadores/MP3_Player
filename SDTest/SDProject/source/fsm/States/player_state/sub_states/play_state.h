@@ -9,7 +9,6 @@
 /*******************************************************************************
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
-void play_showAnimation(void);
 void play_initState(void);
 
 #endif /* PLAY_STATE_H */
