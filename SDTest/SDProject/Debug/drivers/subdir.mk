@@ -5,14 +5,17 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../drivers/file_system_manager.c \
+../drivers/file_system_manager_old.c \
 ../drivers/memory_manager.c 
 
 OBJS += \
 ./drivers/file_system_manager.o \
+./drivers/file_system_manager_old.o \
 ./drivers/memory_manager.o 
 
 C_DEPS += \
 ./drivers/file_system_manager.d \
+./drivers/file_system_manager_old.d \
 ./drivers/memory_manager.d 
 
 
