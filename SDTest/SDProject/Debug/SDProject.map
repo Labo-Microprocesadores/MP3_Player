@@ -1894,7 +1894,7 @@ Discarded input sections
  .bss.files     0x00000000     0xcb20 ./drivers/file_system_manager.o
  .bss.filesCount
                 0x00000000        0x4 ./drivers/file_system_manager.o
- .rodata        0x00000000      0x270 ./drivers/file_system_manager.o
+ .rodata        0x00000000      0x310 ./drivers/file_system_manager.o
  .text.FileSystem_isMp3File
                 0x00000000       0x38 ./drivers/file_system_manager.o
  .text.FileSystem_AddFile
@@ -1908,7 +1908,7 @@ Discarded input sections
  .text.FileSystem_GetFileName
                 0x00000000       0x7c ./drivers/file_system_manager.o
  .text.FileSystem_Test
-                0x00000000      0x300 ./drivers/file_system_manager.o
+                0x00000000      0x354 ./drivers/file_system_manager.o
  .debug_info    0x00000000      0x47d ./drivers/file_system_manager.o
  .debug_abbrev  0x00000000      0x145 ./drivers/file_system_manager.o
  .debug_aranges
@@ -1921,7 +1921,7 @@ Discarded input sections
  .debug_macro   0x00000000      0x12d ./drivers/file_system_manager.o
  .debug_macro   0x00000000       0xd8 ./drivers/file_system_manager.o
  .debug_macro   0x00000000       0x22 ./drivers/file_system_manager.o
- .debug_line    0x00000000      0x28c ./drivers/file_system_manager.o
+ .debug_line    0x00000000      0x296 ./drivers/file_system_manager.o
  .debug_str     0x00000000     0x394b ./drivers/file_system_manager.o
  .comment       0x00000000       0x7f ./drivers/file_system_manager.o
  .debug_frame   0x00000000      0x13c ./drivers/file_system_manager.o

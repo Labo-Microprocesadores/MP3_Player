@@ -99,8 +99,8 @@ void FileSystem_Test (void)
 	 /*TEST*/
 	char *filename = "/dir0/hola.mp3";
 	char *filename2 = "/dir0/hola2.mp3";
-	char *filename3 = "/dir1/hola3.mp3";
-	char *filename4 = "/dir1/hola4.mp3";
+	char *filename3 = "/dir11/dir1/hola3.mp3";
+	char *filename4 = "/hola4.mp3";
 	char *filename5 = "/dir2/hola5.mp3";
 	FileSystem_AddFile(filename);
 	FileSystem_AddFile(filename2);
@@ -109,14 +109,16 @@ void FileSystem_Test (void)
 	FileSystem_AddFile(filename5);
 
 	/* Test File Addition & Test Get File Name */
+	printf("Test File Addition & Test Get File Name\n");
 	for (int i = 0; i< filesCount; i++)
 	{
 		printf("File n%d path: %s\n", i ,files[i].path);
 		char * fileName = FileSystem_GetFileName(files[i]);
 		printf("File n%d name: %s\n", i ,fileName);
 	}
-
+	printf("\n");
 	/* Test Mp3 Recognition */
+	printf("Test Mp3 Recognition\n");
 	if (FileSystem_isMp3File("/dir0/archivo0.mp3"))
 		printf("archivo0 es mp3\n");
 	if (FileSystem_isMp3File("/dir0/archivo1.xls"))
@@ -124,11 +126,16 @@ void FileSystem_Test (void)
 	if (FileSystem_isMp3File("/dir0"))
 		printf("dir0 es mp3\n");
 
+	printf("\n");
+
 	/* Test Get First File */
+	printf("Test Get First File\n");
 	Mp3File_t currentFile = FileSystem_GetFirstFile();
 	printf("Primer Archivo: %s\n", currentFile.path);
+	printf("\n");
 
 	/*Test File System Navigation*/
+	printf("Test File System Navigation\n");
 	for (int j = 0 ; j<2; j++)
 	{
 		currentFile = FileSystem_GetNextFile(currentFile);
@@ -141,7 +148,9 @@ void FileSystem_Test (void)
 		printf("Anterior Archivo: %s\n", currentFile.path);
 	}
 
+	printf("\n");
 	/*Test File System Overflow*/
+	printf("Test File System Overflow\n");
 	currentFile = FileSystem_GetFirstFile();
 	printf("Index: %d\n", currentFile.index);
 	for (int l = 0 ; l<10; l++)
@@ -149,11 +158,12 @@ void FileSystem_Test (void)
 		currentFile = FileSystem_GetNextFile(currentFile);
 		printf("Index Siguiente: %d\n", currentFile.index);
 	}
-	for (int m = 0; m<2; m++)
+	for (int m = 0; m<10; m++)
 	{
 		currentFile = FileSystem_GetPreviousFile(currentFile);
-		printf("Index Anterior: %s\n", currentFile.index);
+		printf("Index Anterior: %d\n", currentFile.index);
 	}
+	printf("\n");
 
 }
 
