@@ -7,7 +7,7 @@
 /*******************************************************************************
  * INCLUDE HEADER FILES
  ******************************************************************************/
-#include <file_system_manager_old.h>
+#include <file_system_manager.h>
 #include <stdio.h>
 
 #include "fsl_sd.h"
@@ -44,7 +44,8 @@
 static bool SD_connected = false;
 static bool SD_error = false;
 static bool SD_HostInitDone = false;
-static TREE_NODE_T * rootNode, * currNode;
+//static TREE_NODE_T * rootNode, * currNode;
+static Mp3File_t firstFile;
 
 /*******************************************************************************
  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
@@ -61,8 +62,9 @@ static void Mm_ScanFiles(char * path);
  ******************************************************************************/
 void Mm_Init(void)
 {
-	rootNode = getRootNode();
-	currNode = rootNode;
+	firstFile = FileSystem_GetFirstFile();
+//	rootNode = getRootNode();
+//	currNode = rootNode;
 	SYSMPU_Enable(SYSMPU, false);
 
 	CLOCK_EnableClock(kCLOCK_PortE);                           /* Port E Clock Gate Control: Clock enabled */
@@ -113,59 +115,59 @@ void Mm_Init(void)
 	}
 }
 
-char * Mm_GetCurrentPath(void)
-{
-	return currNode->url;
-}
-char * Mm_GetCurrentName(void)
-{
-	return currNode->nodeName;
-}
-
-void Mm_GoNext(void)
-{
-	if(currNode->rightSiblingNode != NULL)
-		currNode = currNode->rightSiblingNode;
-}
-
-bool Mm_IsNext(void)
-{
-	return (currNode->rightSiblingNode != NULL);
-}
-
-void Mm_GoPrev(void)
-{
-	if(currNode->leftSiblingNode != NULL)
-		currNode = currNode->leftSiblingNode;
-
-}
-
-bool Mm_IsPrev(void)
-{
-	return (currNode->leftSiblingNode != NULL);
-}
-
-void Mm_GoInDir(void)
-{
-	if(currNode->childNode != NULL)
-		currNode = currNode->childNode;
-}
-
-void Mm_GoOutDir(void)
-{
-	if(currNode->parentNode != NULL)
-		currNode = currNode->parentNode;
-}
-
-bool Mm_CanGoInDir(void)
-{
-	return (currNode->childNode != NULL);
-}
-
-bool Mm_CanGoOutDir(void)
-{
-	return (currNode->parentNode != NULL);
-}
+//char * Mm_GetCurrentPath(void)
+//{
+//	return currNode->url;
+//}
+//char * Mm_GetCurrentName(void)
+//{
+//	return currNode->nodeName;
+//}
+//
+//void Mm_GoNext(void)
+//{
+//	if(currNode->rightSiblingNode != NULL)
+//		currNode = currNode->rightSiblingNode;
+//}
+//
+//bool Mm_IsNext(void)
+//{
+//	return (currNode->rightSiblingNode != NULL);
+//}
+//
+//void Mm_GoPrev(void)
+//{
+//	if(currNode->leftSiblingNode != NULL)
+//		currNode = currNode->leftSiblingNode;
+//
+//}
+//
+//bool Mm_IsPrev(void)
+//{
+//	return (currNode->leftSiblingNode != NULL);
+//}
+//
+//void Mm_GoInDir(void)
+//{
+//	if(currNode->childNode != NULL)
+//		currNode = currNode->childNode;
+//}
+//
+//void Mm_GoOutDir(void)
+//{
+//	if(currNode->parentNode != NULL)
+//		currNode = currNode->parentNode;
+//}
+//
+//bool Mm_CanGoInDir(void)
+//{
+//	return (currNode->childNode != NULL);
+//}
+//
+//bool Mm_CanGoOutDir(void)
+//{
+//	return (currNode->parentNode != NULL);
+//}
 
 /*******************************************************************************
  *******************************************************************************
@@ -221,7 +223,7 @@ static void Mm_OnConnection(void)
 	//buff[0] = 0;
 	Mm_ScanFiles(buff);
 
-	printTree(rootNode, "", true);
+	FileSystem_PrintFiles(true);
 }
 
 
@@ -265,8 +267,8 @@ static void Mm_ScanFiles(char * path)
 
 			printf("General file : %s.\r\n", path);
 
-			if (isMp3File(path))
-				addFileToTree(path);
+			if (FileSystem_isMp3File(path))
+				FileSystem_AddFile(path);
 
 			*(path+i) = 0;
 		}

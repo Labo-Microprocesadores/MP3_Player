@@ -70,7 +70,14 @@ char * FileSystem_GetFileName(Mp3File_t file);
  * */
 void FileSystem_Test(void);
 
-
+/*
+ * @brief Prints all the files of the file system.
+ * @param completePath.
+ * 				true: prints the complete path of the file.
+ * 				false: prints only the file's name.
+ *
+ * */
+void FileSystem_PrintFiles(bool completePath);
 
 
 

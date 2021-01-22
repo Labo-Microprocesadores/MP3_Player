@@ -167,3 +167,20 @@ void FileSystem_Test (void)
 
 }
 
+void FileSystem_PrintFiles(bool completePath)
+{
+	printf("Files list: \n");
+	for (int i = 0; i< filesCount; i++)
+	{
+		if (completePath)
+		{
+			printf("%s\n", i ,files[i].path);
+		}else
+		{
+			char * fileName = FileSystem_GetFileName(files[i]);
+			printf("%s\n", i ,fileName);
+		}
+	}
+	printf("\n");
+}
+
