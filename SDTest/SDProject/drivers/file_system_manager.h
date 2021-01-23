@@ -80,5 +80,12 @@ void FileSystem_Test(void);
 void FileSystem_PrintFiles(bool completePath);
 
 
+/*
+ * @brief Gets the amount of files that exist in the file system.
+ */
+
+int FileSystem_GetFilesCount(void);
+
+
 
 #endif /* FILE_SYSTEM_MANAGER_H_ */

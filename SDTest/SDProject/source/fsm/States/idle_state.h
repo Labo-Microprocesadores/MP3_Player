@@ -1,5 +1,5 @@
 /***************************************************************************/ /**
-  @file     idle_state.h
+  @file     Idle_state.h
   @brief    Idle state
   @author   Grupo 2 - Lab de Micros
  ******************************************************************************/
@@ -18,12 +18,12 @@
 /**
  * @brief Initializes the idle state
  */
-void idle_initState(void);
+void Idle_InitState(void);
 
 /**
  * @brief Stop showing the time when the user interacts with the system.
  */
-void idle_onUserInteraction(void);
+void Idle_OnUserInteraction(void);
 
 
 #endif /* IDLE_STATE_H */

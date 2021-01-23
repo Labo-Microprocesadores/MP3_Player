@@ -1,5 +1,5 @@
 /***************************************************************************/ /**
-  @file     player_state.h
+  @file     Player_state.h
   @brief    Player state header.
   @author   Grupo 2 - Lab de Micros
  ******************************************************************************/
@@ -7,16 +7,16 @@
 #ifndef PLAYER_STATE_H
 #define PLAYER_STATE_H
 
-#include "../../fsm.h"
 
 /*******************************************************************************
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
-void player_initFSM(void);
+void Player_InitState(void);
+void Player_Pause(void);
+void Player_Play(void);
+void Player_Stop(void);
+void Player_PlayNextSong(void);
+void Player_PlayPreviousSong(void);
 
-void player_onLKP(void);
-void player_onPress(void);
-void player_onStorageOut(void);
-void player_onTimeOut(void);
 
 #endif /* PLAYER_STATE_H*/

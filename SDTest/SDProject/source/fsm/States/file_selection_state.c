@@ -40,11 +40,6 @@ static void stopShowingTitle(void);
  */
 static void userInteractionStopsTitle(void);
 
-/*
- * @brief Gets the file tree and shows the main node name.
- */
-static void showFiles(void);
-
 
 /*******************************************************************************
  *******************************************************************************
@@ -52,34 +47,28 @@ static void showFiles(void);
  *******************************************************************************
  ******************************************************************************/
 
-void fileselection_initState(void)
+void FileSelection_initState(void)
 {
     showTitle();    //Shows the state's title.
+    //TODO: fetch files.
+    //TODO: Show the first file.
 }
-void fileselection_goIn(void)
+
+void FileSelection_NextFile(void)
 {
-	 if (showingTitle)
-		userInteractionStopsTitle();
-	else
-	{
-		//Go inside folder or read file
-		//if (file)
-		//	emitEvent(PLAY_EV);
-	}
 
 }
-void fileselection_goOut(void)
+
+void FileSelection_PreviousFile(void)
 {
-    if (showingTitle)
-        userInteractionStopsTitle();
-    else
-    {
-    	//Go out of the current folder
-    }
-    
+
 }
 
 
+void FileSelection_SelectFile(void)
+{
+
+}
 /*******************************************************************************
  *******************************************************************************
  *                         LOCAL FUNCTION DEFINITIONS
@@ -108,8 +97,4 @@ static void userInteractionStopsTitle(void)
 		stopShowingTitle();
 }
 
-static void showFiles(void)
-{
-	//TODO: get the file tree and show the main node.
-}
 

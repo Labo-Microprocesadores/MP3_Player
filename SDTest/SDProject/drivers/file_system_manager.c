@@ -184,3 +184,7 @@ void FileSystem_PrintFiles(bool completePath)
 	printf("\n");
 }
 
+int FileSystem_GetFilesCount(void)
+{
+	return filesCount;
+}

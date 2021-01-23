@@ -7,14 +7,12 @@
 /*******************************************************************************
  * INCLUDE HEADER FILES
  ******************************************************************************/
-#include <fsm/States/player_state/player_fsm_table.h>
-#include <fsm/States/player_state/player_state.h>
+#include <fsm/States/Player_state.h>
 #include <stdbool.h>
 #include "queue.h"
 /*******************************************************************************
  * GLOBAL VARIABLES WITH FILE LEVEL SCOPE
  ******************************************************************************/
-static STATE *currentState;
 
 /*******************************************************************************
  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
@@ -25,28 +23,26 @@ static STATE *currentState;
                         GLOBAL FUNCTION DEFINITIONS
  *******************************************************************************
  ******************************************************************************/
-void player_initFSM(void)
+void Player_InitState(void)
 {
-    currentState = subFSM_GetInitState();
-    subFSM_StartInitState();
-}
 
-
-void player_onLKP(void)
-{
-    currentState = fsm(currentState, LKP_EV);
 }
-void player_onPress(void)
+void Player_Pause(void)
 {
-    currentState = fsm(currentState, PRESS_EV);
-}
 
-void player_onStorageOut(void)
-{
-    currentState = fsm(currentState, ST_OUT_EV);
 }
-
-void player_onTimeOut(void)
+void Player_Play(void)
 {
-    currentState = fsm(currentState, TIMEOUT_EV);
+}
+void Player_Stop(void)
+{
+
+}
+void Player_PlayNextSong(void)
+{
+
+}
+void Player_PlayPreviousSong(void)
+{
+
 }

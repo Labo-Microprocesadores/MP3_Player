@@ -1,13 +1,13 @@
 /***************************************************************************/ /**
-  @file     main_effects_state.c
-  @brief    Main Effects state functions.
+  @file     effects_state.c
+  @brief    Effects state functions.
   @author   Grupo 2 - Lab de Micros
  ******************************************************************************/
 
 /*******************************************************************************
  * INCLUDE HEADER FILES
  ******************************************************************************/
-#include "main_effects_state.h"
+#include <fsm/States/effects_state.h>
 #include "queue.h"
 /*******************************************************************************
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
@@ -46,7 +46,7 @@ static void userInteractionStopsTitle(void);
  * FUNCTIONS WITH GLOBAL SCOPE
  ******************************************************************************/
 
-void maineffects_initState(void)
+void Effects_initState(void)
 {
     showTitle();
 }

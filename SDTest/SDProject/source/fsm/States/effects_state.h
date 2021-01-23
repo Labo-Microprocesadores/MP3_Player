@@ -1,10 +1,10 @@
 /***************************************************************************/ /**
-  @file     main_effects_state.h
-  @brief    Main Effects state
+  @file     effects_state.h
+  @brief    Effects state
   @author   Grupo 2 - Lab de Micros
  ******************************************************************************/
-#ifndef MAIN_EFFECTS_STATE_H
-#define MAIN_EFFECTS_STATE_H
+#ifndef EFFECTS_STATE_H
+#define EFFECTS_STATE_H
 
 /*******************************************************************************
  * INCLUDE HEADER FILES
@@ -18,7 +18,7 @@
 /**
  * @brief Initializes the main effects state
  */
-void maineffects_initState(void);
+void Effects_InitState(void);
 
 
-#endif /* MAIN_EFFECTS_STATE_H */
+#endif /* EFFECTS_STATE_H */

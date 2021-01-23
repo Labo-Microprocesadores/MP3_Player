@@ -20,15 +20,20 @@
 /**
  * @brief Initialization of the state.
  */
-void fileselection_initState(void);
+void FileSelection_InitState(void);
 /**
- * @brief If a folder is selected, go inside of it. If it's a file, read it.
+ * @brief Gets the next file.
  */
-void fileselection_goIn(void);
+void FileSelection_NextFile(void);
 /**
- * @brief Go out of the current folder (if possible).
+ * @brief Gets the previous file.
  */
-void fileselection_goOut(void);
+void FileSelection_PreviousFile(void);
+
+/*
+ * @brief	Selects the current file.
+ */
+void FileSelection_SelectFile(void);
 
 
 #endif //FILE_SELECTION_STATE_H
