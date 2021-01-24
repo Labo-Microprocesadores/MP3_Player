@@ -5,19 +5,31 @@
  *      Author: Santi
  */
 
+#include <stdbool.h>
+#include <stdint.h>
+
 #include "fsl_common.h"
 #include "fsl_port.h"
 #include "fsl_dspi.h"
+
 #include "SPI_wrapper.h"
 #include "hardware.h"
+
 
 #define MAX_SIZE 200
 #define MSG_LEN(rear,front,max) (((rear)+(max)-(front)) % ((max) - 1 )) // MSG_LEN(rear, front, max_len)
 #define BUFFER_FULL(rear, front, max) ((((rear)+2)%((max)-1)) == (front))
 
+
+typedef struct spi_block{
+	uint32_t data;
+	bool end;
+	void(*callback)(void);
+}spi_block_t;
+
 static SPI_Type * p_spi[] = SPI_BASE_PTRS;
 
-static uint32_t buffer_out[MAX_SIZE] = {0U};
+static spi_block_t buffer_out[MAX_SIZE] = {0U};
 static uint16_t p_out_rear = 0, p_out_front = 1;
 static uint16_t msg_size = 0;
 
@@ -73,7 +85,7 @@ void SPI_Init(spi_id_t id, spi_slave_t slave, uint32_t baudrate)
 	DSPI_MasterInit(p_spi[id], &masterConfig, srcClock_Hz);
 
 	/* Enable the NVIC for DSPI peripheral. */
-	EnableIRQ(SPI0_IRQn + id != 2?id:39);
+	EnableIRQ(SPI0_IRQn + (id != 2?id:39));
 
 	/* Start master transfer*/
 	dspi_command_data_config_t commandData;
@@ -95,7 +107,7 @@ void SPI_Init(spi_id_t id, spi_slave_t slave, uint32_t baudrate)
 }
 
 
-void SPI_Send(spi_id_t id, spi_slave_t slave, const char * msg, uint16_t len)
+void SPI_Send(spi_id_t id, spi_slave_t slave, const char * msg, uint16_t len, void(*end_callback)(void))
 {
 	/**
 	 * static uint32_t buffer_out[MAX_SIZE] = {0U};
@@ -113,9 +125,16 @@ void SPI_Send(spi_id_t id, spi_slave_t slave, const char * msg, uint16_t len)
 	while((len > i) && !BUFFER_FULL(p_out_rear, p_out_front, MAX_SIZE))
 	{
 		p_out_rear = (p_out_rear + 1)%(MAX_SIZE - 1);
-		buffer_out[p_out_rear] = masterCommand | msg[i];
+		spi_block_t block = {
+				.data = masterCommand | msg[i],
+				.end = false,
+				.callback = NULL
+		};
+		buffer_out[p_out_rear] = block;
 		i++;
 	}
+	buffer_out[p_out_rear].end = true;
+	buffer_out[p_out_rear].callback = end_callback;
 	msg_size += len;
 
     /*Fill up the master Tx data*/
@@ -123,7 +142,14 @@ void SPI_Send(spi_id_t id, spi_slave_t slave, const char * msg, uint16_t len)
     {
         if (msg_size != 0)
         {
-            p_spi[id]->PUSHR = buffer_out[p_out_front];
+            p_spi[id]->PUSHR = buffer_out[p_out_front].data;
+
+            if(buffer_out[p_out_front].end &&
+            		buffer_out[p_out_front].callback != NULL)
+            {
+            	buffer_out[p_out_front].callback();
+            }
+
             p_out_front = (p_out_front + 1) % (MAX_SIZE - 1);
             --msg_size;
         }
@@ -141,6 +167,8 @@ void SPI_Send(spi_id_t id, spi_slave_t slave, const char * msg, uint16_t len)
     /* Start DSPI transafer.*/
     DSPI_StartTransfer(p_spi[id]);
 }
+
+#ifndef TEST
 void SPI0_IRQHandler(void)
 {
     /*if (masterRxCount < TRANSFER_SIZE)
@@ -163,7 +191,14 @@ void SPI0_IRQHandler(void)
 	{
 		if (msg_size != 0)
 		{
-			p_spi[0]->PUSHR = buffer_out[p_out_front];
+			p_spi[0]->PUSHR = buffer_out[p_out_front].data;
+
+			if(buffer_out[p_out_front].end &&
+				buffer_out[p_out_front].callback != NULL)
+			{
+				buffer_out[p_out_front].callback();
+			}
+
 			p_out_front = (p_out_front + 1) % (MAX_SIZE - 1);
 			--msg_size;
 		}
@@ -185,5 +220,5 @@ void SPI0_IRQHandler(void)
     }
     SDK_ISR_EXIT_BARRIER;
 }
-
+#endif
 

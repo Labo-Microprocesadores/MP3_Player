@@ -11,6 +11,9 @@
 #include <stdbool.h>
 
 #include "SPI_wrapper.h"
+#include "LCD_GDM1602A.h"
+#include "fsl_device_registers.h"
+
 /*******************************************************************************
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
  ******************************************************************************/
@@ -19,41 +22,27 @@
  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
  ******************************************************************************/
 
-static bool work = true;
-
-#define ENABLE(x)  	((x)<<1)
-#define RS(x)		(x)
-#define VAL(x)		((x)<<4)
-
-#define BLOCK(e, rs, v) 	(ENABLE(e) | RS(rs) | VAL(v))
 
 /*******************************************************************************
  *******************************************************************************
                         GLOBAL FUNCTION DEFINITIONS
  *******************************************************************************/
-
+uint8_t a = 0;
 /* Función que se llama 1 vez, al comienzo del programa */
 void App_Init(void)
 {
-	SPI_Init(SPI_0_ID, SPI_SLAVE_0, 700000U);
+	LCD_Init();
 }
 
 /* Función que se llama constantemente en un ciclo infinito */
 void App_Run(void)
 {
-	char msg[3] = {0U};
-	if(work)
+	if(!a && LCD_isInit())
 	{
-		char c = getchar();
-		if(c >= '0' && c<= '9')
-		{
-			c = c-'0';
-			msg[0] = ENABLE(0) | VAL(c);
-			msg[1] = ENABLE(1) | VAL(c);
-			msg[2] = ENABLE(0) | VAL(c);
-
-			SPI_Send(SPI_0_ID, SPI_SLAVE_0, msg, 3);
-		}
+		LCD_writeStrInPos(">", 1, 0, 0);
+		LCD_writeBouncingStr("UnaCancion_Con nombre largo.mp3",31, 0, 1, SLOW);
+		LCD_writeShiftingStr("Datos de la cancion, aurtor:...", 31, 1,FAST);
+		a = 1;
 	}
 }
 
