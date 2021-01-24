@@ -7,10 +7,14 @@
 /*******************************************************************************
  * INCLUDE HEADER FILES
  ******************************************************************************/
+#include <fsm/States/effects_state.h>
 #include <stdio.h>
 #include "fsm.h"
 #include "fsm_table.h"
-
+#include "States/idle_state.h"
+#include "States/file_selection_state.h"
+#include "States/player_state.h"
+#include "States/effects_state.h"
 #include "queue.h"
 
 
@@ -25,11 +29,8 @@ static void do_nothing(void);
 /*Foward Declarations*/
 
 extern STATE idle[];
-extern STATE main_menu[];
-extern STATE main_effects[];
-extern STATE storage_read[];
+extern STATE effects[];
 extern STATE player[];
-extern STATE player_effects[];
 extern STATE file_selection[];
 
 
@@ -39,53 +40,33 @@ extern STATE file_selection[];
 
  STATE idle[]=
 {
-	{START_EV, 				main_menu, 				NULL},
-	{ST_IN_EV, 				storage_read, 			NULL},
+	{PRESS_EV,				idle, 					Idle_OnUserInteraction},
+	{LKP_EV,				idle, 					Idle_OnUserInteraction},
+	{SD_IN_EV, 				file_selection, 		FileSelection_InitState},
   	{FIN_TABLA, 			idle, 					do_nothing}
 };
 
+/*** Effects State ***/
 
-/*** Main Menu State ***/
-
-STATE main_menu[]=
+STATE effects[] =
 {
-	{PRESS_EV,				main_menu, 				NULL},
-	{LKP_EV,				main_menu, 				NULL},
-	{TIMEOUT_EV,			idle, 					NULL},
-	{EFF_EV, 				main_effects, 			NULL},
-	{ST_IN_EV, 				storage_read, 			NULL},
-	{FIN_TABLA,				main_menu,				do_nothing},
+	{PRESS_EV,				effects, 				NULL},
+	{LKP_EV, 				effects, 				NULL},
+	{TIMEOUT_EV, 			idle, 					Idle_InitState},
+	{CHANGE_MODE_EV,		player,					Player_InitState},
+	{SD_OUT_EV, 			idle, 					Idle_InitState},
+	{FIN_TABLA, 			effects, 				do_nothing}
 };
 
-/*** Main Effects State ***/
-
-STATE main_effects[] =
-{
-	{PRESS_EV,				main_effects, 			NULL},
-	{LKP_EV, 				main_effects, 			NULL},
-	{EFF_SELECTED_EV,		main_menu, 				NULL},
-	{TIMEOUT_EV, 			idle, 					NULL},
-	{FIN_TABLA, 			main_effects, 			do_nothing}
-};
-
-/*** Storage Read State ***/
-
-STATE storage_read[] =
-{
-	{ST_FAIL_EV, 			main_menu, 				NULL},
-	{ST_OUT_EV, 			main_menu, 				NULL},
-	{ST_OK_EV, 				file_selection, 		NULL},
-	{FIN_TABLA, 			storage_read, 			do_nothing}
-};
 
 /*** File Selection State ***/
 STATE file_selection[] =
 {
-	{ST_OUT_EV, 			main_menu, 				NULL},
-	{TIMEOUT_EV,			idle,					NULL},
+	{SD_OUT_EV, 			idle, 					Idle_InitState},
+	{TIMEOUT_EV,			idle,					Idle_InitState},
 	{PRESS_EV,				file_selection, 		NULL},
 	{LKP_EV, 				file_selection, 		NULL},
-	{PLAY_EV, 				player, 				NULL},
+	{CHANGE_MODE_EV, 		effects, 				Effects_InitState},
 	{FIN_TABLA, 			file_selection, 		do_nothing}
 };
 
@@ -94,22 +75,12 @@ STATE player[] =
 {
 	{PRESS_EV,				player, 				NULL},
 	{LKP_EV, 				player, 				NULL},
-	{ST_OUT_EV, 			main_menu, 				NULL},
-	{CHANGE_FILE_EV,		file_selection, 		NULL},
-	{TIMEOUT_EV,			idle,	 				NULL},
-	{EFF_EV, 				player_effects, 		NULL},
+	{CHANGE_MODE_EV, 		file_selection, 		FileSelection_InitState},
+	{SD_OUT_EV, 			idle, 					Idle_InitState},
+	{TIMEOUT_EV,			idle,	 				Idle_InitState},
 	{FIN_TABLA, 			player, 				do_nothing}
 };
-/*** Player Effects State***/
-STATE player_effects[] =
-{	
-	{PRESS_EV, 				player_effects, 		NULL},
-	{LKP_EV, 				player_effects, 		NULL},
-	{TIMEOUT_EV,			player, 				NULL},
-	{EFF_SELECTED_EV, 		player, 				NULL},
-	{ST_OUT_EV, 			main_menu, 				NULL},
-	{FIN_TABLA, 			player_effects, 		do_nothing}
-};
+
 
 /*******************************************************************************
  *******************************************************************************

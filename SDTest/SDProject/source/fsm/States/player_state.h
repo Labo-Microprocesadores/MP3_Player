@@ -1,15 +1,22 @@
 /***************************************************************************/ /**
-  @file     pause_state.h
-  @brief    Pause state header
+  @file     Player_state.h
+  @brief    Player state header.
   @author   Grupo 2 - Lab de Micros
  ******************************************************************************/
-#ifndef PAUSE_STATE_H
-#define PAUSE_STATE_H
+
+#ifndef PLAYER_STATE_H
+#define PLAYER_STATE_H
+
 
 /*******************************************************************************
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
-void pause_showAnimation(void);
+void Player_InitState(void);
+void Player_Pause(void);
+void Player_Play(void);
+void Player_Stop(void);
+void Player_PlayNextSong(void);
+void Player_PlayPreviousSong(void);
 
-void pause_initState(void);
-#endif /* PAUSE_STATE_H */
+
+#endif /* PLAYER_STATE_H*/

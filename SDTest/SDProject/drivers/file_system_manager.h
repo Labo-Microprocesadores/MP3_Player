@@ -4,8 +4,8 @@
   @author   Grupo 2 - Lab de Micros
  ******************************************************************************/
 
-#ifndef FYLE_SYSTEM_MANAGER_H
-#define FYLE_SYSTEM_MANAGER_H
+#ifndef FILE_SYSTEM_MANAGER_H_
+#define FILE_SYSTEM_MANAGER_H_
 
 
 #include <stdbool.h>
@@ -13,28 +13,79 @@
 /*******************************************************************************
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
  ******************************************************************************/
-
-typedef struct TREE_NODE_T TREE_NODE_T;
-struct TREE_NODE_T
+typedef struct
 {
-
-    TREE_NODE_T *parentNode;
-    TREE_NODE_T *childNode;
-    TREE_NODE_T *rightSiblingNode;
-    TREE_NODE_T *leftSiblingNode;
-    char url[STR_SIZE];
-    char nodeName[STR_SIZE];
-};
+	char path[STR_SIZE];
+	int index;
+}Mp3File_t;
 
 /*******************************************************************************
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
 
-void testFileTree();
-void addFileToTree(char *url);
-bool isMp3File(char *url);
+/*
+ * @brief Detects if a file's path corresponds to a .mp3 file.
+ * */
+bool FileSystem_isMp3File(char * path);
+/*
+ * @brief Adds a file to the file system.
+ * @param path: complete file's path.
+ *
+ * */
+void FileSystem_AddFile(char * path);
 
-TREE_NODE_T *getRootNode();
-void printCompleteFileTree(bool printCompleteUrl);
-void printTree(TREE_NODE_T *parentNode, char *spacing, bool printCompleteUrl);
-#endif /*FYLE_SYSTEM_MANAGER_H*/
+
+/*
+ * @brief Gets the first file of the file system.
+ *
+ * */
+Mp3File_t FileSystem_GetFirstFile(void);
+
+/*
+ * @brief Gets the next file of the file system.
+ * @param currentFile: The file that is considered the 'current' one. The 'next' file will be defined based on this param.
+ * @return Mp3File_t next file of the file system.  If the current file is the last one, returns the first file.
+ *
+ * */
+Mp3File_t FileSystem_GetNextFile(Mp3File_t currentFile);
+
+/*
+ * @brief Gets the previous file of the file system.
+ * @param currentFile: The file that is considered the 'current' one. The 'previous' file will be defined based on this param.
+ * @return Mp3File_t previous file of the file system.  If the current file is the first one, returns the last file.
+ *
+ * */
+Mp3File_t FileSystem_GetPreviousFile(Mp3File_t currentFile);
+
+/*
+ * @brief Gets the file's name of a Mp3File_t file.
+ * @param file: The file whose file's name is wanted.
+ * @return char * file's name. (Ex.: if file's path is "/dir0/dir1/hello.mp3", it's file's name is "hello");
+ *
+ * */
+char * FileSystem_GetFileName(Mp3File_t file);
+
+/*
+ * @brief Runs tests on each function of the FileSystem's driver.
+ * */
+void FileSystem_Test(void);
+
+/*
+ * @brief Prints all the files of the file system.
+ * @param completePath.
+ * 				true: prints the complete path of the file.
+ * 				false: prints only the file's name.
+ *
+ * */
+void FileSystem_PrintFiles(bool completePath);
+
+
+/*
+ * @brief Gets the amount of files that exist in the file system.
+ */
+
+int FileSystem_GetFilesCount(void);
+
+
+
+#endif /* FILE_SYSTEM_MANAGER_H_ */

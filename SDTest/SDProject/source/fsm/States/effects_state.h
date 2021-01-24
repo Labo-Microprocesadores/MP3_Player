@@ -1,10 +1,10 @@
 /***************************************************************************/ /**
-  @file     main_menu_state.h
-  @brief    main_menu state
+  @file     effects_state.h
+  @brief    Effects state
   @author   Grupo 2 - Lab de Micros
  ******************************************************************************/
-#ifndef MAIN_MENU_STATE_H
-#define MAIN_MENU_STATE_H
+#ifndef EFFECTS_STATE_H
+#define EFFECTS_STATE_H
 
 /*******************************************************************************
  * INCLUDE HEADER FILES
@@ -16,21 +16,9 @@
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
 /**
- * @brief Initializes the main menu state
+ * @brief Initializes the main effects state
  */
-void mainmenu_initState(void);
-/**
- * @brief Changes the current position of the options array to the next one.
- */
-void mainmenu_nextOption(void);
-/**
- * @brief  Changes the current position of the options array to the previous one.
- */
-void mainmenu_previousOption(void);
+void Effects_InitState(void);
 
-/**
- * @brief Selects the current option. Adds an event to the event queue of the FSM.
- */
-void mainmenu_selectOption(void);
 
-#endif /* MAIN_MENU_STATE_H */
+#endif /* EFFECTS_STATE_H */

@@ -5,29 +5,19 @@
   @author   Grupo 2 - Lab de Micros
  ******************************************************************************/
 
-/*******************************************************************************
- * INCLUDE HEADER FILES
- ******************************************************************************/
-
-#include "file_system_manager.h"
+#include <file_system_manager.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
-#define NODE_ARRAY_SIZE	200
-/*******************************************************************************
- * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
- ******************************************************************************/
-static TREE_NODE_T *createNode(char *completeUrl, char *nodeName, TREE_NODE_T *parentNode, TREE_NODE_T *leftSibling);
-static TREE_NODE_T *accessNode(char *url, TREE_NODE_T *parentNode);
+#define FILE_ARRAY_SIZE	200
 
 /*******************************************************************************
  * PRIVATE VARIABLES WITH FILE LEVEL SCOPE
  ******************************************************************************/
-TREE_NODE_T rootNode = {.url = "", .nodeName = ""};
 
-TREE_NODE_T  nodes [NODE_ARRAY_SIZE] = {};
-int nodeCount = 0;
+Mp3File_t files [FILE_ARRAY_SIZE] = {};
+int filesCount = 0;
 
 /*******************************************************************************
  *******************************************************************************
@@ -35,17 +25,12 @@ int nodeCount = 0;
  *******************************************************************************
  ******************************************************************************/
 
-TREE_NODE_T *getRootNode()
+bool FileSystem_isMp3File(char * path)
 {
-    return &rootNode;
-}
-
-bool isMp3File(char *url)
-{
-    char *ext;
-    if ((ext = strrchr(url, '.')) != NULL)
+    char *extension;
+    if ((extension = strrchr(path, '.')) != NULL)
     {
-        if (strcmp(ext, ".mp3") == 0)
+        if (strcmp(extension, ".mp3") == 0)
         {
             return true;
         }
@@ -53,136 +38,153 @@ bool isMp3File(char *url)
     return false;
 }
 
-void testFileTree()
+void FileSystem_AddFile(char * path)
 {
-    /*TEST*/
-    char *filename = "/dir0/hola.mp3";
-    char *filename2 = "/dir0/hola2.mp3";
-    char *filename3 = "/dir1/hola3.mp3";
-    char *filename4 = "/dir1/hola4.mp3";
-    char *filename5 = "/dir2/hola5.mp3";
-    addFileToTree(filename);
-    addFileToTree(filename2);
-    addFileToTree(filename3);
-    addFileToTree(filename4);
-    addFileToTree(filename5);
-    printCompleteFileTree(true);
-    if (isMp3File("/dir0/archivo0.mp3"))
-		printf("archivo0 es mp3");
-	if (isMp3File("/dir0/archivo1.xls"))
-		printf("archivo1 es mp3");
-	if (isMp3File("/dir0"))
-		printf("dir0 es mp3");
+	Mp3File_t * newFile = &files[filesCount];
+	strcpy(newFile->path, path);
+	newFile->index = filesCount;
+	filesCount++;
 }
 
-void addFileToTree(char *url)
+Mp3File_t FileSystem_GetFirstFile(void)
 {
-    char str[STR_SIZE];
-    strcpy(str, url);
-    char *pch;
-    pch = strtok(str, "/");
-    TREE_NODE_T *parentNode = &rootNode;
-    while (pch != NULL)
-    {
-        //printf("%s\n", pch);
-        char path[STR_SIZE];
-        strcpy(path, pch);
-        parentNode = accessNode(path, parentNode);
-        pch = strtok(NULL, "/");
-    }
+	if (filesCount == 0)
+	{
+		Mp3File_t nullFile = {.index = -1, .path = ""};
+		return nullFile;
+	}
+	return files[0];
 }
-void printTree(TREE_NODE_T *parentNode, char *spacing, bool printCompleteUrl)
+
+Mp3File_t FileSystem_GetNextFile(Mp3File_t currentFile)
 {
-    char printableUrl[STR_SIZE];
-    strcpy(printableUrl, spacing);
-    if (printCompleteUrl)
-    {
-        strcat(printableUrl, parentNode->url);
-    }
-    else
-    {
-        strcat(printableUrl, parentNode->nodeName);
-    }
-
-    printf(printableUrl);
-    printf("\n");
-    if (parentNode->childNode != NULL)
-    {
-        char newSpacing[STR_SIZE];
-        strcpy(newSpacing, spacing);
-        strcat(newSpacing, "**");
-        printTree(parentNode->childNode, newSpacing, printCompleteUrl);
-    }
-    if (parentNode->rightSiblingNode != NULL)
-    {
-        printTree(parentNode->rightSiblingNode, spacing, printCompleteUrl);
-    }
+	int nextFileIndex = currentFile.index + 1;
+	if(currentFile.index == filesCount)
+	{
+		nextFileIndex = 0;
+	}
+	return files[nextFileIndex];
 }
 
-void printCompleteFileTree(bool printCompleteUrl){
-	printTree(&rootNode, "" , printCompleteUrl);
-}
-
-/*******************************************************************************
- *******************************************************************************
-                        LOCAL FUNCTION DEFINITIONS
- *******************************************************************************
- ******************************************************************************/
-static TREE_NODE_T *accessNode(char *url, TREE_NODE_T *parentNode)
+Mp3File_t FileSystem_GetPreviousFile(Mp3File_t currentFile)
 {
-    TREE_NODE_T *childNode = parentNode->childNode;
-    char completeUrl[STR_SIZE];
-    strcpy(completeUrl, parentNode->url);
-
-    strcat(completeUrl, "/");
-    strcat(completeUrl, url);
-
-    if (childNode != NULL)
-    {
-        if (strcmp(childNode->url, completeUrl) == 0)
-        {
-            return childNode;
-        }
-
-        while (childNode->rightSiblingNode != NULL)
-        {
-            childNode = childNode->rightSiblingNode;
-
-            if (strcmp(childNode->url, completeUrl) == 0)
-            {
-                return childNode;
-            }
-        }
-    }
-
-    return createNode(completeUrl, url, parentNode, childNode);
+	int previousFileIndex = currentFile.index - 1;
+	if(currentFile.index == 0)
+	{
+		previousFileIndex = filesCount - 1;
+	}
+	return files[previousFileIndex];
 }
 
-static TREE_NODE_T *createNode(char *completeUrl, char *nodeName, TREE_NODE_T *parentNode, TREE_NODE_T *leftSibling)
+char * FileSystem_GetFileName(Mp3File_t file)
 {
-	nodeCount++;
-    if (leftSibling == NULL)
-    {
-        //FIRST CHILD
-    	TREE_NODE_T * node = &nodes[nodeCount];
-        strcpy(node->url, completeUrl);
-        strcpy(node->nodeName, nodeName);
-        node->parentNode = parentNode;
-        parentNode->childNode = node;
-        return node;
-    }
-    else
-    {
-        //ADD SIBLING
-    	TREE_NODE_T *node = &nodes[nodeCount];
-        strcpy(node->url, completeUrl);
-        strcpy(node->nodeName, nodeName);
-        node->parentNode = parentNode;
-        node->leftSiblingNode = leftSibling;
-        leftSibling->rightSiblingNode = node;
-        return node;
-    }
+	char str[STR_SIZE];
+	strcpy(str, file.path);
+	char *pch;
+	pch = strtok(str, "/");
+	char fileNamePart[STR_SIZE];
+	while (pch != NULL)
+	{
+		//printf("%s\n", pch);
+		strcpy(fileNamePart, pch);
+		pch = strtok(NULL, "/");
+	}
+	char * fileName;
+	fileName = strtok(fileNamePart, ".");
+	return fileName;
+}
+
+void FileSystem_Test (void)
+{
+	 /*TEST*/
+	char *filename = "/dir0/hola.mp3";
+	char *filename2 = "/dir0/hola2.mp3";
+	char *filename3 = "/dir11/dir1/hola3.mp3";
+	char *filename4 = "/hola4.mp3";
+	char *filename5 = "/dir2/hola5.mp3";
+	FileSystem_AddFile(filename);
+	FileSystem_AddFile(filename2);
+	FileSystem_AddFile(filename3);
+	FileSystem_AddFile(filename4);
+	FileSystem_AddFile(filename5);
+
+	/* Test File Addition & Test Get File Name */
+	printf("Test File Addition & Test Get File Name\n");
+	for (int i = 0; i< filesCount; i++)
+	{
+		printf("File n%d path: %s\n", i ,files[i].path);
+		char * fileName = FileSystem_GetFileName(files[i]);
+		printf("File n%d name: %s\n", i ,fileName);
+	}
+	printf("\n");
+	/* Test Mp3 Recognition */
+	printf("Test Mp3 Recognition\n");
+	if (FileSystem_isMp3File("/dir0/archivo0.mp3"))
+		printf("archivo0 es mp3\n");
+	if (FileSystem_isMp3File("/dir0/archivo1.xls"))
+		printf("archivo1 es mp3\n");
+	if (FileSystem_isMp3File("/dir0"))
+		printf("dir0 es mp3\n");
+
+	printf("\n");
+
+	/* Test Get First File */
+	printf("Test Get First File\n");
+	Mp3File_t currentFile = FileSystem_GetFirstFile();
+	printf("Primer Archivo: %s\n", currentFile.path);
+	printf("\n");
+
+	/*Test File System Navigation*/
+	printf("Test File System Navigation\n");
+	for (int j = 0 ; j<2; j++)
+	{
+		currentFile = FileSystem_GetNextFile(currentFile);
+		printf("Archivo Siguiente: %s\n", currentFile.path);
+	}
+
+	for (int k = 0; k<2; k++)
+	{
+		currentFile = FileSystem_GetPreviousFile(currentFile);
+		printf("Anterior Archivo: %s\n", currentFile.path);
+	}
+
+	printf("\n");
+	/*Test File System Overflow*/
+	printf("Test File System Overflow\n");
+	currentFile = FileSystem_GetFirstFile();
+	printf("Index: %d\n", currentFile.index);
+	for (int l = 0 ; l<10; l++)
+	{
+		currentFile = FileSystem_GetNextFile(currentFile);
+		printf("Index Siguiente: %d\n", currentFile.index);
+	}
+	for (int m = 0; m<10; m++)
+	{
+		currentFile = FileSystem_GetPreviousFile(currentFile);
+		printf("Index Anterior: %d\n", currentFile.index);
+	}
+	printf("\n");
 
 }
 
+void FileSystem_PrintFiles(bool completePath)
+{
+	printf("Files list: \n");
+	for (int i = 0; i< filesCount; i++)
+	{
+		if (completePath)
+		{
+			printf("%s\n", i ,files[i].path);
+		}else
+		{
+			char * fileName = FileSystem_GetFileName(files[i]);
+			printf("%s\n", i ,fileName);
+		}
+	}
+	printf("\n");
+}
 
+int FileSystem_GetFilesCount(void)
+{
+	return filesCount;
+}

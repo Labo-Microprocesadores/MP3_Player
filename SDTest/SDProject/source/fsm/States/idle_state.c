@@ -1,20 +1,19 @@
 /***************************************************************************/ /**
-  @file     storage_read_state.c
-  @brief    Storage Read state functions
+  @file     idle_state.c
+  @brief    Idle state functions.
   @author   Grupo 2 - Lab de Micros
  ******************************************************************************/
 
 /*******************************************************************************
  * INCLUDE HEADER FILES
  ******************************************************************************/
-#include "storage_read_state.h"
-#include <stdbool.h>
-//#include "MplxLed.h"
+#include "idle_state.h"
 #include "queue.h"
-//#include "Timer.h"
-
 /*******************************************************************************
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
+ ******************************************************************************/
+/*******************************************************************************
+ * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
  ******************************************************************************/
 
 /*******************************************************************************
@@ -22,39 +21,51 @@
  ******************************************************************************/
 
 /*******************************************************************************
- * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
- **********************************************************************/
-void onStorageError(void);
-
-void onStorageOk(void);
-/*******************************************************************************
- *******************************************************************************
-                        GLOBAL FUNCTION DEFINITIONS
- *******************************************************************************
+ * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
  ******************************************************************************/
-void storageread_Read(void)
+
+/*******************************************************************************
+ * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
+ ******************************************************************************/
+/**
+ * @brief Show the current time on the display. If the user interacts with the system, the time will stop showing.
+ */
+static void showTime(void);
+/**
+ * @brief Stops showing the time on the display.
+ */
+static void stopShowingTime(void);
+/*******************************************************************************
+ * FUNCTIONS WITH GLOBAL SCOPE
+ ******************************************************************************/
+
+void idle_initState(void)
 {
-	//Show animation while reading
+
+    showTime();
+    //TODO: enter low energy consumption mode.
 }
 
+void idle_onUserInteraction(void)
+{
+	//TODO: enter high energy consumption mode.
+	stopShowingTime();
+	emitEvent(START_EV);
+}
 
 /*******************************************************************************
  *******************************************************************************
                         LOCAL FUNCTION DEFINITIONS
  *******************************************************************************
  ******************************************************************************/
-
-void onStorageError(void)
+static void showTime(void)
 {
-	//Show error title
-	emitEvent(ST_FAIL_EV);
+	//TODO: fetch current time and show it on the display.
 }
 
-void onStorageOk(void)
+
+static void stopShowingTime(void)
 {
-	//Show ok title
-	emitEvent(ST_OK_EV);
+	//When the user interacts with the system, stop showing the time
 }
 
-/*******************************************************************************
- ******************************************************************************/

@@ -1,10 +1,10 @@
 /***************************************************************************/ /**
-  @file     main_effects_state.h
-  @brief    Main Effects state
+  @file     Idle_state.h
+  @brief    Idle state
   @author   Grupo 2 - Lab de Micros
  ******************************************************************************/
-#ifndef MAIN_EFFECTS_STATE_H
-#define MAIN_EFFECTS_STATE_H
+#ifndef IDLE_STATE_H
+#define IDLE_STATE_H
 
 /*******************************************************************************
  * INCLUDE HEADER FILES
@@ -16,9 +16,14 @@
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
 /**
- * @brief Initializes the main effects state
+ * @brief Initializes the idle state
  */
-void maineffects_initState(void);
+void Idle_InitState(void);
+
+/**
+ * @brief Stop showing the time when the user interacts with the system.
+ */
+void Idle_OnUserInteraction(void);
 
 
-#endif /* MAIN_EFFECTS_STATE_H */
+#endif /* IDLE_STATE_H */
