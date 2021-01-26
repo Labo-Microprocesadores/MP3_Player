@@ -321,6 +321,8 @@ status_t SDMMC_SetCardInactive(sdmmchost_t *host);
 
 /* @} */
 
+void SDMMC_Delay(uint32_t milliseconds);
+
 #if defined(__cplusplus)
 }
 #endif

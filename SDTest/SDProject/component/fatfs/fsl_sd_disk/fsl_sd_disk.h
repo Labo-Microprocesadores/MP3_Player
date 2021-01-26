@@ -29,7 +29,7 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-extern sd_card_t g_sd; /* sd card descriptor */
+
 
 /*************************************************************************************************
  * API
@@ -96,6 +96,8 @@ DRESULT sd_disk_write(BYTE pdrv, const BYTE* buff, LBA_t sector, UINT count);
  * @retval RES_OK Success.
  */
 DRESULT sd_disk_ioctl(BYTE pdrv, BYTE cmd, void* buff);
+
+void sd_disk_atach_sd(sd_card_t * g_sd);
 
 /* @} */
 #if defined(__cplusplus)

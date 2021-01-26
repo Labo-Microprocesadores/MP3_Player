@@ -156,3 +156,8 @@ status_t SDMMC_SetCardInactive(sdmmchost_t *host)
 
     return kStatus_Success;
 }
+
+void SDMMC_Delay(uint32_t milliseconds)
+{
+	SDK_DelayAtLeastUs(milliseconds * 1000U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+}

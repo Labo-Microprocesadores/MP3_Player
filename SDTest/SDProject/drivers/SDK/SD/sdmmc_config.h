@@ -16,7 +16,6 @@
 #endif
 
 
-#include "fsl_gpio.h"
 #include "fsl_port.h"
 #include "fsl_sdmmc_host.h"
 #include "fsl_sdmmc_common.h"

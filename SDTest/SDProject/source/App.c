@@ -39,6 +39,7 @@ void App_Init(void)
 
 	printf("\r\nPlease insert a card into board.\r\n");
 
+
 	Mm_Init();
 
 }

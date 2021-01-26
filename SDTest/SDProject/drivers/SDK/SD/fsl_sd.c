@@ -300,6 +300,8 @@ static status_t SD_Transfer(sd_card_t *card, sdmmchost_transfer_t *content, uint
 static inline status_t SD_ExecuteTuning(sd_card_t *card);
 #endif
 
+
+
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -320,6 +322,8 @@ static uint32_t s_sdAuSizeMap[] = {0,
                                    24 * 1024 * 1024,
                                    32 * 1024 * 1024,
                                    64 * 1024 * 1024};
+
+//static bool s_cardInit = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -1152,7 +1156,6 @@ static status_t SD_ApplicationSendOperationCondition(sd_card_t *card, uint32_t a
             return kStatus_Success;
         }
 
-        SDMMC_OSADelay(10U);
     }
 
     SDMMC_LOG("\r\nError: send ACMD41 timeout");
@@ -1910,6 +1913,10 @@ status_t SD_CardInit(sd_card_t *card)
     assert(card);
     assert(card->isHostReady == true);
 
+    if(card->initReady)
+    {
+    	return kStatus_Success;
+    }
     /* reset variables */
     card->flags = 0U;
     /* set DATA bus width */
@@ -1976,6 +1983,8 @@ status_t SD_CardInit(sd_card_t *card)
     /* try to get card current status */
     SD_ReadStatus(card);
 
+    card->initReady = true;
+
     return kStatus_Success;
 }
 
@@ -2029,7 +2038,7 @@ void SD_SetCardPower(sd_card_t *card, bool enable)
         SDMMCHOST_SetCardPower(card->host, enable);
     }
 
-    SDMMC_OSADelay(SD_POWER_RESET_DELAY);
+    SDMMC_Delay(SD_POWER_RESET_DELAY);
 }
 
 bool SD_IsCardPresent(sd_card_t *card)
@@ -2063,47 +2072,8 @@ bool SD_IsCardPresent(sd_card_t *card)
 
 status_t SD_PollingCardInsert(sd_card_t *card, uint32_t status)
 {
-    assert(card != NULL);
-    assert(card->usrParam.cd != NULL);
-
-    if (card->usrParam.cd->type == kSD_DetectCardByGpioCD)
-    {
-        if (card->usrParam.cd->cardDetected == NULL)
-        {
-            return false;
-        }
-
-        do
-        {
-            if ((card->usrParam.cd->cardDetected() == true) && (status == kSD_Inserted))
-            {
-                SDMMC_OSADelay(card->usrParam.cd->cdDebounce_ms);
-                if (card->usrParam.cd->cardDetected() == true)
-                {
-                    break;
-                }
-            }
-
-            if ((card->usrParam.cd->cardDetected() == false) && (status == kSD_Removed))
-            {
-                break;
-            }
-        } while (1);
-    }
-    else
-    {
-        if (card->isHostReady == false)
-        {
-            return kStatus_Fail;
-        }
-
-        if (SDMMCHOST_PollingCardDetectStatus(card->host, status, ~0U) != kStatus_Success)
-        {
-            return kStatus_Fail;
-        }
-    }
-
-    return kStatus_Success;
+	/*Not available*/
+	return kStatus_Fail;
 }
 
 status_t SD_Init(sd_card_t *card)

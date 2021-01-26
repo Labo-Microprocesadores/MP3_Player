@@ -30,19 +30,24 @@
  ******************************************************************************/
 
 /*! @brief Card descriptor */
-sd_card_t g_sd;
+static sd_card_t * g_sd = NULL;
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
+void sd_disk_atach_sd(sd_card_t * g_sd_p)
+{
+	g_sd = g_sd_p;
+}
+
 DRESULT sd_disk_write(BYTE pdrv, const BYTE* buff, LBA_t sector, UINT count)
 {
-    if (pdrv != SDDISK)
+    if (pdrv != SDDISK || g_sd == NULL)
     {
         return RES_PARERR;
     }
 
-    if (kStatus_Success != SD_WriteBlocks(&g_sd, buff, sector, count))
+    if (kStatus_Success != SD_WriteBlocks(g_sd, buff, sector, count))
     {
         return RES_ERROR;
     }
@@ -52,12 +57,12 @@ DRESULT sd_disk_write(BYTE pdrv, const BYTE* buff, LBA_t sector, UINT count)
 
 DRESULT sd_disk_read(BYTE pdrv, BYTE* buff, LBA_t sector, UINT count)
 {
-    if (pdrv != SDDISK)
+    if (pdrv != SDDISK || g_sd == NULL)
     {
         return RES_PARERR;
     }
 
-    if (kStatus_Success != SD_ReadBlocks(&g_sd, buff, sector, count))
+    if (kStatus_Success != SD_ReadBlocks(g_sd, buff, sector, count))
     {
         return RES_ERROR;
     }
@@ -69,7 +74,7 @@ DRESULT sd_disk_ioctl(BYTE pdrv, BYTE cmd, void* buff)
 {
     DRESULT result = RES_OK;
 
-    if (pdrv != SDDISK)
+    if (pdrv != SDDISK || g_sd == NULL)
     {
         return RES_PARERR;
     }
@@ -79,7 +84,7 @@ DRESULT sd_disk_ioctl(BYTE pdrv, BYTE cmd, void* buff)
         case GET_SECTOR_COUNT:
             if (buff)
             {
-                *(uint32_t *)buff = g_sd.blockCount;
+                *(uint32_t *)buff = g_sd->blockCount;
             }
             else
             {
@@ -89,7 +94,7 @@ DRESULT sd_disk_ioctl(BYTE pdrv, BYTE cmd, void* buff)
         case GET_SECTOR_SIZE:
             if (buff)
             {
-                *(uint32_t *)buff = g_sd.blockSize;
+                *(uint32_t *)buff = g_sd->blockSize;
             }
             else
             {
@@ -99,7 +104,7 @@ DRESULT sd_disk_ioctl(BYTE pdrv, BYTE cmd, void* buff)
         case GET_BLOCK_SIZE:
             if (buff)
             {
-                *(uint32_t *)buff = g_sd.csd.eraseSectorSize;
+                *(uint32_t *)buff = g_sd->csd.eraseSectorSize;
             }
             else
             {
@@ -119,7 +124,7 @@ DRESULT sd_disk_ioctl(BYTE pdrv, BYTE cmd, void* buff)
 
 DSTATUS sd_disk_status(BYTE pdrv)
 {
-    if (pdrv != SDDISK)
+    if (pdrv != SDDISK  || g_sd == NULL)
     {
         return STA_NOINIT;
     }
@@ -129,27 +134,20 @@ DSTATUS sd_disk_status(BYTE pdrv)
 
 DSTATUS sd_disk_initialize(BYTE pdrv)
 {
-    if (pdrv != SDDISK)
+    if (pdrv != SDDISK || g_sd == NULL)
     {
         return STA_NOINIT;
     }
 
-    if(g_sd.isHostReady)
-    {
-        /* reset host */
-        SD_HostDoReset(&g_sd);
-        SD_SetCardPower(&g_sd, false);
-        SD_SetCardPower(&g_sd, true);
-    }
-    else
+    if(!g_sd->isHostReady)
     {
         return STA_NOINIT;
     }
 
-    if (kStatus_Success != SD_CardInit(&g_sd))
+    if (kStatus_Success != SD_CardInit(g_sd))
     {
-        SD_CardDeinit(&g_sd);
-        memset(&g_sd, 0U, sizeof(g_sd));
+        SD_CardDeinit(g_sd);
+        memset(g_sd, 0U, sizeof(g_sd));
         return STA_NOINIT;
     }
 

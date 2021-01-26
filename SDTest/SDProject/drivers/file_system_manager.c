@@ -174,11 +174,11 @@ void FileSystem_PrintFiles(bool completePath)
 	{
 		if (completePath)
 		{
-			printf("%s\n", i ,files[i].path);
+			printf("Track: %d -> %s\n", i ,files[i].path);
 		}else
 		{
 			char * fileName = FileSystem_GetFileName(files[i]);
-			printf("%s\n", i ,fileName);
+			printf("Track: %d -> %s\n", i ,fileName);
 		}
 	}
 	printf("\n");
@@ -187,4 +187,10 @@ void FileSystem_PrintFiles(bool completePath)
 int FileSystem_GetFilesCount(void)
 {
 	return filesCount;
+}
+
+Mp3File_t FileSystem_ResetFiles(void)
+{
+	filesCount = 0;
+	return FileSystem_GetFirstFile();
 }

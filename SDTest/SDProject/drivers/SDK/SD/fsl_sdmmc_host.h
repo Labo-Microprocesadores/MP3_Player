@@ -11,7 +11,7 @@
 
 #include "fsl_common.h"
 #include "fsl_sdhc.h"
-#include "fsl_sdmmc_osa.h"
+
 /*!
  * @addtogroup SDMMCHOST_SDHC
  * @{
@@ -213,8 +213,10 @@ status_t SDMMCHOST_CardDetectInit(sdmmchost_t *host, void *cd);
  * @param timeout wait time out.
  * @retval kStatus_Success detect card insert
  * @retval kStatus_Fail card insert event fail
+ *
+ *	Removed (grupo 2 labo de micros 26/01/2021
  */
-status_t SDMMCHOST_PollingCardDetectStatus(sdmmchost_t *host, uint32_t waitCardStatus, uint32_t timeout);
+//status_t SDMMCHOST_PollingCardDetectStatus(sdmmchost_t *host, uint32_t waitCardStatus, uint32_t timeout);
 
 /*!
  * @brief card detect status.

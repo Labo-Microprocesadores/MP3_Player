@@ -86,6 +86,11 @@ void FileSystem_PrintFiles(bool completePath);
 
 int FileSystem_GetFilesCount(void);
 
+/*
+ * @brief Reset the file system and return a new first file.
+ *
+ * */
+Mp3File_t FileSystem_ResetFiles(void);
 
 
 #endif /* FILE_SYSTEM_MANAGER_H_ */

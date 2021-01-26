@@ -17,11 +17,10 @@ SUBDIRS := \
 component/fatfs \
 component/fatfs/fsl_sd_disk \
 component/lists \
-component/osa \
 device \
+drivers \
 drivers/SDK/SD \
 drivers/SDK \
-drivers \
 source \
 source/fsm/States \
 source/fsm \

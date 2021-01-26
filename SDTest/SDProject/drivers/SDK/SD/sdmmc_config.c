@@ -7,10 +7,13 @@
 
 #include "sdmmc_config.h"
 #include "hardware.h"
+#include "gpio.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#define SD_PIN_T						 PORTNUM2PIN(PE, BOARD_SDMMC_SD_CD_GPIO_PIN)
+
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -21,28 +24,24 @@ SDK_ALIGN(static uint32_t s_sdmmcHostDmaBuffer[BOARD_SDMMC_HOST_DMA_DESCRIPTOR_B
 static sd_detect_card_t s_cd;
 
 static sdmmchost_t s_host;
-OSA_EVENT_HANDLE_DEFINE(s_event);
+static uint32_t s_event[4];
 /*******************************************************************************
  * Code
  ******************************************************************************/
 
 bool BOARD_SDCardGetDetectStatus(void)
 {
-    return GPIO_PinRead(BOARD_SDMMC_SD_CD_GPIO_BASE, BOARD_SDMMC_SD_CD_GPIO_PIN) == BOARD_SDMMC_SD_CD_INSERT_LEVEL;
+    return gpioRead(SD_PIN_T) == BOARD_SDMMC_SD_CD_INSERT_LEVEL;
 }
 
-void BOARD_SDMMC_SD_CD_PORT_IRQ_HANDLER(void)
+void BOARD_SDDetectCallback(void)
 {
-    if (PORT_GetPinsInterruptFlags(BOARD_SDMMC_SD_CD_PORT_BASE) & (1U << BOARD_SDMMC_SD_CD_GPIO_PIN))
-    {
-        if (s_cd.callback != NULL)
-        {
-            s_cd.callback(BOARD_SDCardGetDetectStatus(), s_cd.userData);
-        }
-    }
-    /* Clear interrupt flag.*/
-    PORT_ClearPinsInterruptFlags(BOARD_SDMMC_SD_CD_PORT_BASE, ~0U);
+	if (s_cd.callback != NULL)
+	{
+		s_cd.callback(BOARD_SDCardGetDetectStatus(), s_cd.userData);
+	}
 }
+
 
 void BOARD_SDCardDetectInit(sd_cd_t cd, void *userData)
 {
@@ -52,15 +51,12 @@ void BOARD_SDCardDetectInit(sd_cd_t cd, void *userData)
     s_cd.cardDetected  = BOARD_SDCardGetDetectStatus;
     s_cd.callback      = cd;
     s_cd.userData      = userData;
-    /* Card detection pin will generate interrupt on either eage */
-    PORT_SetPinInterruptConfig(BOARD_SDMMC_SD_CD_PORT_BASE, BOARD_SDMMC_SD_CD_GPIO_PIN,
-                               BOARD_SDMMC_SD_CD_INTTERUPT_TYPE);
-    /* set IRQ priority */
-    NVIC_SetPriority(BOARD_SDMMC_SD_CD_PORT_IRQ, BOARD_SDMMC_SD_CD_IRQ_PRIORITY);
-    /* Open card detection pin NVIC. */
-    EnableIRQ(BOARD_SDMMC_SD_CD_PORT_IRQ);
 
-    if (GPIO_PinRead(BOARD_SDMMC_SD_CD_GPIO_BASE, BOARD_SDMMC_SD_CD_GPIO_PIN) == BOARD_SDMMC_SD_CD_INSERT_LEVEL)
+    /* Card detection pin will generate interrupt on either eage */
+	gpioIRQ(SD_PIN_T, GPIO_IRQ_MODE_BOTH_EDGES, BOARD_SDDetectCallback);
+
+
+    if (BOARD_SDCardGetDetectStatus())
     {
         if (cd != NULL)
         {
@@ -69,7 +65,32 @@ void BOARD_SDCardDetectInit(sd_cd_t cd, void *userData)
     }
 }
 
+static void BOARD_SDInitPins(void)
+{
+	SYSMPU->CESR &= ~SYSMPU_CESR_VLD_MASK; //Disable sysmpu
 
+	CLOCK_EnableClock(kCLOCK_PortE);                           /* Port E Clock Gate Control: Clock enabled */
+
+	const port_pin_config_t port_config = {
+			kPORT_PullUp,                                            /* Internal pull-up resistor is enabled */
+			kPORT_FastSlewRate,                                      /* Fast slew rate is configured */
+			kPORT_PassiveFilterDisable,                              /* Passive filter is disabled */
+			kPORT_OpenDrainDisable,                                  /* Open drain is disabled */
+			kPORT_HighDriveStrength,                                 /* High drive strength is configured */
+			kPORT_MuxAlt4,                                           /* Pin is configured as SDHC0_D1 */
+			kPORT_UnlockRegister                                     /* Pin Control Register fields [15:0] are not locked */
+	};
+
+	PORT_SetPinConfig(PORTE, 0, &port_config);   /* PORTE0 (pin 1) is configured as SDHC0_D1 */
+	PORT_SetPinConfig(PORTE, 1, &port_config);   /* PORTE1 (pin 2) is configured as SDHC0_D0 */
+	PORT_SetPinConfig(PORTE, 2, &port_config);   /* PORTE2 (pin 3) is configured as SDHC0_DCLK */
+	PORT_SetPinConfig(PORTE, 3, &port_config);   /* PORTE3 (pin 4) is configured as SDHC0_CMD */
+	PORT_SetPinConfig(PORTE, 4, &port_config);   /* PORTE4 (pin 5) is configured as SDHC0_D3 */
+	PORT_SetPinConfig(PORTE, 5, &port_config);   /* PORTE5 (pin 6) is configured as SDHC0_D2 */
+
+	gpioMode(SD_PIN_T, INPUT_PULLDOWN);
+
+}
 
 void BOARD_SD_Config(void *card, sd_cd_t cd, uint32_t hostIRQPriority, void *userData)
 {
@@ -84,7 +105,6 @@ void BOARD_SD_Config(void *card, sd_cd_t cd, uint32_t hostIRQPriority, void *use
     ((sd_card_t *)card)->host->hostEvent = &s_event;
     ((sd_card_t *)card)->usrParam.cd     = &s_cd;
 
+    BOARD_SDInitPins();
     BOARD_SDCardDetectInit(cd, userData);
-
-    NVIC_SetPriority(BOARD_SDMMC_SD_HOST_IRQ, hostIRQPriority);
 }

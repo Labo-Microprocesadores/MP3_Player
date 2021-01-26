@@ -62,6 +62,8 @@ typedef struct _sd_card
     sd_driver_strength_t driverStrength;                         /*!< driver strength */
     sd_max_current_t maxCurrent;                                 /*!< card current limit */
     sdmmc_operation_voltage_t operationVoltage;                  /*!< card operation voltage */
+
+    bool initReady;												 /*!< card init status */
 } sd_card_t;
 
 /*************************************************************************************************

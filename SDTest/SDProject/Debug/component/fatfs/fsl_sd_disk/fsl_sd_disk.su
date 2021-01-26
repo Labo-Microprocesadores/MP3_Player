@@ -1,5 +1,6 @@
-fsl_sd_disk.c:38:9:sd_disk_write	24	static
-fsl_sd_disk.c:53:9:sd_disk_read	24	static
-fsl_sd_disk.c:68:9:sd_disk_ioctl	24	static
-fsl_sd_disk.c:120:9:sd_disk_status	16	static
-fsl_sd_disk.c:130:9:sd_disk_initialize	16	static
+fsl_sd_disk.c:38:6:sd_disk_atach_sd	16	static
+fsl_sd_disk.c:43:9:sd_disk_write	24	static
+fsl_sd_disk.c:58:9:sd_disk_read	24	static
+fsl_sd_disk.c:73:9:sd_disk_ioctl	24	static
+fsl_sd_disk.c:125:9:sd_disk_status	16	static
+fsl_sd_disk.c:135:9:sd_disk_initialize	16	static
