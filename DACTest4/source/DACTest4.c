@@ -111,18 +111,18 @@ int main(void)
 
     PRINTF("DAC CONTINUOUS PDB EDMA DEMO\r\n");
 
-    /* Initialize DMAMUX. */
-    DMAMUX_Configuration();
-    /* Initialize EDMA. */
-    EDMA_Configuration();
-    /* Initialize the HW trigger source. */
-    //PDB_Configuration();
-    PIT_Configuration();
-    /* Initialize DAC. */
-    DAC_Configuration();
+//    /* Initialize DMAMUX. */
+//    DMAMUX_Configuration();
+//    /* Initialize EDMA. */
+//    EDMA_Configuration();
+//    /* Initialize the HW trigger source. */
+//    //PDB_Configuration();
+//    PIT_Configuration();
+//    /* Initialize DAC. */
+//    DAC_Configuration();
 
-   // all_init();
-   // all_start();
+    all_init();
+    all_start();
 
     /* Generate continuous trigger signal to DAC. */
    // PDB_DoSoftwareTrigger(DEMO_PDB_BASEADDR);
