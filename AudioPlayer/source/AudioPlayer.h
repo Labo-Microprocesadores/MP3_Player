@@ -9,11 +9,15 @@
 #include <stdbool.h>
 
 typedef enum {AP_NO_ERROR, AP_ERROR_BB_NOT_FREE} audioPlayerError;
+
+#define AUDIO_PLAYER_BUFF_SIZE	32U
+
+
 /*!
  * @brief Initialize the Audio Player.
  */
 void AudioPlayer_Init(void);
-void AudioPlayer_LoadSongInfo(uint16_t * firstSongFrame, uint16_t * secondSongFrame, uint16_t frameSize_, uint16_t sampleRate);
+void AudioPlayer_LoadSongInfo(uint16_t * firstSongFrame, uint16_t sampleRate);
 void AudioPlayer_UpdateSampleRate(uint16_t sampleRate);
 bool AudioPlayer_IsBackBufferFree(void);
 audioPlayerError AudioPlayer_UpdateBackBuffer(uint16_t * newBackBuffer);

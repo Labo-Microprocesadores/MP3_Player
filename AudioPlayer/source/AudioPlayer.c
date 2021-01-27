@@ -24,7 +24,7 @@
 #define DEMO_PDB_MODULUS_VALUE      0xFFFU
 #define DEMO_PDB_DELAY_VALUE        0U
 #define DEMO_PDB_DAC_CHANNEL        kPDB_DACTriggerChannel0
-#define DEMO_PDB_DAC_INTERVAL_VALUE 0xFFFU
+#define DEMO_PDB_DAC_INTERVAL_VALUE 0x22U//0xFFFU
 #define DEMO_DAC_BASEADDR           DAC0
 #define DEMO_DMAMUX_BASEADDR        DMAMUX
 #define DEMO_DMA_CHANNEL            0U
@@ -32,6 +32,7 @@
 #define DEMO_DMA_BASEADDR           DMA0
 #define DAC_DATA_REG_ADDR           0x400cc000U
 #define DEMO_DMA_IRQ_ID             DMA0_IRQn
+
 
 /*******************************************************************************
  * Prototypes
@@ -64,10 +65,9 @@ edma_transfer_config_t g_transferConfig;                 /* Edma transfer config
 volatile uint32_t g_index                          = 0U; /* Index of the g_dacDataArray array. */
 
 
-uint16_t buffers[2][32];
+uint16_t buffers[2][AUDIO_PLAYER_BUFF_SIZE];
 uint16_t * activeBuffer = buffers[0];
 uint16_t * backBuffer= buffers[1];
-uint16_t frameSize;
 bool backBufferFree = false;
 
 
@@ -92,12 +92,12 @@ void AudioPlayer_Init(void)
 	DAC_Configuration();
 }
 
-void AudioPlayer_LoadSongInfo(uint16_t * firstSongFrame, uint16_t * secondSongFrame, uint16_t frameSize_, uint16_t sampleRate)
+void AudioPlayer_LoadSongInfo(uint16_t * firstSongFrame, uint16_t sampleRate)
 {
-	activeBuffer = firstSongFrame;
-	backBuffer = secondSongFrame;
-	backBufferFree = false;
-	frameSize = frameSize_;
+	memcpy(activeBuffer, firstSongFrame, AUDIO_PLAYER_BUFF_SIZE * sizeof(uint16_t));
+	//activeBuffer = firstSongFrame;
+	//backBuffer = secondSongFrame;
+	backBufferFree = true;
 	g_index = 0U;
 
 	AudioPlayer_UpdateSampleRate(sampleRate);
@@ -194,7 +194,7 @@ audioPlayerError AudioPlayer_UpdateBackBuffer(uint16_t * newBackBuffer)
 {
 	if(backBufferFree)
 	{
-		memcpy( backBuffer, newBackBuffer,buffers);
+		memcpy( backBuffer, newBackBuffer, AUDIO_PLAYER_BUFF_SIZE * sizeof(uint16_t));
 		//backBuffer = newBackBuffer;
 		backBufferFree = false;
 		return AP_NO_ERROR;
@@ -365,7 +365,7 @@ static void Edma_Callback(edma_handle_t *handle, void *userData, bool transferDo
      */
 
     g_index += DAC_DATL_COUNT; //TODO: si esto queda aca, tiene que haber una primera transferencia antes.
-    if (g_index == frameSize)
+    if (g_index == AUDIO_PLAYER_BUFF_SIZE)
     {
         g_index = 0U;
         void * temp = activeBuffer;
