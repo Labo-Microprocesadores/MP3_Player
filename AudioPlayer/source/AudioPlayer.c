@@ -79,7 +79,7 @@ uint16_t songSize;
  ******************************************************************************/
 void AudioPlayer_DEMOMode(void)
 {
-	AudioPlayer_UpdateSampleRate(33);
+	AudioPlayer_UpdateSampleRate(44100);
 }
 
 void AudioPlayer_Init(void)
