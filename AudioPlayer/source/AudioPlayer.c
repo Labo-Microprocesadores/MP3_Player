@@ -32,7 +32,7 @@
 #define DEMO_DMA_BASEADDR           DMA0
 #define DAC_DATA_REG_ADDR           0x400cc000U
 #define DEMO_DMA_IRQ_ID             DMA0_IRQn
-#define DEMO_DAC_USED_BUFFER_SIZE 32U
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -62,16 +62,12 @@ static void Edma_Callback(edma_handle_t *handle, void *userData, bool transferDo
 edma_handle_t g_EDMA_Handle;                             /* Edma handler */
 edma_transfer_config_t g_transferConfig;                 /* Edma transfer config. */
 volatile uint32_t g_index                          = 0U; /* Index of the g_dacDataArray array. */
-uint16_t g_dacDataArray[DEMO_DAC_USED_BUFFER_SIZE] = {
-    0U,    401U,  799U,  1188U, 1567U, 1930U, 2275U, 2598U, 2895U, 3165U, 3405U, 3611U, 3783U, 3918U, 4016U, 4075U,
-    4095U, 4075U, 4016U, 3918U, 3783U, 3611U, 3405U, 3165U, 2895U, 2598U, 2275U, 1930U, 1567U, 1188U, 799U,  401U};
-uint16_t g_dacDataArray2[DEMO_DAC_USED_BUFFER_SIZE] = {
-	2275U, 2275U, 2275U, 2275U, 2275U,2275U, 2275U, 2275U, 2275U, 2275U, 2275U, 2275U, 2275U, 2275U, 2275U, 2275U,
-	2275U, 2275U, 2275U, 2275U, 2275U, 2275U,2275U, 2275U, 2275U, 2275U, 2275U, 2275U, 2275U, 2275U, 2275U, 2275U};
 
-uint16_t * firstSongFrame;
-uint16_t currentSongIndex;
-uint16_t songSize;
+
+uint16_t * activeBuffer;
+uint16_t * backBuffer;
+uint16_t frameSize;
+bool backBufferFree = false;
 
 
 /*******************************************************************************
@@ -95,11 +91,13 @@ void AudioPlayer_Init(void)
 	DAC_Configuration();
 }
 
-void AudioPlayer_LoadSongInfo(uint16_t * firstSongFrame_, uint16_t songSize_, uint16_t sampleRate)
+void AudioPlayer_LoadSongInfo(uint16_t * firstSongFrame, uint16_t * secondSongFrame, uint16_t frameSize_, uint16_t sampleRate)
 {
-	firstSongFrame = firstSongFrame_;
-	songSize = songSize_;
-	currentSongIndex = 0;
+	activeBuffer = firstSongFrame;
+	backBuffer = secondSongFrame;
+	backBufferFree = false;
+	frameSize = frameSize_;
+	g_index = 0U;
 
 	AudioPlayer_UpdateSampleRate(sampleRate);
 }
@@ -191,13 +189,31 @@ void AudioPlayer_UpdateSampleRate(uint16_t sampleRate) //PDB_Configuration
     PDB_DoLoadValues(DEMO_PDB_BASEADDR);
 }
 
+audioPlayerError AudioPlayer_UpdateBackBuffer(uint16_t * newBackBuffer)
+{
+	if(backBufferFree)
+	{
+		backBuffer = newBackBuffer;
+		backBufferFree = false;
+		return AP_NO_ERROR;
+	}
+	else
+		return AP_ERROR_BB_NOT_FREE;
+}
+
+bool AudioPlayer_IsBackBufferFree(void)
+{
+	return backBufferFree;
+}
+
 void AudioPlayer_Play(void)
 {
+	g_index = 0U;
 	// DMAMUX:
     DMAMUX_EnableChannel(DEMO_DMAMUX_BASEADDR, DEMO_DMA_CHANNEL);
 
 	// EDMA:
-	 EDMA_PrepareTransfer(&g_transferConfig, (void *)(g_dacDataArray + g_index), sizeof(uint16_t),
+	 EDMA_PrepareTransfer(&g_transferConfig, (void *)(activeBuffer + g_index), sizeof(uint16_t),
 	                         (void *)DAC_DATA_REG_ADDR, sizeof(uint16_t), DAC_DATL_COUNT * sizeof(uint16_t),
 	                         DAC_DATL_COUNT * sizeof(uint16_t), kEDMA_MemoryToMemory);
 	 EDMA_SubmitTransfer(&g_EDMA_Handle, &g_transferConfig);
@@ -319,6 +335,7 @@ static void Edma_Callback(edma_handle_t *handle, void *userData, bool transferDo
     EDMA_ClearChannelStatusFlags(DEMO_DMA_BASEADDR, DEMO_DMA_CHANNEL, kEDMA_InterruptFlag);
     /* Setup transfer */
 
+    /*
     g_index += DAC_DATL_COUNT;
     if (g_index == DEMO_DAC_USED_BUFFER_SIZE)
     {
@@ -345,6 +362,20 @@ static void Edma_Callback(edma_handle_t *handle, void *userData, bool transferDo
                              (void *)DAC_DATA_REG_ADDR, sizeof(uint16_t), DAC_DATL_COUNT * sizeof(uint16_t),
                              DAC_DATL_COUNT * sizeof(uint16_t), kEDMA_MemoryToMemory);
     }
+     */
+
+    g_index += DAC_DATL_COUNT; //TODO: si esto queda aca, tiene que haber una primera transferencia antes.
+    if (g_index == frameSize)
+    {
+        g_index = 0U;
+        activeBuffer = backBuffer;
+        backBufferFree = true;
+    }
+    EDMA_PrepareTransfer(&g_transferConfig, (void *)(activeBuffer + g_index), sizeof(uint16_t),
+                        (void *)DAC_DATA_REG_ADDR, sizeof(uint16_t), DAC_DATL_COUNT * sizeof(uint16_t),
+                        DAC_DATL_COUNT * sizeof(uint16_t), kEDMA_MemoryToMemory);
+
+
     EDMA_SetTransferConfig(DEMO_DMA_BASEADDR, DEMO_DMA_CHANNEL, &g_transferConfig, NULL);
     /* Enable transfer. */
     EDMA_StartTransfer(&g_EDMA_Handle);
