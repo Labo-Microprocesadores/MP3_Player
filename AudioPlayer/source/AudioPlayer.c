@@ -64,8 +64,9 @@ edma_transfer_config_t g_transferConfig;                 /* Edma transfer config
 volatile uint32_t g_index                          = 0U; /* Index of the g_dacDataArray array. */
 
 
-uint16_t * activeBuffer;
-uint16_t * backBuffer;
+uint16_t buffers[2][32];
+uint16_t * activeBuffer = buffers[0];
+uint16_t * backBuffer= buffers[1];
 uint16_t frameSize;
 bool backBufferFree = false;
 
@@ -193,7 +194,8 @@ audioPlayerError AudioPlayer_UpdateBackBuffer(uint16_t * newBackBuffer)
 {
 	if(backBufferFree)
 	{
-		backBuffer = newBackBuffer;
+		memcpy( backBuffer, newBackBuffer,buffers);
+		//backBuffer = newBackBuffer;
 		backBufferFree = false;
 		return AP_NO_ERROR;
 	}
@@ -327,8 +329,6 @@ static void DAC_Configuration(void)
     DAC_SetBufferReadPointer(DEMO_DAC_BASEADDR, 0U); /* Make sure the read pointer to the start. */
 }
 
-static used_buffer = 1;
-
 static void Edma_Callback(edma_handle_t *handle, void *userData, bool transferDone, uint32_t tcds)
 {
     /* Clear Edma interrupt flag. */
@@ -368,7 +368,9 @@ static void Edma_Callback(edma_handle_t *handle, void *userData, bool transferDo
     if (g_index == frameSize)
     {
         g_index = 0U;
+        void * temp = activeBuffer;
         activeBuffer = backBuffer;
+        backBuffer = temp;
         backBufferFree = true;
     }
     EDMA_PrepareTransfer(&g_transferConfig, (void *)(activeBuffer + g_index), sizeof(uint16_t),

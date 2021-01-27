@@ -1,0 +1,9 @@
+SysTick.c:47:6:SysTick_Init	4	static
+SysTick.c:62:5:SysTick_AddCallback	48	static
+SysTick.c:74:14:Systick_ClrCallback	32	static
+SysTick.c:111:14:Systick_PauseCallback	32	static
+SysTick.c:132:14:Systick_ResumeCallback	32	static
+SysTick.c:153:14:Systick_ChangeCallbackPeriod	32	static
+SysTick.c:180:6:Systick_GetStatus	32	static
+SysTick.c:203:12:getArrayEffectiveLength	24	static
+SysTick.c:217:9:SysTick_Handler	24	static

@@ -1,0 +1,14 @@
+core_cm4.h:1679:22:__NVIC_EnableIRQ	16	static
+fsl_clock.h:668:20:CLOCK_EnableClock	24	static
+fsl_common.h:484:28:EnableIRQ	16	static
+fsl_port.h:346:20:PORT_SetPinMux	24	static
+fsl_dspi.h:535:24:DSPI_GetStatusFlags	16	static
+fsl_dspi.h:553:20:DSPI_ClearStatusFlags	16	static
+fsl_dspi.h:593:20:DSPI_DisableInterrupts	16	static
+fsl_dspi.h:726:20:DSPI_StartTransfer	16	static
+fsl_dspi.h:737:20:DSPI_StopTransfer	16	static
+fsl_dspi.h:766:20:DSPI_FlushFifo	16	static
+fsl_dspi.h:946:24:DSPI_MasterGetFormattedCommand	16	static
+SPI_wrapper.c:39:6:SPI_Init	72	static
+SPI_wrapper.c:110:6:SPI_Send	40	static
+SPI_wrapper.c:172:6:SPI0_IRQHandler	8	static

@@ -17,6 +17,7 @@ uint16_t g_dacDataArray2[DEMO_DAC_USED_BUFFER_SIZE] = {
  */
 int main(void)
 {
+
     /* Initialize hardware. */
     BOARD_InitPins();
     BOARD_BootClockRUN();
@@ -37,7 +38,9 @@ int main(void)
     {
     	if(AudioPlayer_IsBackBufferFree())
     	{
-    		if(lastSent)
+			AudioPlayer_UpdateBackBuffer(g_dacDataArray);
+
+    		/*if(lastSent)
     		{
     			AudioPlayer_UpdateBackBuffer(g_dacDataArray);
     			lastSent = 0;
@@ -46,7 +49,24 @@ int main(void)
     		{
     			AudioPlayer_UpdateBackBuffer(g_dacDataArray2);
     			lastSent = 1;
-    		}
+    		}*/
+    		if(lastSent)
+			{
+    			for (int i = 0; i < 20; i++)
+    			{
+    				g_dacDataArray[i] = 2275U;
+    			}
+				lastSent = 0;
+			}
+			else
+			{
+				for (int i = 0; i < 20; i++)
+				{
+					g_dacDataArray[i] = 3918U;
+				}
+
+				lastSent = 1;
+			}
     	}
     }
 }

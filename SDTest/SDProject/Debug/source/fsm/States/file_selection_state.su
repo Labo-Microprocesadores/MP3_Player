@@ -1,0 +1,7 @@
+file_selection_state.c:50:6:FileSelection_initState	8	static
+file_selection_state.c:57:6:FileSelection_NextFile	4	static
+file_selection_state.c:62:6:FileSelection_PreviousFile	4	static
+file_selection_state.c:68:6:FileSelection_SelectFile	4	static
+file_selection_state.c:77:13:showTitle	8	static
+file_selection_state.c:85:13:stopShowingTitle	8	static
+file_selection_state.c:93:13:userInteractionStopsTitle	8	static

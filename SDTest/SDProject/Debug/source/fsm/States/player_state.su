@@ -1,0 +1,6 @@
+player_state.c:26:6:Player_InitState	4	static
+player_state.c:30:6:Player_Pause	4	static
+player_state.c:34:6:Player_Play	4	static
+player_state.c:37:6:Player_Stop	4	static
+player_state.c:41:6:Player_PlayNextSong	4	static
+player_state.c:45:6:Player_PlayPreviousSong	4	static

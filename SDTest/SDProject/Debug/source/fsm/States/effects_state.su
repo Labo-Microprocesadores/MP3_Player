@@ -1,0 +1,4 @@
+effects_state.c:49:6:Effects_initState	8	static
+effects_state.c:59:13:showTitle	8	static
+effects_state.c:67:13:stopShowingTitle	8	static
+effects_state.c:75:13:userInteractionStopsTitle	8	static
