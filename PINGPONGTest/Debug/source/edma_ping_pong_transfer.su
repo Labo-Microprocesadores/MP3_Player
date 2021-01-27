@@ -1,4 +1,4 @@
 fsl_dmamux.h:75:20:DMAMUX_EnableChannel	16	static
 fsl_dmamux.h:109:20:DMAMUX_SetSource	24	static
-edma_ping_pong_transfer.c:49:6:EDMA_Callback	24	static
-edma_ping_pong_transfer.c:63:5:main	56	static
+edma_ping_pong_transfer.c:49:6:EDMA_Callback	32	static
+edma_ping_pong_transfer.c:69:5:main	56	static

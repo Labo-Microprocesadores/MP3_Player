@@ -54,6 +54,12 @@ void EDMA_Callback(edma_handle_t *handle, void *param, bool transferDone, uint32
     {
         g_transferDone = true;
         EDMA_AbortTransfer(&g_EDMA_Handle);
+
+    }
+    PRINTF("\n Destination Buffer:\r\n");
+    for (int i = 0; i < BUFFER_LENGTH; i++)
+    {
+        PRINTF("%d\t", destAddr[i]);
     }
 }
 
@@ -104,13 +110,17 @@ int main(void)
                          kEDMA_MemoryToMemory);
     EDMA_TcdSetTransferConfig(tcdMemoryPoolPtr, &transferConfig, &tcdMemoryPoolPtr[1]);
 
+    EDMA_TcdEnableInterrupts(&tcdMemoryPoolPtr[0], kEDMA_HalfInterruptEnable);
+
     /* prepare descriptor 1 */
+
     EDMA_PrepareTransfer(&transferConfig, &srcAddr[4], sizeof(srcAddr[0]), &destAddr[4], sizeof(destAddr[0]),
-                         sizeof(srcAddr[0]),                      /* minor loop bytes: 4 */
-                         sizeof(srcAddr[0]) * HALF_BUFFER_LENGTH, /* major loop counts : 4 */
+                         sizeof(srcAddr[0]),                      // minor loop bytes: 4
+                         sizeof(srcAddr[0]) * HALF_BUFFER_LENGTH, // major loop counts : 4
                          kEDMA_MemoryToMemory);
     EDMA_TcdSetTransferConfig(&tcdMemoryPoolPtr[1], &transferConfig, &tcdMemoryPoolPtr[0]);
-    EDMA_TcdEnableInterrupts(&tcdMemoryPoolPtr[1], kEDMA_MajorInterruptEnable);
+   //EDMA_TcdEnableInterrupts(&tcdMemoryPoolPtr[1], kEDMA_MajorInterruptEnable);
+
 
     EDMA_InstallTCD(EXAMPLE_DMA, DEMO_EDMA_CHANNEL_0, tcdMemoryPoolPtr);
 

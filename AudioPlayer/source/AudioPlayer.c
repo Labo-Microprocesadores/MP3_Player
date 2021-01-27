@@ -77,7 +77,10 @@ uint16_t songSize;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
+void AudioPlayer_DEMOMode(void)
+{
+	AudioPlayer_UpdateSampleRate(33);
+}
 
 void AudioPlayer_Init(void)
 {
@@ -86,16 +89,106 @@ void AudioPlayer_Init(void)
 	/* Initialize EDMA. */
 	EDMA_Configuration();
 	/* Initialize the HW trigger source. */
+	// Lo de PDB se hace directamente en update sample rate porque esta relacionado.
 	PDB_Configuration();
 	/* Initialize DAC. */
 	DAC_Configuration();
 }
 
-void AudioPlayer_LoadSong(uint16_t * firstSongFrame_, uint16_t songSize_)
+void AudioPlayer_LoadSongInfo(uint16_t * firstSongFrame_, uint16_t songSize_, uint16_t sampleRate)
 {
 	firstSongFrame = firstSongFrame_;
 	songSize = songSize_;
 	currentSongIndex = 0;
+
+	AudioPlayer_UpdateSampleRate(sampleRate);
+}
+
+//TODO: Hay que ver si hacer el PDB_Deinit antes de cada update sample rate, porque en definitiva cambia toda su config.
+// Y para eso hay que chequear que a lo que usa PDB para triggerear no le afecte esto....
+void AudioPlayer_UpdateSampleRate(uint16_t sampleRate) //PDB_Configuration
+{
+    pdb_config_t pdbConfigStruct;
+    pdb_dac_trigger_config_t pdbDacTriggerConfigStruct;
+    PDB_GetDefaultConfig(&pdbConfigStruct);
+
+	if(sampleRate == 8000)
+	{
+		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor1;
+		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider2;
+		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 1875);
+	}
+	else if(sampleRate == 11025)
+	{
+		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor1;
+		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
+		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 2721);
+	}
+	else if(sampleRate == 12000)
+	{
+		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor10;
+		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider2;
+		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 125);
+	}
+	else if(sampleRate == 16000)
+	{
+		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor1;
+		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
+		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 1875);
+	}
+	else if(sampleRate == 22050)
+	{
+		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor1;
+		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider16;
+		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 85);
+	}
+	else if(sampleRate == 24000)
+	{
+		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor10;
+		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
+		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 125);
+	}
+	else if(sampleRate == 32000)
+	{
+		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor1;
+		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
+		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 937);
+	}
+	else if(sampleRate == 44100)
+	{
+		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor40;
+		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
+		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 16);
+	}
+	else if(sampleRate == 48000)
+	{
+		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor1;
+		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
+		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 625);
+	}
+	else //For testing with DEMO
+	{
+		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor40;
+		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
+		PDB_SetModulusValue(DEMO_PDB_BASEADDR, DEMO_PDB_MODULUS_VALUE);
+	}
+	// Pongo estas configuraciones de PDB aca porque necesitan info del sample rate
+	//pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor40;
+	//pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
+	pdbConfigStruct.enableContinuousMode        = true;
+	PDB_Init(DEMO_PDB_BASEADDR, &pdbConfigStruct);
+	PDB_EnableInterrupts(DEMO_PDB_BASEADDR, kPDB_DelayInterruptEnable);
+	//PDB_SetModulusValue(DEMO_PDB_BASEADDR, DEMO_PDB_MODULUS_VALUE);
+	PDB_SetCounterDelayValue(DEMO_PDB_BASEADDR, DEMO_PDB_DELAY_VALUE);
+
+    /* Set DAC trigger. */
+    pdbDacTriggerConfigStruct.enableExternalTriggerInput = false;
+    pdbDacTriggerConfigStruct.enableIntervalTrigger      = true;
+    PDB_SetDACTriggerConfig(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, &pdbDacTriggerConfigStruct);
+    PDB_SetDACTriggerIntervalValue(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, DEMO_PDB_DAC_INTERVAL_VALUE);
+
+    /* Load PDB values. */
+    PDB_DoLoadValues(DEMO_PDB_BASEADDR);
 }
 
 void AudioPlayer_Play(void)
@@ -148,7 +241,7 @@ void AudioPlayer_Stop(void)
 	PDB_DisableInterrupts(DEMO_PDB_BASEADDR, kPDB_DelayInterruptEnable);
 
 	g_index = 0U;
-	currentSongFrame = firstSongFrame;
+	//currentSongFrame = firstSongFrame;
 }
 
 static void EDMA_Configuration(void)
@@ -182,12 +275,14 @@ static void PDB_Configuration(void)
      * pdbConfigStruct.enableContinuousMode = true;
      */
     PDB_GetDefaultConfig(&pdbConfigStruct);
+    // Paso esto a load song info para cambiar los valores para el PDB
     pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor40;
     pdbConfigStruct.enableContinuousMode        = true;
     PDB_Init(DEMO_PDB_BASEADDR, &pdbConfigStruct);
     PDB_EnableInterrupts(DEMO_PDB_BASEADDR, kPDB_DelayInterruptEnable);
     PDB_SetModulusValue(DEMO_PDB_BASEADDR, DEMO_PDB_MODULUS_VALUE);
     PDB_SetCounterDelayValue(DEMO_PDB_BASEADDR, DEMO_PDB_DELAY_VALUE);
+
 
     /* Set DAC trigger. */
     pdbDacTriggerConfigStruct.enableExternalTriggerInput = false;
@@ -224,28 +319,33 @@ static void Edma_Callback(edma_handle_t *handle, void *userData, bool transferDo
     EDMA_ClearChannelStatusFlags(DEMO_DMA_BASEADDR, DEMO_DMA_CHANNEL, kEDMA_InterruptFlag);
     /* Setup transfer */
 
-    /*
     g_index += DAC_DATL_COUNT;
     if (g_index == DEMO_DAC_USED_BUFFER_SIZE)
     {
         g_index = 0U;
+        if(used_buffer == 1)
+        {
+        	used_buffer = 2;
+        }
+        else if(used_buffer == 2)
+        {
+        	used_buffer = 1;
+        }
     }
-    */
-    uint16_t auxArray[DAC_dATL_COUNT] = 0;
-    if ((currentSongIndex + DAC_DATL_COUNT)  > songSize)
+
+    if(used_buffer == 1)
     {
-    	for(int i = 0; i < (songSize - currentSongIndex); i++)
-    	{
-    		//auxArray[i] = firstSongFrame + currentSongIndex + i];
-    	}
+        EDMA_PrepareTransfer(&g_transferConfig, (void *)(g_dacDataArray + g_index), sizeof(uint16_t),
+                             (void *)DAC_DATA_REG_ADDR, sizeof(uint16_t), DAC_DATL_COUNT * sizeof(uint16_t),
+                             DAC_DATL_COUNT * sizeof(uint16_t), kEDMA_MemoryToMemory);
     }
-
-
-    EDMA_PrepareTransfer(&g_transferConfig, (void *)(g_dacDataArray + g_index), sizeof(uint16_t),
-                         (void *)DAC_DATA_REG_ADDR, sizeof(uint16_t), DAC_DATL_COUNT * sizeof(uint16_t),
-                         DAC_DATL_COUNT * sizeof(uint16_t), kEDMA_MemoryToMemory);
+    else if(used_buffer == 2)
+    {
+        EDMA_PrepareTransfer(&g_transferConfig, (void *)(g_dacDataArray2 + g_index), sizeof(uint16_t),
+                             (void *)DAC_DATA_REG_ADDR, sizeof(uint16_t), DAC_DATL_COUNT * sizeof(uint16_t),
+                             DAC_DATL_COUNT * sizeof(uint16_t), kEDMA_MemoryToMemory);
+    }
     EDMA_SetTransferConfig(DEMO_DMA_BASEADDR, DEMO_DMA_CHANNEL, &g_transferConfig, NULL);
     /* Enable transfer. */
     EDMA_StartTransfer(&g_EDMA_Handle);
-    currentSongFrame += DAC_DATL_COUNT;
 }

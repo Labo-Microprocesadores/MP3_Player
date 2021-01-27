@@ -18,10 +18,12 @@ int main(void)
     AudioPlayer_Init();
 
     /* Generate continuous trigger signal to DAC. */
+    AudioPlayer_DEMOMode(); //Aca iria AudioPlayer_LoadSongInfo(...);
     AudioPlayer_Play();
 
     PRINTF("Please probe the DAC output with a oscilloscope.\r\n");
     while (1)
     {
+
     }
 }
