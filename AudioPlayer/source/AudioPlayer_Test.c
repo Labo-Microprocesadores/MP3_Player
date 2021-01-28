@@ -2,8 +2,9 @@
 
 #include "AudioPlayer.h"
 #include "fsl_debug_console.h"
+#include "math.h"
 
-extern uint16_t song;
+//extern uint16_t song;
 
 
 
@@ -36,16 +37,41 @@ int main(void)
 
 
     //AudioPlayer_LoadSongInfo(g_dacDataArray, 12000);
-    AudioPlayer_LoadSongInfo(song, 44100);
+
+    int16_t baja[1024];
+    int i;
+  	for(i=0; i<1024; i++)
+  	{
+  	       //  baja[i] = 30.0f*arm_sin_f32(2*3.1415926f*50*i/44100);
+  	         /*
+  	         alta[i] = 10.0f*arm_sin_f32(2*3.1415926f*10*i/44100);
+  	         otra[i] = 20.0f*arm_sin_f32(2*3.1415926f*100*i/44100);
+  	         otra2[i] = 30.0f*arm_sin_f32(2*3.1415926f*200*i/44100);
+  	         otra3[i] = 30.0f*arm_sin_f32(2*3.1415926f*300*i/44100);
+  	         */
+  	         //otra4[i] = 30.0f*arm_sin_f32(2*3.1415926f*15000*i/44100);
+
+  		baja[i] = 1500.0f*sin(2*3.1415926f*130.81*i/44100)+1500;
+  	   // signal[i] = baja[i];//+otra4[i];
+  	 }
+
+
+
+    AudioPlayer_LoadSongInfo(baja, 44100);
     AudioPlayer_Play();
     int lastSent = 1;
 
+
+    AudioPlayer_UpdateBackBuffer(baja);
 
     PRINTF("Please probe the DAC output with a oscilloscope.\r\n");
     while (1)
     {
     	if(AudioPlayer_IsBackBufferFree())
     	{
+
+    		AudioPlayer_UpdateBackBuffer(baja);
+    		// PARA PROBAR CON ARRAYS DE EJEMPLO:
 
 			//AudioPlayer_UpdateBackBuffer(g_dacDataArray);
 
@@ -79,6 +105,10 @@ int main(void)
 				lastSent = 1;
 			}
 			*/
+
+
+    		//PARA PROBAR CON PEDACITO DE CANCION
+    		/*
     		AudioPlayer_UpdateBackBuffer(song + iii * AUDIO_PLAYER_BUFF_SIZE);
 
     		iii++;
@@ -87,6 +117,7 @@ int main(void)
     		{
     			iii=0;
     		}
+    		*/
     	}
     }
 }

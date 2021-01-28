@@ -10,7 +10,7 @@
 
 typedef enum {AP_NO_ERROR, AP_ERROR_BB_NOT_FREE} audioPlayerError;
 
-#define AUDIO_PLAYER_BUFF_SIZE	32U
+#define AUDIO_PLAYER_BUFF_SIZE	1024U
 
 
 /*!

@@ -65,9 +65,14 @@ edma_transfer_config_t g_transferConfig;                 /* Edma transfer config
 volatile uint32_t g_index                          = 0U; /* Index of the g_dacDataArray array. */
 
 
+/*
 uint16_t buffers[2][AUDIO_PLAYER_BUFF_SIZE];
 uint16_t * activeBuffer = buffers[0];
 uint16_t * backBuffer= buffers[1];
+*/
+int16_t buffers[2][AUDIO_PLAYER_BUFF_SIZE];
+int16_t * activeBuffer = buffers[0];
+int16_t * backBuffer= buffers[1];
 bool backBufferFree = false;
 
 
