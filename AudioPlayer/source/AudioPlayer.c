@@ -24,7 +24,7 @@
 #define DEMO_PDB_MODULUS_VALUE      0xFFFU
 #define DEMO_PDB_DELAY_VALUE        0U
 #define DEMO_PDB_DAC_CHANNEL        kPDB_DACTriggerChannel0
-#define DEMO_PDB_DAC_INTERVAL_VALUE 0x22U//0xFFFU
+#define DEMO_PDB_DAC_INTERVAL_VALUE 0xFFFU
 #define DEMO_DAC_BASEADDR           DAC0
 #define DEMO_DMAMUX_BASEADDR        DMAMUX
 #define DEMO_DMA_CHANNEL            0U
@@ -114,56 +114,65 @@ void AudioPlayer_UpdateSampleRate(uint16_t sampleRate) //PDB_Configuration
 	if(sampleRate == 8000)
 	{
 		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor1;
-		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider2;
+		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider4;
 		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 1875);
+		PDB_SetDACTriggerIntervalValue(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, 1875);
 	}
 	else if(sampleRate == 11025)
 	{
 		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor1;
-		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
+		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider2;
 		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 2721);
+		PDB_SetDACTriggerIntervalValue(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, 2721);
 	}
 	else if(sampleRate == 12000)
 	{
-		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor10;
-		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider2;
+		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor40;
+		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
 		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 125);
+		PDB_SetDACTriggerIntervalValue(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, 125);
 	}
 	else if(sampleRate == 16000)
 	{
-		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor1;
+		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor10;
 		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
-		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 1875);
+		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 375);
+		PDB_SetDACTriggerIntervalValue(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, 375);
 	}
 	else if(sampleRate == 22050)
 	{
 		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor1;
-		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider16;
-		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 85);
+		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
+		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 2721);
+		PDB_SetDACTriggerIntervalValue(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, 2721);
 	}
 	else if(sampleRate == 24000)
 	{
-		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor10;
+		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor20;
 		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
 		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 125);
+		PDB_SetDACTriggerIntervalValue(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, 125);
 	}
 	else if(sampleRate == 32000)
 	{
 		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor1;
 		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
-		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 937);
+		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 1875);
+		PDB_SetDACTriggerIntervalValue(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, 1875);
 	}
 	else if(sampleRate == 44100)
 	{
 		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor40;
-		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
-		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 16);
+		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider2;
+		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 17);
+		PDB_SetDACTriggerIntervalValue(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, 17);
 	}
 	else if(sampleRate == 48000)
 	{
-		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor1;
+		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor10;
 		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
-		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 625);
+		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 125);
+		PDB_SetDACTriggerIntervalValue(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, 125);
 	}
 	else //For testing with DEMO
 	{
@@ -184,7 +193,7 @@ void AudioPlayer_UpdateSampleRate(uint16_t sampleRate) //PDB_Configuration
     pdbDacTriggerConfigStruct.enableExternalTriggerInput = false;
     pdbDacTriggerConfigStruct.enableIntervalTrigger      = true;
     PDB_SetDACTriggerConfig(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, &pdbDacTriggerConfigStruct);
-    PDB_SetDACTriggerIntervalValue(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, DEMO_PDB_DAC_INTERVAL_VALUE);
+  //  PDB_SetDACTriggerIntervalValue(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, 17);//DEMO_PDB_DAC_INTERVAL_VALUE);
 
     /* Load PDB values. */
     PDB_DoLoadValues(DEMO_PDB_BASEADDR);

@@ -35,7 +35,7 @@ int main(void)
     //AudioPlayer_DEMOMode(); //Aca iria AudioPlayer_LoadSongInfo(...);
 
 
-    //AudioPlayer_LoadSongInfo(g_dacDataArray, 44100);
+    //AudioPlayer_LoadSongInfo(g_dacDataArray, 12000);
     AudioPlayer_LoadSongInfo(song, 44100);
     AudioPlayer_Play();
     int lastSent = 1;
@@ -83,7 +83,7 @@ int main(void)
 
     		iii++;
 
-    		if(iii>15000UL)
+    		if(iii>20000UL)
     		{
     			iii=0;
     		}
