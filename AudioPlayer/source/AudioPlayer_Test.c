@@ -20,7 +20,7 @@ uint32_t iii = 1;
 /*!
  * @brief Main function
  */
-int main(void)
+int test(void)
 {
 
     /* Initialize hardware. */
