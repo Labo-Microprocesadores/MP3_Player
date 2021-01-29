@@ -11,7 +11,6 @@
 
 #include "fsl_common.h"
 #include "fsl_sdhc.h"
-#include "osa/fsl_sdmmc_osa.h"
 /*!
  * @addtogroup SDMMCHOST_SDHC
  * @{
@@ -94,7 +93,7 @@ typedef struct _sdmmchost_
     uint32_t dmaDesBufferWordsNum; /*!< DMA descriptor buffer size in byte */
     sdhc_handle_t handle;          /*!< host controller handler */
 
-    sdmmc_osa_event_t hostEvent; /*!< host event handler */
+    //sdmmc_osa_event_t hostEvent; /*!< host event handler */
     void *cd;                    /*!< card detect */
     void *cardInt;               /*!< call back function for card interrupt */
 } sdmmchost_t;

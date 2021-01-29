@@ -24,6 +24,8 @@
 #include "fsl_debug_console.h"
 #include "math.h"
 
+#include "memory_manager.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -41,7 +43,7 @@ static status_t sdcardWaitCardInsert(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-static FATFS g_fileSystem; /* File system object */
+//static FATFS g_fileSystem; /* File system object */
 static FIL g_fileObject;   /* File object */
 
 /* @brief decription about the read/write buffer
@@ -57,10 +59,22 @@ SDK_ALIGN(uint16_t g_bufferWrite[BUFFER_SIZE], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZ
 /*! @brief Data read from the card */
 SDK_ALIGN(uint16_t g_bufferRead[BUFFER_SIZE], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE);
 SDK_ALIGN(uint8_t g_bufferRead2[BUFFER_SIZE*2], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE);
+#define SONGS 12
+char * canciones[SONGS] = {  "Una lady.wav", "Vida de Rico.wav",
+						"Besame.wav", "Favorito.wav", "Tusa.wav", "Tutu.wav","Si me tomo una cerveza.wav",
+						"Despeinada.wav", "Chica Ideal.wav", "Taki Taki.wav",
+						"Hasta la Luna.wav", "Solo necesito.wav"};
+uint8_t curr = 0;
 
+bool cardIn = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
+void sdCallback(bool isInserted, void *userData)
+{
+	cardIn = isInserted;
+}
+
 void fillBuffer(void)
 {
 	FRESULT error;
@@ -76,19 +90,21 @@ void fillBuffer(void)
 	}
 	if ((error) || (bytesRead != sizeof(g_bufferRead)))
 	{
-		PRINTF(" End of file?. \r\n");
-
-		/* Move the file pointer */
-		if (f_lseek(&g_fileObject, 0U))
-		{
-			PRINTF("Set file pointer position failed. \r\n");
-			return;
-		}
-
 		for(uint16_t i = (bytesRead/sizeof(uint16_t)); i<1024U; i++)
 		{
 			g_bufferRead[i] = 1024U;
 		}
+
+		f_close(&g_fileObject);
+		//curr = (curr+1)%SONGS;
+		curr++;
+		if(curr >= SONGS)
+		{
+			curr = 0;
+		}
+		printf("TRACK %d: %s", curr, canciones[curr]);
+
+		f_open(&g_fileObject, _T(canciones[curr]), (FA_READ));
 	}
 }
 /*!
@@ -97,24 +113,26 @@ void fillBuffer(void)
 int main(void)
 {
     FRESULT error;
-    const TCHAR driverNumberBuffer[3U] = {SDDISK + '0', ':', '/'};
+    //const TCHAR driverNumberBuffer[3U] = {SDDISK + '0', ':', '/'};
 
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
     SYSMPU_Enable(SYSMPU, false);
+    Mm_Init();
     AudioPlayer_Init();
 
     PRINTF("\r\nFATFS example to demonstrate how to use FATFS with SD card.\r\n");
 
     PRINTF("\r\nPlease insert a card into board.\r\n");
 
-    if (sdcardWaitCardInsert() != kStatus_Success)
+
+    /*if (sdcardWaitCardInsert() != kStatus_Success)
     {
         return -1;
     }
 
-    if (f_mount(&g_fileSystem, driverNumberBuffer, 0U))
+    if (f_mount(&g_fileSystem, driverNumberBuffer, 1U))
     {
         PRINTF("Mount volume failed.\r\n");
         return -1;
@@ -128,9 +146,10 @@ int main(void)
         return -1;
     }
 #endif
-
+     */
     PRINTF("\r\n Open test.mp3 \r\n");
-    error = f_open(&g_fileObject, _T("/test.mp3"), (FA_READ));
+    error = f_open(&g_fileObject, _T(canciones[curr]), (FA_READ));
+    printf("TRACK %d: %s", curr, canciones[curr]);
     if (error)
     {
         if (error == FR_EXIST)
@@ -173,7 +192,7 @@ int main(void)
 
 static status_t sdcardWaitCardInsert(void)
 {
-    BOARD_SD_Config(&g_sd, NULL, BOARD_SDMMC_SD_HOST_IRQ_PRIORITY, NULL);
+    BOARD_SD_Config(&g_sd, sdCallback, BOARD_SDMMC_SD_HOST_IRQ_PRIORITY, NULL);
 
     /* SD host init function */
     if (SD_HostInit(&g_sd) != kStatus_Success)
@@ -182,20 +201,7 @@ static status_t sdcardWaitCardInsert(void)
         return kStatus_Fail;
     }
 
-    /* wait card insert */
-    if (SD_PollingCardInsert(&g_sd, kSD_Inserted) == kStatus_Success)
-    {
-        PRINTF("\r\nCard inserted.\r\n");
-        /* power off card */
-        SD_SetCardPower(&g_sd, false);
-        /* power on the card */
-        SD_SetCardPower(&g_sd, true);
-    }
-    else
-    {
-        PRINTF("\r\nCard detect fail.\r\n");
-        return kStatus_Fail;
-    }
+    while(!cardIn){}
 
     return kStatus_Success;
 }

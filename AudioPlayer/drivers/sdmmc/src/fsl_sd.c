@@ -612,7 +612,8 @@ static status_t SD_PollingCardStatusBusy(sd_card_t *card, bool sendStatusOnly, u
                 }
                 else
                 {
-                    SDMMC_OSADelay(1U);
+                	SDK_DelayAtLeastUs(1000U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+                    //SDMMC_OSADelay(1U);
                     statusTimeout--;
                 }
             }
@@ -1243,8 +1244,8 @@ static status_t SD_ApplicationSendOperationCondition(sd_card_t *card, uint32_t a
 
             return kStatus_Success;
         }
-
-        SDMMC_OSADelay(10U);
+        SDK_DelayAtLeastUs(10000U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+        //SDMMC_OSADelay(10U);
     }
 
     SDMMC_LOG("\r\nError: send ACMD41 timeout");
@@ -2151,8 +2152,8 @@ void SD_SetCardPower(sd_card_t *card, bool enable)
     {
         SDMMCHOST_SetCardPower(card->host, enable);
     }
-
-    SDMMC_OSADelay(SD_POWER_RESET_DELAY);
+    SDK_DelayAtLeastUs(SD_POWER_RESET_DELAY * 1000U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+    //SDMMC_OSADelay(SD_POWER_RESET_DELAY);
 }
 
 bool SD_IsCardPresent(sd_card_t *card)
@@ -2200,7 +2201,8 @@ status_t SD_PollingCardInsert(sd_card_t *card, uint32_t status)
         {
             if ((card->usrParam.cd->cardDetected() == true) && (status == (uint32_t)kSD_Inserted))
             {
-                SDMMC_OSADelay(card->usrParam.cd->cdDebounce_ms);
+                //SDMMC_OSADelay(card->usrParam.cd->cdDebounce_ms);
+                SDK_DelayAtLeastUs(card->usrParam.cd->cdDebounce_ms * 1000U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
                 if (card->usrParam.cd->cardDetected() == true)
                 {
                     break;
