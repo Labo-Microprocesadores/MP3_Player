@@ -267,7 +267,7 @@ void SDMMCHOST_PowerOffCard(SDMMCHOST_TYPE *base, const sdmmchost_pwr_card_t *pw
     if (pwr != NULL)
     {
         pwr->powerOff();
-        SDMMC_OSADelay(pwr->powerOffDelay_ms);
+        SDK_DelayAtLeastUs(pwr->powerOffDelay_ms * 1000U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     }
 }
 
@@ -277,12 +277,12 @@ void SDMMCHOST_PowerOnCard(SDMMCHOST_TYPE *base, const sdmmchost_pwr_card_t *pwr
     if (pwr != NULL)
     {
         pwr->powerOn();
-        SDMMC_OSADelay(pwr->powerOnDelay_ms);
+        SDK_DelayAtLeastUs(pwr->powerOnDelay_ms * 1000U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     }
     else
     {
         /* Delay several milliseconds to make card stable. */
-        SDMMC_OSADelay(1000U);
+        SDK_DelayAtLeastUs(1000U * 1000U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     }
 }
 

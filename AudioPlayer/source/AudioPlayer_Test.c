@@ -1,9 +1,10 @@
 
 
 #include "AudioPlayer.h"
-#include "fsl_debug_console.h"
-#include "math.h"
 
+#include "math.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 //extern uint16_t song;
 
 
@@ -26,7 +27,6 @@ int test(void)
     /* Initialize hardware. */
     BOARD_InitPins();
     BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
 
     PRINTF("DAC CONTINUOUS PDB EDMA DEMO\r\n");
 
@@ -38,7 +38,7 @@ int test(void)
 
     //AudioPlayer_LoadSongInfo(g_dacDataArray, 12000);
 
-    int16_t baja[1024];
+    uint16_t baja[1024];
     int i;
   	for(i=0; i<1024; i++)
   	{
@@ -59,7 +59,6 @@ int test(void)
 
     AudioPlayer_LoadSongInfo(baja, 44100);
     AudioPlayer_Play();
-    int lastSent = 1;
 
 
     AudioPlayer_UpdateBackBuffer(baja);

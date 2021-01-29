@@ -54,7 +54,7 @@ static void Mm_ScanFiles(char * path);
 void Mm_Init(void)
 {
 	firstFile = FileSystem_GetFirstFile();
-
+	SYSMPU->CESR &= ~SYSMPU_CESR_VLD_MASK;
 	BOARD_SD_Config(&g_sd, Mm_Callback, BOARD_SDMMC_SD_HOST_IRQ_PRIORITY, NULL);
 
 	if (SD_HostInit(&g_sd) != kStatus_Success)

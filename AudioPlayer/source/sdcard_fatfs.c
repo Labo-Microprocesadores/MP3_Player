@@ -8,20 +8,14 @@
 
 #include <stdio.h>
 #include <string.h>
-#include "inc/fsl_sd.h"
-#include "fsl_debug_console.h"
-#include "ff.h"
-#include "diskio.h"
-#include "fsl_sd_disk/fsl_sd_disk.h"
-#include "pin_mux.h"
-#include "clock_config.h"
-#include "board.h"
-#include "sdmmc_config.h"
-#include "fsl_sysmpu.h"
 
+#include "ff.h"
+
+#include "pin_mux.h"
+#include "sdmmc_config.h"
 
 #include "AudioPlayer.h"
-#include "fsl_debug_console.h"
+
 #include "math.h"
 
 #include "memory_manager.h"
@@ -35,10 +29,7 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-/*!
- * @brief wait card insert function.
- */
-static status_t sdcardWaitCardInsert(void);
+
 
 /*******************************************************************************
  * Variables
@@ -60,10 +51,13 @@ SDK_ALIGN(uint16_t g_bufferWrite[BUFFER_SIZE], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZ
 SDK_ALIGN(uint16_t g_bufferRead[BUFFER_SIZE], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE);
 SDK_ALIGN(uint8_t g_bufferRead2[BUFFER_SIZE*2], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE);
 #define SONGS 12
-char * canciones[SONGS] = {  "Una lady.wav", "Vida de Rico.wav",
-						"Besame.wav", "Favorito.wav", "Tusa.wav", "Tutu.wav","Si me tomo una cerveza.wav",
-						"Despeinada.wav", "Chica Ideal.wav", "Taki Taki.wav",
-						"Hasta la Luna.wav", "Solo necesito.wav"};
+/* Request this files (no true .wav files!!!) to store in sd card */
+char * canciones[SONGS] = {
+							"Taki Taki.wav","Hasta la Luna.wav",
+							"Solo necesito.wav","Una lady.wav", "Vida de Rico.wav","Besame.wav",
+							"Favorito.wav", "Tusa.wav", "Tutu.wav","Si me tomo una cerveza.wav",
+							"Despeinada.wav", "Chica Ideal.wav",
+						  };
 uint8_t curr = 0;
 
 bool cardIn = false;
@@ -96,13 +90,12 @@ void fillBuffer(void)
 		}
 
 		f_close(&g_fileObject);
-		//curr = (curr+1)%SONGS;
 		curr++;
 		if(curr >= SONGS)
 		{
 			curr = 0;
 		}
-		printf("TRACK %d: %s", curr, canciones[curr]);
+		printf("TRACK %d: %s\r\n", curr, canciones[curr]);
 
 		f_open(&g_fileObject, _T(canciones[curr]), (FA_READ));
 	}
@@ -113,95 +106,49 @@ void fillBuffer(void)
 int main(void)
 {
     FRESULT error;
-    //const TCHAR driverNumberBuffer[3U] = {SDDISK + '0', ':', '/'};
-
+    /* Board Initialization */
     BOARD_InitPins();
     BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-    SYSMPU_Enable(SYSMPU, false);
+
+    printf("\r\nAudio Player example, reading raw audio from sd card\r\n");
+
+    printf("\r\nPlease insert a card into board.\r\n");
+
+    /* Init Memory manger, using SD and FATFS */
     Mm_Init();
+    /* Init Audio player using DAC, PDB and DMA */
     AudioPlayer_Init();
 
-    PRINTF("\r\nFATFS example to demonstrate how to use FATFS with SD card.\r\n");
-
-    PRINTF("\r\nPlease insert a card into board.\r\n");
-
-
-    /*if (sdcardWaitCardInsert() != kStatus_Success)
-    {
-        return -1;
-    }
-
-    if (f_mount(&g_fileSystem, driverNumberBuffer, 1U))
-    {
-        PRINTF("Mount volume failed.\r\n");
-        return -1;
-    }
-
-#if (FF_FS_RPATH >= 2U)
-    error = f_chdrive((char const *)&driverNumberBuffer[0U]);
-    if (error)
-    {
-        PRINTF("Change drive failed.\r\n");
-        return -1;
-    }
-#endif
-     */
-    PRINTF("\r\n Open test.mp3 \r\n");
+    printf("\r\nOpening first file from playlist\r\n");
+    /* Opening first file from playlist */
     error = f_open(&g_fileObject, _T(canciones[curr]), (FA_READ));
-    printf("TRACK %d: %s", curr, canciones[curr]);
+    printf("TRACK %d: %s\r\n", curr, canciones[curr]);
     if (error)
     {
-        if (error == FR_EXIST)
-        {
-            PRINTF("File exists.\r\n");
-        }
-        else
-        {
-            PRINTF("Open file failed.\r\n");
-            return -1;
-        }
+    	printf("Open file failed.\r\n");
+		return -1;
     }
 
     fillBuffer();
-	printf("%d \r\n", g_bufferRead[0]);
 
+    /* Load first frame of the song */
     AudioPlayer_LoadSongInfo(g_bufferRead, 44100);
+    /* Start Playing */
     AudioPlayer_Play();
+    /* Preparing next buffer */
     fillBuffer();
-    PRINTF("\r\n Read and send to dac \r\n");
+    printf("\r\n Read and send to dac \r\n");
     while (true)
     {
+    	/*
+    	 * If the Audio Player has a buffer to fill, then send send the buffer that
+    	 * was previously filled
+    	 */
     	if(AudioPlayer_IsBackBufferFree())
     	{
     		AudioPlayer_UpdateBackBuffer(g_bufferRead);
+    		/* Prepare buffer for next time */
     		fillBuffer();
     	}
     }
-
-    if (f_close(&g_fileObject))
-    {
-        PRINTF("\r\nClose file failed.\r\n");
-        return -1;
-    }
-
-    while (true)
-    {
-    }
-}
-
-static status_t sdcardWaitCardInsert(void)
-{
-    BOARD_SD_Config(&g_sd, sdCallback, BOARD_SDMMC_SD_HOST_IRQ_PRIORITY, NULL);
-
-    /* SD host init function */
-    if (SD_HostInit(&g_sd) != kStatus_Success)
-    {
-        PRINTF("\r\nSD host init fail\r\n");
-        return kStatus_Fail;
-    }
-
-    while(!cardIn){}
-
-    return kStatus_Success;
 }
