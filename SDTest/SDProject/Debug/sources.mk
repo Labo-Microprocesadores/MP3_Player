@@ -18,7 +18,8 @@ component/fatfs \
 component/fatfs/fsl_sd_disk \
 component/lists \
 device \
-drivers \
+drivers/HAL \
+drivers/MCAL \
 drivers/SDK/SD \
 drivers/SDK \
 source \

@@ -10,6 +10,7 @@
 #ifndef _BOARD_H_
 #define _BOARD_H_
 
+#ifdef BOARD
 #include "fsl_gpio.h"
 #include "fsl_port.h"
 
@@ -179,5 +180,7 @@ status_t BOARD_Accel_I2C_Receive(
 #if defined(__cplusplus)
 }
 #endif /* __cplusplus */
+
+#endif
 
 #endif /* _BOARD_H_ */

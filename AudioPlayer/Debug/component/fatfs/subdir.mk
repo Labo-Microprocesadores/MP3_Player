@@ -1,0 +1,33 @@
+################################################################################
+# Automatically-generated file. Do not edit!
+################################################################################
+
+# Add inputs and outputs from these tool invocations to the build variables 
+C_SRCS += \
+../component/fatfs/diskio.c \
+../component/fatfs/ff.c \
+../component/fatfs/ffsystem.c \
+../component/fatfs/ffunicode.c 
+
+OBJS += \
+./component/fatfs/diskio.o \
+./component/fatfs/ff.o \
+./component/fatfs/ffsystem.o \
+./component/fatfs/ffunicode.o 
+
+C_DEPS += \
+./component/fatfs/diskio.d \
+./component/fatfs/ff.d \
+./component/fatfs/ffsystem.d \
+./component/fatfs/ffunicode.d 
+
+
+# Each subdirectory must supply rules for building sources it contributes
+component/fatfs/%.o: ../component/fatfs/%.c
+	@echo 'Building file: $<'
+	@echo 'Invoking: MCU C Compiler'
+	arm-none-eabi-gcc -D__REDLIB__ -DSD_ENABLED -DCPU_MK64FN1M0VLL12 -DCPU_MK64FN1M0VLL12_cm4 -DFSL_RTOS_BM -DSDK_OS_BAREMETAL -DSDK_DEBUGCONSOLE=0 -DCR_INTEGER_PRINTF -DPRINTF_FLOAT_ENABLE=0 -DSERIAL_PORT_TYPE_UART=1 -D__MCUXPRESSO -D__USE_CMSIS -DDEBUG -I"D:\Facultad\GitMicros\TpFinal\AudioPlayer\board" -I"D:\Facultad\GitMicros\TpFinal\AudioPlayer\component\fatfs" -I"D:\Facultad\GitMicros\TpFinal\AudioPlayer\drivers\sdmmc" -I"D:\Facultad\GitMicros\TpFinal\AudioPlayer\source" -I"D:\Facultad\GitMicros\TpFinal\AudioPlayer\drivers" -I"D:\Facultad\GitMicros\TpFinal\AudioPlayer\utilities" -I"D:\Facultad\GitMicros\TpFinal\AudioPlayer\component\lists" -I"D:\Facultad\GitMicros\TpFinal\AudioPlayer\CMSIS" -I"D:\Facultad\GitMicros\TpFinal\AudioPlayer\device" -O0 -fno-common -g3 -Wall -c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin -fmerge-constants -fmacro-prefix-map="../$(@D)/"=. -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -D__REDLIB__ -fstack-usage -specs=redlib.specs -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+

@@ -14,7 +14,8 @@ RM := rm -rf
 -include source/subdir.mk
 -include drivers/SDK/SD/subdir.mk
 -include drivers/SDK/subdir.mk
--include drivers/subdir.mk
+-include drivers/MCAL/subdir.mk
+-include drivers/HAL/subdir.mk
 -include device/subdir.mk
 -include component/lists/subdir.mk
 -include component/fatfs/fsl_sd_disk/subdir.mk
