@@ -52,6 +52,7 @@ void App_Init(void)
 	{
 		currFile = FileSystem_GetFirstFile();
 		printf("TRACK %d: %s\r\n", currFile.index, currFile.path);
+		f_close(&g_fileObject);
 	}
 }
 
@@ -63,14 +64,16 @@ void App_Run(void)
 		if(LCD_isInit())
 		{
 			start = true;
+			f_open(&g_fileObject, _T(currFile.path), (FA_READ));
+			fillBuffer();
 
 			char track[] = "TRACK __";
 			track[6] = currFile.index/10 + '0';
 			track[7] = currFile.index%10 + '0';
 			LCD_writeStrInPos(track, 8, 0, 0);
-			LCD_writeBouncingStr(currFile.path, strlen(currFile.path), 1, 0, MIDIUM);
+			LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path)-1, 1, 0, MIDIUM);
 
-			fillBuffer();
+
 			AudioPlayer_LoadSongInfo(g_bufferRead, 44100);
 			AudioPlayer_Play();
 			fillBuffer();
@@ -121,7 +124,7 @@ void fillBuffer(void)
 		track[6] = currFile.index/10 + '0';
 		track[7] = currFile.index%10 + '0';
 		LCD_writeStrInPos(track, 8, 0, 0);
-		LCD_writeBouncingStr(currFile.path, strlen(currFile.path), 1, 0, MIDIUM);
+		LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path)-1, 1, 0, MIDIUM);
 		printf("TRACK %d: %s\r\n", currFile.index, currFile.path);
 		f_open(&g_fileObject, _T(currFile.path), (FA_READ));
 	}

@@ -9,6 +9,7 @@
  * 		INCLUDES
  *************************************************************/
 #include <stdbool.h>
+#include <string.h>
 
 #include "SPI_wrapper.h"
 #include "SysTick.h"
@@ -41,7 +42,6 @@
 #define CURSOR_BLINK			0
 
 #define FAST_SPEED				400
-#define NULL					0x0
 
 /*********************************************************
  * 		LOCAL STRUCTS AND ENUMS
@@ -196,13 +196,10 @@ void LCD_writeShiftingStr(char * str, uint8_t len, uint8_t row, lcd_shift_speed_
 	uint8_t i;
 	if(row < DISPLAY_ROWS)
 	{
+		memset(lcdLines[row].buffer, 0x20, SHIFTING_BUFFER_LEN);
 		for(i = 0; i < len; i++)
 		{
 			lcdLines[row].buffer[i] = str[i];
-		}
-		for(;i<SHIFTING_BUFFER_LEN;i++)
-		{
-			lcdLines[row].buffer[i] = 0x20;
 		}
 
 		Systick_ChangeCallbackPeriod(lcdLines[row].timer_id, (3-speed)*FAST_SPEED);
@@ -224,11 +221,18 @@ void LCD_writeBouncingStr(char * str, uint8_t len, uint8_t row, uint8_t begin, l
 	uint8_t i;
 	if(row < DISPLAY_ROWS)
 	{
+		memset(lcdLines[row].buffer, 0x20, SHIFTING_BUFFER_LEN);
 		for(i = 0; i < len; i++)
 		{
 			lcdLines[row].buffer[i] = str[i];
 		}
-
+		if(len+begin <= DISPLAY_COLUMNS) // static
+		{
+			LCD_writeStrInPos(lcdLines[row].buffer, DISPLAY_COLUMNS, row, begin);
+			Systick_PauseCallback(lcdLines[row].timer_id);
+			lcdLines[row].state = NOTHING;
+			return;
+		}
 		Systick_ChangeCallbackPeriod(lcdLines[row].timer_id, (3-speed)*FAST_SPEED);
 		lcdLines[row].speed = speed;
 
@@ -344,7 +348,7 @@ static void shifttingCallback(void)
 
 			if(curr == BOUNCING)
 			{
-				if(!lcdLines[i].direction && !lcdLines[i].pointer)
+				if(!lcdLines[i].direction && lcdLines[i].pointer==0)
 					lcdLines[i].direction = true;
 				else if(lcdLines[i].direction && ((start + lcdLines[i].length -  lcdLines[i].pointer) <= DISPLAY_COLUMNS))
 					lcdLines[i].direction = false;
