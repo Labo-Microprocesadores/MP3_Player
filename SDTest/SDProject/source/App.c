@@ -18,12 +18,14 @@
 #include "AudioPlayer.h"
 #include "file_system_manager.h"
 #include "ff.h"
+#include "matrix_display.h"
 
 /*******************************************************************************
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
  ******************************************************************************/
 #define BUFFER_SIZE (AUDIO_PLAYER_BUFF_SIZE)
-
+const pixel_t blank = {0,0,0};
+const pixel_t on = {1,1,1};
 /*******************************************************************************
  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
  ******************************************************************************/
@@ -35,6 +37,7 @@ static bool start = false;
 SDK_ALIGN(uint16_t g_bufferRead[BUFFER_SIZE], SD_BUFFER_ALIGN_SIZE);
 SDK_ALIGN(uint8_t g_bufferRead2[BUFFER_SIZE*2], SD_BUFFER_ALIGN_SIZE);
 
+static pixel_t pixel_buffer[DISPLAY_SIZE];
 void fillBuffer(void);
 /*******************************************************************************
  *******************************************************************************
@@ -54,6 +57,14 @@ void App_Init(void)
 		printf("TRACK %d: %s\r\n", currFile.index, currFile.path);
 		f_close(&g_fileObject);
 	}
+	md_Init();
+	md_setBrightness(0);
+	for(int i = 0; i <  DISPLAY_SIZE;i++)
+	{
+		pixel_buffer[i] = blank;
+	}
+
+	md_writeBuffer(pixel_buffer);
 }
 
 /* Función que se llama constantemente en un ciclo infinito */
@@ -73,7 +84,15 @@ void App_Run(void)
 			LCD_writeStrInPos(track, 8, 0, 0);
 			LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path)-1, 1, 0, MIDIUM);
 
-
+			uint8_t counter = currFile.index+1;
+			for(uint8_t j; j < 8; j++)
+			{
+				for(uint8_t k; k<8;k++)
+				{
+					pixel_buffer[8*j+k] = (counter & (1<<j))?blank:on;
+				}
+			}
+			md_writeBuffer(pixel_buffer);
 			AudioPlayer_LoadSongInfo(g_bufferRead, 44100);
 			AudioPlayer_Play();
 			fillBuffer();
@@ -127,6 +146,15 @@ void fillBuffer(void)
 		LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path)-1, 1, 0, MIDIUM);
 		printf("TRACK %d: %s\r\n", currFile.index, currFile.path);
 		f_open(&g_fileObject, _T(currFile.path), (FA_READ));
+		uint8_t counter = currFile.index+1;
+		for(uint8_t j; j < 8; j++)
+		{
+			for(uint8_t k; k<8;k++)
+			{
+				pixel_buffer[8*j+k] = (counter & (1<<j))?blank:on;
+			}
+		}
+		md_writeBuffer(pixel_buffer);
 	}
 }
 

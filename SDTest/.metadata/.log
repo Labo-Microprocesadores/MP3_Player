@@ -3426,3 +3426,984 @@ Caused by: java.lang.IllegalArgumentException: Attempted to beginRule: R/, does 
 	at org.eclipse.cdt.internal.core.model.CModelOperation.runOperation(CModelOperation.java:644)
 	at org.eclipse.cdt.internal.core.settings.model.AbstractCProjectDescriptionStorage.setProjectDescription(AbstractCProjectDescriptionStorage.java:208)
 	... 21 more
+
+!ENTRY com.crt.utils 1 0 2021-01-30 11:43:22.702
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-30 11:43:22.721
+!MESSAGE PEMicro continuous memory service session connected on port 10224->63281 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-01-30 11:43:22.737
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.crt.utils 1 0 2021-01-30 11:45:28.856
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-30 11:45:28.868
+!MESSAGE PEMicro continuous memory service session connected on port 10224->63501 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-01-30 11:45:28.892
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:10.766
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@37603240): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &((handle)->flags)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:10.766
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &((handle)->flags)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:10.776
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@5f8c0a9e): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->RESERVED_0)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:10.776
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->RESERVED_0)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:10.786
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@53baea5f): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->RESERVED_2)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:10.786
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->RESERVED_2)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:10.795
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@2861dc3f): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->RESERVED_4)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:10.795
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->RESERVED_4)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:10.804
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@60c03ef5): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->RESERVED_6)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:10.804
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->RESERVED_6)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:10.814
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@662559e9): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->RESERVED_1)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:10.814
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->RESERVED_1)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:10.823
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@51cb5da): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->RESERVED_5)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:10.823
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->RESERVED_5)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:10.833
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@16c98ccb): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->RESERVED_3)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:10.833
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->RESERVED_3)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:10.850
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@397c3193): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->tcdPool)->BITER)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:10.850
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->tcdPool)->BITER)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:10.864
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@7730b64): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI9)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:10.864
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI9)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:10.875
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@67a8e90b): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI6)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:10.875
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI6)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:10.887
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@2fdaf2fd): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI8)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:10.887
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI8)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:10.896
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@195725f4): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &((handle)->tail)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:10.896
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &((handle)->tail)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:10.905
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@3eeda652): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI7)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:10.905
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI7)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:10.915
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@1c3b548d): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI5)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:10.915
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI5)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:10.923
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@4ea5b72c): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI11)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:10.923
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI11)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:10.933
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@294daef5): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->tcdPool)->NBYTES)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:10.933
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->tcdPool)->NBYTES)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:10.941
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@1d231cb4): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI1)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:10.941
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI1)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:10.952
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@168398ba): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI10)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:10.952
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI10)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:10.964
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@b4091ce): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI12)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:10.964
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI12)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:10.976
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@3e3e1b52): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI2)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:10.976
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI2)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:10.989
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@203dbf09): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI0)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:10.989
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI0)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.003
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@4ad8cc84): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI4)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.003
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI4)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.015
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@4c49e88d): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI3)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.015
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI3)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.028
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@5184fdb2): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->SEEI)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.028
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->SEEI)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.040
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@5d96e015): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->SERQ)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.040
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->SERQ)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.061
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@5475fb54): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &((handle)->base)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.061
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &((handle)->base)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.075
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@62635af9): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->CINT)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.075
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->CINT)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.085
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@74eb1c25): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->CEEI)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.085
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->CEEI)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.096
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@42ae1108): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->tcdPool)->ATTR)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.096
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->tcdPool)->ATTR)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.105
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@1e894155): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &((handle)->userData)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.105
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &((handle)->userData)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.114
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@7d51882): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(handle)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.114
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(handle)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.126
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@2498052c): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->ERQ)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.126
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->ERQ)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.136
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@19bfcc97): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->ERR)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.136
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->ERR)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.148
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@d07527): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->ES)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.148
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->ES)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.158
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@5c301a3a): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->CDNE)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.158
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->CDNE)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.171
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@48ae69c0): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &((handle)->tcdSize)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.171
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &((handle)->tcdSize)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.181
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@1c3ca0e6): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->tcdPool)->CSR)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.181
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->tcdPool)->CSR)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.193
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@7dd6f1f6): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &((handle)->tcdPool)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.193
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &((handle)->tcdPool)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.204
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@a50720e): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &((handle)->tcdUsed)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.204
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &((handle)->tcdUsed)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.213
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@6d676693): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->INT)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.213
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->INT)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.224
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@161152b): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->CERR)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.224
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->CERR)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.234
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@53422022): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->CERQ)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.234
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->CERQ)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.245
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@1454736a): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->HRS)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.245
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->HRS)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.257
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@6fc41a18): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->tcdPool)->SLAST)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.257
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->tcdPool)->SLAST)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.267
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@6a36ddbb): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &((handle)->callback)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.267
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &((handle)->callback)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.275
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@234bcf73): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->tcdPool)->SADDR)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.275
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->tcdPool)->SADDR)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.287
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@53fceaf2): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->TCD)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.287
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->TCD)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.298
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@142c06b9): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->tcdPool)->DLAST_SGA)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.298
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->tcdPool)->DLAST_SGA)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.310
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@7912ee1d): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->EEI)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.310
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->EEI)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.322
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@65cdbe36): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->SSRT)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.322
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->SSRT)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.331
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@5acdcecd): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &((handle)->channel)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.331
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &((handle)->channel)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.342
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@4b0e306f): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI15)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.342
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI15)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.352
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@2e62a8d2): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI14)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.352
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI14)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.360
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@12100683): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI13)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.360
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->DCHPRI13)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.368
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@31f314c3): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->CR)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.368
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->base)->CR)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.378
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@79aea68f): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->tcdPool)->DADDR)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.378
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->tcdPool)->DADDR)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.387
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@491e252e): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->tcdPool)->SOFF)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.387
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->tcdPool)->SOFF)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.396
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@4f04ce66): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->tcdPool)->DOFF)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.396
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->tcdPool)->DOFF)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.406
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@49ddf0a): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &(((handle)->tcdPool)->CITER)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.406
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &(((handle)->tcdPool)->CITER)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2021-01-30 11:48:11.415
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIMemory$4@3ad46697): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Failed to execute MI command:
+-data-evaluate-expression &((handle)->header)
+Error message from debugger back end:
+No symbol "handle" in current context. java.lang.Exception: No symbol "handle" in current context.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2021-01-30 11:48:11.415
+!MESSAGE Failed to execute MI command:
+-data-evaluate-expression &((handle)->header)
+Error message from debugger back end:
+No symbol "handle" in current context.
+!STACK 0
+java.lang.Exception: No symbol "handle" in current context.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:993)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:822)
+
+!ENTRY com.crt.utils 1 0 2021-01-30 12:39:25.693
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-30 12:39:25.709
+!MESSAGE PEMicro continuous memory service session connected on port 10224->52091 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-01-30 12:39:25.724
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.nxp.mcuxpresso.core.debug 4 0 2021-01-30 12:41:01.018
+!MESSAGE There is already a running debug session for the launch configuration 'SDProject PE Debug'.
+
+!ENTRY com.crt.utils 1 0 2021-01-30 12:41:20.955
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-30 12:41:20.969
+!MESSAGE PEMicro continuous memory service session connected on port 10224->58155 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-01-30 12:41:20.995
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.crt.utils 1 0 2021-01-30 12:42:42.300
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-30 12:42:42.313
+!MESSAGE PEMicro continuous memory service session connected on port 10224->58305 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-01-30 12:42:42.337
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.crt.utils 1 0 2021-01-30 12:50:09.688
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-30 12:50:09.702
+!MESSAGE PEMicro continuous memory service session connected on port 10224->58999 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-01-30 12:50:09.737
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.crt.utils 1 0 2021-01-30 12:51:31.284
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-30 12:51:31.297
+!MESSAGE PEMicro continuous memory service session connected on port 10224->59147 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-01-30 12:51:31.325
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000

@@ -57,9 +57,9 @@ static void Edma_Callback(edma_handle_t *handle, void *userData, bool transferDo
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-edma_handle_t g_EDMA_Handle;                             /* Edma handler */
-edma_transfer_config_t g_transferConfig;                 /* Edma transfer config. */
-volatile uint32_t g_index                          = 0U; /* Index of the g_dacDataArray array. */
+static edma_handle_t g_EDMA_Handle;                             /* Edma handler */
+static edma_transfer_config_t g_transferConfig;                 /* Edma transfer config. */
+static volatile uint32_t g_index                          = 0U; /* Index of the g_dacDataArray array. */
 
 
 /*
@@ -67,10 +67,10 @@ uint16_t buffers[2][AUDIO_PLAYER_BUFF_SIZE];
 uint16_t * activeBuffer = buffers[0];
 uint16_t * backBuffer= buffers[1];
 */
-int16_t buffers[2][AUDIO_PLAYER_BUFF_SIZE];
-int16_t * activeBuffer = buffers[0];
-int16_t * backBuffer= buffers[1];
-bool backBufferFree = false;
+static int16_t buffers[2][AUDIO_PLAYER_BUFF_SIZE];
+static int16_t * activeBuffer = buffers[0];
+static int16_t * backBuffer= buffers[1];
+static bool backBufferFree = false;
 
 
 /*******************************************************************************

@@ -4,90 +4,103 @@
   @author   Grupo 2 - Lab de Micros
  ******************************************************************************/
 
+/******************************************************************************
+ * 		INCLUDES HEADER FILES
+ ****************************************************************************/
+#include "fsl_edma.h"
+#include "fsl_dmamux.h"
 
-#include "dma.h"
 #include "ftm.h"
 #include "board.h"
 #include "matrix_display.h"
 #include "MK64F12.h"
 
-#define PIXEL_SIZE 24
+/***************************************************************************
+*	CONSTANT AND MACRO DEFINITIONS
+****************************************************************************/
 
-#define ZERO 10
-#define ONE 20
-#define PULSE 30 - 1
+#define PIXEL_SIZE (24U)
+#define DMA_CHANEL (1U)
 
-static uint16_t buffer_1[DISPLAY_SIZE * PIXEL_SIZE + 1];
-static uint16_t buffer_2[DISPLAY_SIZE * PIXEL_SIZE + 1];
+#define ZERO 	(10U)
+#define ONE 	(20U)
+#define PULSE 	(29U) // 30 - 1
+
+/***************************************************************************
+*	LOCAL VARIABLES WITH FILE LEVEL SCOPE
+****************************************************************************/
+static uint16_t buffers[2][DISPLAY_SIZE * PIXEL_SIZE + 1];
+static uint16_t * currBuffer;
+
 static pixel_t pixel_buffer[DISPLAY_SIZE];
 static bool change_buffer = false;
 static uint8_t bright = 2;
 static bool on = true;
 
-void md_dmaCallback(void);
+static edma_handle_t g_EDMA_Handle;                             /* Edma handler */
+static edma_transfer_config_t g_transferConfig;                 /* Edma transfer config. */
+
+/***************************************************************************
+*	LOCAL FUNCTION DECLARATION
+****************************************************************************/
+
+static void md_dmaCallback(edma_handle_t *handle, void *userData, bool transferDone, uint32_t tcds);
+
+/***************************************************************************
+*	GLOBAL FUNCTION DEFINITIONS
+****************************************************************************/
 
 void md_Init(void)
 {
-	buffer_1[0] = 2;
-	buffer_2[0] = 2;
+	buffers[0][0] = 2;
+	buffers[1][0] = 2;
 	for (int i = 1; i <= DISPLAY_SIZE * PIXEL_SIZE; i++)
 	{
-		buffer_1[i] = ZERO;
-		buffer_2[i] = ZERO;
+		buffers[0][i] = ZERO;
+		buffers[1][i] = ZERO;
 	}
+	currBuffer = buffers[0];
 
 	PWM_Init(0, FTM_CH_0, FTM_PSC_x2, 2, 1, 4, FTM_lAssertedHigh, PULSE, ZERO, FTM_DMA_ON);
 
-	int16_t ret = -sizeof(buffer_1);
-	DMA_Init(0, 20, (uint32_t)(buffer_1), FTM_GetCnVAddress(0, 0), 0x02, 0x0, DMA16_bits, DMA16_bits, 2,
-			 sizeof(buffer_1) / sizeof(buffer_1[0]), ret, &md_dmaCallback);
-}
-void md_changeBackBuffer(void)
-{
-	if(!on && change_buffer)
-	{
-		for(int i = 1; i <= DISPLAY_SIZE*PIXEL_SIZE; i++)
-		{
-			buffer_1[i] = buffer_2[i];
+	DMAMUX_Init(DMAMUX);
+	DMAMUX_SetSource(DMAMUX, DMA_CHANEL, FTM_DMA_SOURCE);
 
-		}
-		change_buffer = false;
-	}
+	edma_config_t userConfig;
+
+	EDMA_GetDefaultConfig(&userConfig);
+    EDMA_Init(DMA0, &userConfig);
+    EDMA_CreateHandle(&g_EDMA_Handle, DMA0, DMA_CHANEL);
+    EDMA_SetCallback(&g_EDMA_Handle, md_dmaCallback, NULL);
+
+    EDMA_PrepareTransfer(&g_transferConfig, (void *)(currBuffer), sizeof(uint16_t),
+                            (void *)FTM_GetCnVAddress(0, 0), sizeof(uint16_t),
+							sizeof(uint16_t), (DISPLAY_SIZE * PIXEL_SIZE + 1)* sizeof(uint16_t) ,
+							kEDMA_MemoryToPeripheral);
+
+    EDMA_SetTransferConfig(DMA0, DMA_CHANEL, &g_transferConfig, NULL);
+    EDMA_StartTransfer(&g_EDMA_Handle);
 }
 
 void md_writeBuffer(pixel_t *new_buffer)
 {
 	uint16_t i = 0;
-	for (int i = 1; i <= DISPLAY_SIZE * PIXEL_SIZE; i++)
+	uint16_t * backBuffer = (currBuffer == buffers[0]) ? buffers[1]:buffers[0];
+
+	for (i = 1; i <= DISPLAY_SIZE * PIXEL_SIZE; i++)
 	{
-		buffer_1[i] = ZERO;
-		buffer_2[i] = ZERO;
+		backBuffer[i] = ZERO;
 	}
+
 	for (i = 0; i < DISPLAY_SIZE; i++)
 	{
 		pixel_buffer[i] = new_buffer[i];
-		buffer_2[i * 24 + 8 - bright] = new_buffer[i].G ? ONE : ZERO;
-		buffer_2[i * 24 + 16 - bright] = new_buffer[i].R ? ONE : ZERO;
-		buffer_2[i * 24 + 24 - bright] = new_buffer[i].B ? ONE : ZERO;
+
+		backBuffer[i * 24 +  8 - bright] = new_buffer[i].G ? ONE : ZERO;
+		backBuffer[i * 24 + 16 - bright] = new_buffer[i].R ? ONE : ZERO;
+		backBuffer[i * 24 + 24 - bright] = new_buffer[i].B ? ONE : ZERO;
 	}
 	change_buffer = true;
-}
-
-void md_dmaCallback(void)
-{
-	while(!FTM_IsInterruptPending (0,FTM_CH_0)); // Sync with CHF
-
-	if(on)
-	{
-		FTM_offOM(0,0);
-		on = !on;
-	}
-	else
-	{
-		on = !on;
-		FTM_onOM(0,0);
-	}
-
 }
 
 pixel_t md_makeColor(bool r, bool g, bool b)
@@ -107,4 +120,44 @@ void md_setBrightness(uint8_t brigthness)
 		bright = new_b;
 		md_writeBuffer(pixel_buffer);
 	}
+}
+
+/***************************************************************************
+*	LOCAL FUNCTION DEFINITIONS
+****************************************************************************/
+
+static void md_dmaCallback(edma_handle_t *handle, void *userData, bool transferDone, uint32_t tcds)
+{
+	EDMA_ClearChannelStatusFlags(DMA0, DMA_CHANEL, kEDMA_InterruptFlag);
+	while(!FTM_IsInterruptPending (0,FTM_CH_0)); // Sync with CHF
+
+	if(on)
+	{
+		FTM_offOM(0,0);
+		on = !on;
+	}
+	else
+	{
+		on = !on;
+		FTM_onOM(0,0);
+	}
+
+	if(change_buffer)
+	{
+		if(currBuffer == buffers[0])
+			currBuffer = buffers[1];
+		else
+			currBuffer = buffers[0];
+
+		change_buffer = false;
+	}
+
+	EDMA_PrepareTransfer(&g_transferConfig, (void *)(currBuffer), sizeof(uint16_t),
+	                            (void *)FTM_GetCnVAddress(0, 0), sizeof(uint16_t),
+								sizeof(uint16_t), (DISPLAY_SIZE * PIXEL_SIZE + 1) * sizeof(uint16_t) ,
+								kEDMA_MemoryToPeripheral);
+
+	EDMA_SetTransferConfig(DMA0, DMA_CHANEL, &g_transferConfig, NULL);
+	EDMA_StartTransfer(&g_EDMA_Handle);
+
 }
