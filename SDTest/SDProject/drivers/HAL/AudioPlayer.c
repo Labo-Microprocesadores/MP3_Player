@@ -24,7 +24,7 @@
 #define DEMO_PDB_DAC_INTERVAL_VALUE 0xFFFU
 #define DEMO_DAC_BASEADDR           DAC0
 #define DEMO_DMAMUX_BASEADDR        DMAMUX
-#define DEMO_DMA_CHANNEL            0U
+#define DEMO_DMA_CHANNEL            1U
 #define DEMO_DMA_DAC_SOURCE         45U
 #define DEMO_DMA_BASEADDR           DMA0
 #define DAC_DATA_REG_ADDR           0x400cc000U
@@ -275,10 +275,10 @@ void AudioPlayer_Stop(void)
 
 static void EDMA_Configuration(void)
 {
-    edma_config_t userConfig;
+    //edma_config_t userConfig;
 
-    EDMA_GetDefaultConfig(&userConfig);
-    EDMA_Init(DEMO_DMA_BASEADDR, &userConfig);
+    //EDMA_GetDefaultConfig(&userConfig);
+    //EDMA_Init(DEMO_DMA_BASEADDR, &userConfig);
     EDMA_CreateHandle(&g_EDMA_Handle, DEMO_DMA_BASEADDR, DEMO_DMA_CHANNEL);
     EDMA_SetCallback(&g_EDMA_Handle, Edma_Callback, NULL);
 }
@@ -286,7 +286,7 @@ static void EDMA_Configuration(void)
 static void DMAMUX_Configuration(void)
 {
     /* Configure DMAMUX */
-    DMAMUX_Init(DEMO_DMAMUX_BASEADDR);
+   // DMAMUX_Init(DEMO_DMAMUX_BASEADDR);
     DMAMUX_SetSource(DEMO_DMAMUX_BASEADDR, DEMO_DMA_CHANNEL, DEMO_DMA_DAC_SOURCE); /* Map ADC source to channel 0 */
 }
 

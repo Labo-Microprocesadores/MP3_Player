@@ -23,6 +23,7 @@ drivers/MCAL \
 drivers/SDK/SD \
 drivers/SDK \
 source \
+source/fft \
 source/fsm/States \
 source/fsm \
 startup \

@@ -174,7 +174,7 @@ void EDMA_GetDefaultConfig(edma_config_t *config)
     /* Initializes the configure structure to zero. */
     (void)memset(config, 0, sizeof(*config));
 
-    config->enableRoundRobinArbitration = false;
+    config->enableRoundRobinArbitration = true;
     config->enableHaltOnError           = true;
     config->enableContinuousLinkMode    = false;
     config->enableDebugMode             = false;

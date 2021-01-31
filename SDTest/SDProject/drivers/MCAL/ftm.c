@@ -48,7 +48,7 @@ void PWM_Init(FTM_t id, FTM_Channel_t channel, FTM_Prescal_t prescaler,
 	FTM_SetCounter(id, channel, pwm_duty);
 
 	FTM_DmaMode(id, channel, is_dma ? FTM_DMA_ON : FTM_DMA_OFF); // DMA ON
-	FTM_StartClock(id);
+
 }
 
 void FTM_SetPrescaler(FTM_t id, FTM_Prescal_t data)

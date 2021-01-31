@@ -19,13 +19,16 @@
 #include "file_system_manager.h"
 #include "ff.h"
 #include "matrix_display.h"
+#include "gpio.h"
+#include "SysTick.h"
+#include "vumeterRefresh.h"
 
 /*******************************************************************************
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
  ******************************************************************************/
 #define BUFFER_SIZE (AUDIO_PLAYER_BUFF_SIZE)
-const pixel_t blank = {0,0,0};
-const pixel_t on = {1,1,1};
+const pixel_t blank = {false,false,false};
+const pixel_t on = {true, true, true};
 /*******************************************************************************
  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
  ******************************************************************************/
@@ -34,22 +37,40 @@ static Mp3File_t currFile;
 static int maxFile = 0;
 static bool start = false;
 
-SDK_ALIGN(uint16_t g_bufferRead[BUFFER_SIZE], SD_BUFFER_ALIGN_SIZE);
-SDK_ALIGN(uint8_t g_bufferRead2[BUFFER_SIZE*2], SD_BUFFER_ALIGN_SIZE);
+SDK_ALIGN(static uint16_t g_bufferRead[BUFFER_SIZE], SD_BUFFER_ALIGN_SIZE);
+SDK_ALIGN(static uint8_t g_bufferRead2[BUFFER_SIZE*2], SD_BUFFER_ALIGN_SIZE);
 
-static pixel_t pixel_buffer[DISPLAY_SIZE];
+static pixel_t m_pixel_buffer[DISPLAY_SIZE];
 void fillBuffer(void);
 /*******************************************************************************
  *******************************************************************************
                         GLOBAL FUNCTION DEFINITIONS
  *******************************************************************************/
-
+void update(void)
+{
+	static uint8_t counter = 0;
+	for(uint8_t j=0; j < DISPLAY_SIZE; j++)
+	{
+			if(counter != j)
+			{
+				m_pixel_buffer[j] = blank;
+			}
+			else
+			{
+				m_pixel_buffer[j] = on;
+			}
+	}
+	counter = (counter + 1)%(DISPLAY_SIZE-8);
+	md_writeBuffer(m_pixel_buffer);
+}
 /* Función que se llama 1 vez, al comienzo del programa */
 void App_Init(void)
 {
+	SysTick_Init();
+	//SysTick_AddCallback(update, 23);
 	Mm_Init();
 	LCD_Init();
-	AudioPlayer_Init();
+
 	maxFile = FileSystem_GetFilesCount();
 	if(maxFile != 0)
 	{
@@ -58,13 +79,15 @@ void App_Init(void)
 		f_close(&g_fileObject);
 	}
 	md_Init();
-	md_setBrightness(0);
+	/*md_setBrightness(0);
 	for(int i = 0; i <  DISPLAY_SIZE;i++)
 	{
-		pixel_buffer[i] = blank;
+		m_pixel_buffer[i] = on;
 	}
-
-	md_writeBuffer(pixel_buffer);
+	md_writeBuffer(m_pixel_buffer);
+	*/
+	AudioPlayer_Init();
+	vumeterRefresh_init();
 }
 
 /* Función que se llama constantemente en un ciclo infinito */
@@ -84,15 +107,6 @@ void App_Run(void)
 			LCD_writeStrInPos(track, 8, 0, 0);
 			LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path)-1, 1, 0, MIDIUM);
 
-			uint8_t counter = currFile.index+1;
-			for(uint8_t j; j < 8; j++)
-			{
-				for(uint8_t k; k<8;k++)
-				{
-					pixel_buffer[8*j+k] = (counter & (1<<j))?blank:on;
-				}
-			}
-			md_writeBuffer(pixel_buffer);
 			AudioPlayer_LoadSongInfo(g_bufferRead, 44100);
 			AudioPlayer_Play();
 			fillBuffer();
@@ -113,6 +127,7 @@ void fillBuffer(void)
 {
 	FRESULT error;
 	UINT bytesRead;
+	float arr[1024];
 
 	memset(g_bufferRead2, 0, sizeof(g_bufferRead2));
 	memset(g_bufferRead, 0, sizeof(g_bufferRead));
@@ -146,16 +161,14 @@ void fillBuffer(void)
 		LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path)-1, 1, 0, MIDIUM);
 		printf("TRACK %d: %s\r\n", currFile.index, currFile.path);
 		f_open(&g_fileObject, _T(currFile.path), (FA_READ));
-		uint8_t counter = currFile.index+1;
-		for(uint8_t j; j < 8; j++)
-		{
-			for(uint8_t k; k<8;k++)
-			{
-				pixel_buffer[8*j+k] = (counter & (1<<j))?blank:on;
-			}
-		}
-		md_writeBuffer(pixel_buffer);
+
 	}
+	//update();
+	for(uint16_t i = 0; i<1024; i++)
+	{
+		arr[i] = 1.0 * g_bufferRead[i];
+	}
+	vumeterRefresh_fft(arr, 44100.0, 80, 10000);
 }
 
 
