@@ -158,7 +158,6 @@
     <ClCompile Include="..\id3\read_id3.c" />
     <ClCompile Include="..\wav\wav.c" />
     <ClCompile Include="decoder.c" />
-    <ClCompile Include="loading.c" />
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
@@ -171,7 +170,6 @@
     <ClInclude Include="..\id3\read_id3.h" />
     <ClInclude Include="..\wav\wav.h" />
     <ClInclude Include="decoder.h" />
-    <ClInclude Include="loading.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -69,9 +69,6 @@
     <ClCompile Include="main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="loading.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\wav\wav.c">
       <Filter>Resource Files</Filter>
     </ClCompile>
@@ -99,9 +96,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="decoder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="loading.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\wav\wav.h">
