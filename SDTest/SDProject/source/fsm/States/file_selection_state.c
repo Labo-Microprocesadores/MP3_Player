@@ -133,6 +133,7 @@ static void initialFileFetching(void)
 //TODO: Add file parameter
 static void printFileInfo(void)
 {
+	LCD_clearDisplay();
 	//TODO: Show the file's name and data.
 	LCD_writeStrInPos("Archivo Prueba", 14, 0, 0);
 	LCD_writeStrInPos("Artista Prueba", 14, 0, 0);
