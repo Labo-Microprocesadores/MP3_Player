@@ -41,6 +41,10 @@ static void showTime(void);
  */
 static void stopShowingTime(void);
 
+/**
+ * @brief Changes the energy consumption mode of the device.
+ * @param EnergyConsumptionMode_t energy mode.
+ */
 static void setEnergyConsumptionMode(EnergyConsumptionMode_t energyConsumptionMode);
 /*******************************************************************************
  * FUNCTIONS WITH GLOBAL SCOPE
