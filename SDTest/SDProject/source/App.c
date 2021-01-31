@@ -104,7 +104,7 @@ void App_Run(void)
 			char track[] = "TRACK __";
 			track[6] = currFile.index/10 + '0';
 			track[7] = currFile.index%10 + '0';
-			LCD_writeStrInPos(track, 8, 0, 0);
+			//LCD_writeStrInPos(track, 8, 0, 0);
 			LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path)-1, 1, 0, MIDIUM);
 
 			AudioPlayer_LoadSongInfo(g_bufferRead, 44100);

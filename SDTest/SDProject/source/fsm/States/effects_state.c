@@ -8,6 +8,7 @@
  * INCLUDE HEADER FILES
  ******************************************************************************/
 #include <fsm/States/effects_state.h>
+#include <../drivers/HAL/LCD_GDM1602A.h>
 #include "queue.h"
 /*******************************************************************************
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
@@ -58,7 +59,8 @@ void Effects_initState(void)
  ******************************************************************************/
 static void showTitle(void)
 {
-	//TODO: show Title "Effects".
+	LCD_clearDisplay();
+	LCD_writeStrInPos("Efectos", 7, 0 , 0);
 	showingTitle = true;
 	titleTimerID = Timer_AddCallback(&stopShowingTitle,TITLE_TIME, true );
 }
@@ -67,7 +69,7 @@ static void showTitle(void)
 static void stopShowingTitle(void)
 {
 	    showingTitle = false;
-	    //   TODO: erase screen
+	    LCD_clearDisplay();
 	    setCurrentOption();
 
 }

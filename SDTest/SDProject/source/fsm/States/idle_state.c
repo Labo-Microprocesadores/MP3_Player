@@ -61,6 +61,9 @@ void idle_onUserInteraction(void)
 static void showTime(void)
 {
 	//TODO: fetch current time and show it on the display.
+  LCD_clearDisplay();
+	LCD_writeStrInPos("20:03PM", 7, 0 , 0);
+  LCD_writeStrInPos("31/01/21", 8, 1 , 0);
 }
 
 

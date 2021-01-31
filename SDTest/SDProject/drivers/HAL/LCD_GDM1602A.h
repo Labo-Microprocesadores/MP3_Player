@@ -1,9 +1,8 @@
-/*
- * LCD_GDM1602A.h
- *
- *  Created on: 16 ene. 2021
- *      Author: Santi
- */
+ /***************************************************************************
+  @file     LCD_GDM1602A.h
+  @brief    LCD controller
+  @author   Grupo 2 - Lab de Micros
+ ******************************************************************************/
 
 #ifndef LCD_GDM1602A_H_
 #define LCD_GDM1602A_H_
