@@ -7,7 +7,6 @@
 #ifndef PLAYER_STATE_H
 #define PLAYER_STATE_H
 
-
 /*******************************************************************************
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
@@ -17,6 +16,5 @@ void Player_Play(void);
 void Player_Stop(void);
 void Player_PlayNextSong(void);
 void Player_PlayPreviousSong(void);
-
 
 #endif /* PLAYER_STATE_H*/

@@ -17,9 +17,9 @@
 /*******************************************************************************
  * GLOBAL VARIABLES WITH FILE LEVEL SCOPE
  ******************************************************************************/
-	// Estas dos cosas vienen del mp3 decoder
-	uint16_t * currentSongFrame;
-	uint16_t sampleRate;
+// Estas dos cosas vienen del mp3 decoder
+uint16_t *currentSongFrame;
+uint16_t sampleRate;
 
 /*******************************************************************************
  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
@@ -32,60 +32,91 @@
  ******************************************************************************/
 void Player_InitState(void)
 {
-
 }
 void Player_Pause(void)
 {
   AudioPlayer_Pause();
+  // y frenar la fft.
 }
 void Player_Play(void)
 {
-	// Estas dos cosas vienen del mp3 decoder
-	//uint16_t * firstSongFrame = ;
-	//uint16_t sampleRate = ;
-	f_open(&g_fileObject, _T(currFile.path), (FA_READ));
-	fillBuffer();
+  // Estas dos cosas vienen del mp3 decoder
+  //uint16_t * firstSongFrame = ;
+  //uint16_t sampleRate = ;
+  f_open(&g_fileObject, _T(currFile.path), (FA_READ));
+  fillBuffer();
 
-	char track[] = "TRACK __";
-	track[6] = currFile.index/10 + '0';
-	track[7] = currFile.index%10 + '0';
-	//LCD_writeStrInPos(track, 8, 0, 0);
-	LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path)-1, 1, 0, MIDIUM);
+  char track[] = "TRACK __";
+  track[6] = currFile.index / 10 + '0';
+  track[7] = currFile.index % 10 + '0';
+  //LCD_writeStrInPos(track, 8, 0, 0);
+  LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path) - 1, 1, 0, MIDIUM);
 
-	AudioPlayer_LoadSongInfo(currentSongFrame, sampleRate);
-	AudioPlayer_Play();
-	fillBuffer();
+  AudioPlayer_LoadSongInfo(currentSongFrame, sampleRate);
+  AudioPlayer_Play();
+  fillBuffer();
 }
 void Player_Stop(void)
 {
   AudioPlayer_Stop();
+  //y frenar la fft
+
+  // Estas dos cosas vienen del mp3 decoder
+  //uint16_t * currentSongFrame = ;//el primer frame de la song
+  //uint16_t sampleRate = ;
+  f_open(&g_fileObject, _T(currFile.path), (FA_READ));
+  fillBuffer();
+
+  char track[] = "TRACK __";
+  track[6] = currFile.index / 10 + '0';
+  track[7] = currFile.index % 10 + '0';
+  //LCD_writeStrInPos(track, 8, 0, 0);
+  LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path) - 1, 1, 0, MIDIUM);
+
+  AudioPlayer_LoadSongInfo(currentSongFrame, sampleRate); // mandarle el primer frame
+  AudioPlayer_Play();
+  fillBuffer();
 }
 void Player_PlayNextSong(void)
 {
   AudioPlayer_Stop();
-	// Estas dos cosas vienen del mp3 decoder
-	//uint16_t * currentSongFrame = ;//el primer frame de la song
-	//uint16_t sampleRate = ;
-	f_open(&g_fileObject, _T(currFile.path), (FA_READ));
-	fillBuffer();
+  // y frenar fft
 
-	char track[] = "TRACK __";
-	track[6] = currFile.index/10 + '0';
-	track[7] = currFile.index%10 + '0';
-	//LCD_writeStrInPos(track, 8, 0, 0);
-	LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path)-1, 1, 0, MIDIUM);
+  currFile++;
+  // Estas dos cosas vienen del mp3 decoder
+  //uint16_t * currentSongFrame = ;//el primer frame de la song
+  //uint16_t sampleRate = ;
+  f_open(&g_fileObject, _T(currFile.path), (FA_READ));
+  fillBuffer();
 
-	AudioPlayer_LoadSongInfo(currentSongFrame, sampleRate); // mandarle el primer frame
-	AudioPlayer_Play();
-	fillBuffer();
+  char track[] = "TRACK __";
+  track[6] = currFile.index / 10 + '0';
+  track[7] = currFile.index % 10 + '0';
+  //LCD_writeStrInPos(track, 8, 0, 0);
+  LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path) - 1, 1, 0, MIDIUM);
+
+  AudioPlayer_LoadSongInfo(currentSongFrame, sampleRate); // mandarle el primer frame
+  AudioPlayer_Play();
+  fillBuffer();
 }
 
 void Player_PlayPreviousSong(void)
 {
   AudioPlayer_Stop();
-	// Estas dos cosas vienen del mp3 decoder
-	//firstSongFrame = ;
-	//sampleRate = ;
-	AudioPlayer_LoadSongInfo(firstSongFrame, sampleRate);
+  currFile--;
+  // Estas dos cosas vienen del mp3 decoder
+  //uint16_t * currentSongFrame = ;//el primer frame de la song
+  //uint16_t sampleRate = ;
+  f_open(&g_fileObject, _T(currFile.path), (FA_READ));
+  fillBuffer();
+
+  char track[] = "TRACK __";
+  track[6] = currFile.index / 10 + '0';
+  track[7] = currFile.index % 10 + '0';
+  //LCD_writeStrInPos(track, 8, 0, 0);
+  LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path) - 1, 1, 0, MIDIUM);
+
+  AudioPlayer_LoadSongInfo(currentSongFrame, sampleRate); // mandarle el primer frame
   AudioPlayer_Play();
+  fillBuffer();
 }

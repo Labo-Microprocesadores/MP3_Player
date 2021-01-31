@@ -37,7 +37,7 @@ static bool alreadyInit = false;
  ******************************************************************************/
 bool Timer_Init(void)
 {
-	if(!alreadyInit)
+	if (!alreadyInit)
 	{
 		SysTick_Init();
 		SysTick_AddCallback(&Timer_PISR, TIMER_ISR_PERIOD); //Requests SysTick to periodically call the Timer's ISR.
@@ -149,7 +149,6 @@ TimerError Timer_Reset(int timerID)
 		{
 			idFound = true;				  //ID found
 			timerElements[i].counter = 0; //Resets the calling of the callback.
-
 		}
 		i++;
 	};

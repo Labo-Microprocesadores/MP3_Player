@@ -11,7 +11,6 @@
  ******************************************************************************/
 #include <stdint.h>
 
-
 /*******************************************************************************
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
@@ -19,6 +18,5 @@
  * @brief Initializes the main effects state
  */
 void Effects_InitState(void);
-
 
 #endif /* EFFECTS_STATE_H */

@@ -43,7 +43,7 @@ bool emitEvent(EventType type)
 {
   event_t *temp = eventQueue.p2write;
 
-   if (eventQueue.p2write->ack == false) // si en la cola de eventos no hay mas lugar -> error
+  if (eventQueue.p2write->ack == false) // si en la cola de eventos no hay mas lugar -> error
   {
     return false;
   }
@@ -59,7 +59,7 @@ bool emitEvent(EventType type)
     (eventQueue.p2write)++; // sino avanza una posicion
   }
   temp->p2NextEv = (struct EVENT *)eventQueue.p2write; // guardo en el evento anterior un puntero al evento actual para no tener que problems con el movimiento en get_event
-  temp->ack = false;                              // marco el lugar como ocupado
+  temp->ack = false;                                   // marco el lugar como ocupado
   return true;
 }
 

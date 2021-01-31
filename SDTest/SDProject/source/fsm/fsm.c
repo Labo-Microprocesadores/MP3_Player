@@ -24,4 +24,3 @@ STATE *fsm(STATE *p_tabla_estado, event evento_actual)
 
    return (p_tabla_estado);
 }
-

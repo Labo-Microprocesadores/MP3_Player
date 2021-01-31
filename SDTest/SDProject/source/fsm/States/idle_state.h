@@ -11,7 +11,6 @@
  ******************************************************************************/
 #include <stdint.h>
 
-
 /*******************************************************************************
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
@@ -24,6 +23,5 @@ void Idle_InitState(void);
  * @brief Stop showing the time when the user interacts with the system.
  */
 void Idle_OnUserInteraction(void);
-
 
 #endif /* IDLE_STATE_H */

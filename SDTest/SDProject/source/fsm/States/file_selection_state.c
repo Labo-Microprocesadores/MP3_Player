@@ -8,7 +8,7 @@
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
  ******************************************************************************/
 
-#define TITLE_TIME  5000
+#define TITLE_TIME 5000
 
 /*******************************************************************************
  * INCLUDE HEADER FILES
@@ -24,7 +24,7 @@
  ******************************************************************************/
 static bool showingTitle;
 static int titleTimerID = -1;
-uint16_t * firstSongFrame;
+uint16_t *firstSongFrame;
 uint16_t sampleRate;
 
 /*******************************************************************************
@@ -55,7 +55,6 @@ static void initialFileFetching(void);
  */
 static void printFileInfo(void);
 
-
 /*******************************************************************************
  *******************************************************************************
                         GLOBAL FUNCTION DEFINITIONS
@@ -64,37 +63,35 @@ static void printFileInfo(void);
 
 void FileSelection_initState(void)
 {
-    showTitle();    //Shows the state's title.
-	titleTimerID = Timer_AddCallback(&stopShowingTitle,TITLE_TIME, true );
-    
+	showTitle(); //Shows the state's title.
+	titleTimerID = Timer_AddCallback(&stopShowingTitle, TITLE_TIME, true);
 }
 
 void FileSelection_NextFile(void)
 {
 	//TODO: get file.
-	printFileInfo();//TODO: add file parameter.
+	printFileInfo(); //TODO: add file parameter.
 }
 
 void FileSelection_PreviousFile(void)
 {
 	//TODO: get file.
-	printFileInfo();//TODO: add file parameter.
+	printFileInfo(); //TODO: add file parameter.
 }
-
 
 void FileSelection_SelectFile(void)
 {
-	// Estas dos cosas vienen del mp3 decoder
+	//TODO: Estas dos cosas vienen del mp3 decoder
 	//uint16_t * firstSongFrame = ;
 	//uint16_t sampleRate = ;
 	f_open(&g_fileObject, _T(currFile.path), (FA_READ));
 	fillBuffer();
 
 	char track[] = "TRACK __";
-	track[6] = currFile.index/10 + '0';
-	track[7] = currFile.index%10 + '0';
+	track[6] = currFile.index / 10 + '0';
+	track[7] = currFile.index % 10 + '0';
 	//LCD_writeStrInPos(track, 8, 0, 0);
-	LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path)-1, 1, 0, MIDIUM);
+	LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path) - 1, 1, 0, MIDIUM);
 
 	AudioPlayer_LoadSongInfo(firstSongFrame, sampleRate);
 	AudioPlayer_Play();
@@ -108,24 +105,23 @@ void FileSelection_SelectFile(void)
 static void showTitle(void)
 {
 	LCD_clearDisplay();
-	LCD_writeStrInPos("Elegir Archivo", 14, 0 , 0);
+	LCD_writeStrInPos("Elegir Archivo", 14, 0, 0);
 	showingTitle = true;
-	titleTimerID = Timer_AddCallback(&stopShowingTitle,TITLE_TIME, true );
+	titleTimerID = Timer_AddCallback(&stopShowingTitle, TITLE_TIME, true);
 }
-
 
 static void stopShowingTitle(void)
 {
-	    showingTitle = false;
-	    LCD_clearDisplay();
-	    showFiles();
+	showingTitle = false;
+	LCD_clearDisplay();
+	showFiles();
 }
 
 static void userInteractionStopsTitle(void)
 {
-		Timer_Delete(titleTimerID);
-		titleTimerID = -1;
-		stopShowingTitle();
+	Timer_Delete(titleTimerID);
+	titleTimerID = -1;
+	stopShowingTitle();
 }
 
 static void initialFileFetching(void)
@@ -134,12 +130,10 @@ static void initialFileFetching(void)
 	printFileInfo(); //TODO: send first file
 }
 
-    //TODO: Add file parameter
+//TODO: Add file parameter
 static void printFileInfo(void)
 {
-	    //TODO: Show the file's name and data.
-		LCD_writeStrInPos("Archivo Prueba", 14, 0 , 0);
-		LCD_writeStrInPos("Artista Prueba", 14, 0 , 0);
+	//TODO: Show the file's name and data.
+	LCD_writeStrInPos("Archivo Prueba", 14, 0, 0);
+	LCD_writeStrInPos("Artista Prueba", 14, 0, 0);
 }
-
-

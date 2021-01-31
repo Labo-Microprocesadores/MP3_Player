@@ -27,7 +27,7 @@
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
  ******************************************************************************/
 #define BUFFER_SIZE (AUDIO_PLAYER_BUFF_SIZE)
-const pixel_t blank = {false,false,false};
+const pixel_t blank = {false, false, false};
 const pixel_t on = {true, true, true};
 /*******************************************************************************
  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
@@ -38,7 +38,7 @@ static int maxFile = 0;
 static bool start = false;
 
 SDK_ALIGN(static uint16_t g_bufferRead[BUFFER_SIZE], SD_BUFFER_ALIGN_SIZE);
-SDK_ALIGN(static uint8_t g_bufferRead2[BUFFER_SIZE*2], SD_BUFFER_ALIGN_SIZE);
+SDK_ALIGN(static uint8_t g_bufferRead2[BUFFER_SIZE * 2], SD_BUFFER_ALIGN_SIZE);
 
 static pixel_t m_pixel_buffer[DISPLAY_SIZE];
 void fillBuffer(void);
@@ -49,18 +49,18 @@ void fillBuffer(void);
 void update(void)
 {
 	static uint8_t counter = 0;
-	for(uint8_t j=0; j < DISPLAY_SIZE; j++)
+	for (uint8_t j = 0; j < DISPLAY_SIZE; j++)
 	{
-			if(counter != j)
-			{
-				m_pixel_buffer[j] = blank;
-			}
-			else
-			{
-				m_pixel_buffer[j] = on;
-			}
+		if (counter != j)
+		{
+			m_pixel_buffer[j] = blank;
+		}
+		else
+		{
+			m_pixel_buffer[j] = on;
+		}
 	}
-	counter = (counter + 1)%(DISPLAY_SIZE-8);
+	counter = (counter + 1) % (DISPLAY_SIZE - 8);
 	md_writeBuffer(m_pixel_buffer);
 }
 /* Función que se llama 1 vez, al comienzo del programa */
@@ -72,7 +72,7 @@ void App_Init(void)
 	LCD_Init();
 
 	maxFile = FileSystem_GetFilesCount();
-	if(maxFile != 0)
+	if (maxFile != 0)
 	{
 		currFile = FileSystem_GetFirstFile();
 		printf("TRACK %d: %s\r\n", currFile.index, currFile.path);
@@ -93,19 +93,19 @@ void App_Init(void)
 /* Función que se llama constantemente en un ciclo infinito */
 void App_Run(void)
 {
-	if(!start)
+	if (!start)
 	{
-		if(LCD_isInit())
+		if (LCD_isInit())
 		{
 			start = true;
 			f_open(&g_fileObject, _T(currFile.path), (FA_READ));
 			fillBuffer();
 
 			char track[] = "TRACK __";
-			track[6] = currFile.index/10 + '0';
-			track[7] = currFile.index%10 + '0';
+			track[6] = currFile.index / 10 + '0';
+			track[7] = currFile.index % 10 + '0';
 			//LCD_writeStrInPos(track, 8, 0, 0);
-			LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path)-1, 1, 0, MIDIUM);
+			LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path) - 1, 1, 0, MIDIUM);
 
 			AudioPlayer_LoadSongInfo(g_bufferRead, 44100);
 			AudioPlayer_Play();
@@ -114,14 +114,13 @@ void App_Run(void)
 		return;
 	}
 
-	if(AudioPlayer_IsBackBufferFree())
+	if (AudioPlayer_IsBackBufferFree())
 	{
 		AudioPlayer_UpdateBackBuffer(g_bufferRead);
 		/* Prepare buffer for next time */
 		fillBuffer();
 	}
 }
-
 
 void fillBuffer(void)
 {
@@ -133,19 +132,19 @@ void fillBuffer(void)
 	memset(g_bufferRead, 0, sizeof(g_bufferRead));
 
 	error = f_read(&g_fileObject, g_bufferRead2, sizeof(g_bufferRead2), &bytesRead);
-	for(uint16_t i = 0; i < bytesRead/2; i++)
+	for (uint16_t i = 0; i < bytesRead / 2; i++)
 	{
-		g_bufferRead[i] = ((uint16_t)g_bufferRead2[2*i]<<8)|(g_bufferRead2[2*i+1]);
+		g_bufferRead[i] = ((uint16_t)g_bufferRead2[2 * i] << 8) | (g_bufferRead2[2 * i + 1]);
 	}
 	if ((error) || (bytesRead != sizeof(g_bufferRead)))
 	{
-		for(uint16_t i = (bytesRead/sizeof(uint16_t)); i<1024U; i++)
+		for (uint16_t i = (bytesRead / sizeof(uint16_t)); i < 1024U; i++)
 		{
 			g_bufferRead[i] = 1024U;
 		}
 
 		f_close(&g_fileObject);
-		if(currFile.index == maxFile)
+		if (currFile.index == maxFile)
 		{
 			currFile = FileSystem_GetFirstFile();
 		}
@@ -155,25 +154,17 @@ void fillBuffer(void)
 		}
 
 		char track[] = "TRACK __";
-		track[6] = currFile.index/10 + '0';
-		track[7] = currFile.index%10 + '0';
+		track[6] = currFile.index / 10 + '0';
+		track[7] = currFile.index % 10 + '0';
 		LCD_writeStrInPos(track, 8, 0, 0);
-		LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path)-1, 1, 0, MIDIUM);
+		LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path) - 1, 1, 0, MIDIUM);
 		printf("TRACK %d: %s\r\n", currFile.index, currFile.path);
 		f_open(&g_fileObject, _T(currFile.path), (FA_READ));
-
 	}
 	//update();
-	for(uint16_t i = 0; i<1024; i++)
+	for (uint16_t i = 0; i < 1024; i++)
 	{
 		arr[i] = 1.0 * g_bufferRead[i];
 	}
 	vumeterRefresh_fft(arr, 44100.0, 80, 10000);
 }
-
-
-
-
-
-
-

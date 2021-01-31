@@ -12,9 +12,14 @@
 /*******************************************************************************
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
  ******************************************************************************/
-/*******************************************************************************
- * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
- ******************************************************************************/
+/*********************************************************
+ * 		LOCAL STRUCTS AND ENUMS
+ ********************************************************/
+typedef enum
+{
+  LOW_CONSUMPTION,
+  HIGH_CONSUMPTION,
+} EnergyConsumptionMode_t;
 
 /*******************************************************************************
  * GLOBAL VARIABLES WITH FILE LEVEL SCOPE
@@ -35,6 +40,8 @@ static void showTime(void);
  * @brief Stops showing the time on the display.
  */
 static void stopShowingTime(void);
+
+static void setEnergyConsumptionMode(EnergyConsumptionMode_t energyConsumptionMode);
 /*******************************************************************************
  * FUNCTIONS WITH GLOBAL SCOPE
  ******************************************************************************/
@@ -42,15 +49,15 @@ static void stopShowingTime(void);
 void idle_initState(void)
 {
 
-    showTime();
-    //TODO: enter low energy consumption mode.
+  showTime();
+  setEnergyConsumptionMode(LOW_CONSUMPTION);
 }
 
 void idle_onUserInteraction(void)
 {
-	//TODO: enter high energy consumption mode.
-	stopShowingTime();
-	emitEvent(START_EV);
+  setEnergyConsumptionMode(HIGH_CONSUMPTION);
+  stopShowingTime();
+  emitEvent(START_EV);
 }
 
 /*******************************************************************************
@@ -60,15 +67,30 @@ void idle_onUserInteraction(void)
  ******************************************************************************/
 static void showTime(void)
 {
-	//TODO: fetch current time and show it on the display.
+  //TODO: fetch current time and show it on the display.
   LCD_clearDisplay();
-	LCD_writeStrInPos("20:03PM", 7, 0 , 0);
-  LCD_writeStrInPos("31/01/21", 8, 1 , 0);
+  LCD_writeStrInPos("20:03PM", 7, 0, 0);
+  LCD_writeStrInPos("31/01/21", 8, 1, 0);
 }
-
 
 static void stopShowingTime(void)
 {
-	//When the user interacts with the system, stop showing the time
+  LCD_clearDisplay();
 }
 
+static void setEnergyConsumptionMode(EnergyConsumptionMode_t energyConsumptionMode)
+{
+  switch (energyConsumptionMode)
+  {
+  case LOW_CONSUMPTION:
+    //TODO: Set energy consumption
+    break;
+
+  case HIGH_CONSUMPTION:
+    //TODO: Set energy consumption
+    break;
+
+  default:
+    break;
+  }
+}
