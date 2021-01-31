@@ -94,6 +94,35 @@ char *FileSystem_GetFileName(Mp3File_t file)
 	return fileName;
 }
 
+
+void FileSystem_PrintFiles(bool completePath)
+{
+	printf("Files list: \n");
+	for (int i = 0; i < filesCount; i++)
+	{
+		if (completePath)
+		{
+			printf("Track: %d -> %s\n", i, files[i].path);
+		}
+		else
+		{
+			char *fileName = FileSystem_GetFileName(files[i]);
+			printf("Track: %d -> %s\n", i, fileName);
+		}
+	}
+	printf("\n");
+}
+
+int FileSystem_GetFilesCount(void)
+{
+	return filesCount;
+}
+
+Mp3File_t FileSystem_ResetFiles(void)
+{
+	filesCount = 0;
+	return FileSystem_GetFirstFile();
+}
 void FileSystem_Test(void)
 {
 	/*TEST*/
@@ -164,33 +193,4 @@ void FileSystem_Test(void)
 		printf("Index Anterior: %d\n", currentFile.index);
 	}
 	printf("\n");
-}
-
-void FileSystem_PrintFiles(bool completePath)
-{
-	printf("Files list: \n");
-	for (int i = 0; i < filesCount; i++)
-	{
-		if (completePath)
-		{
-			printf("Track: %d -> %s\n", i, files[i].path);
-		}
-		else
-		{
-			char *fileName = FileSystem_GetFileName(files[i]);
-			printf("Track: %d -> %s\n", i, fileName);
-		}
-	}
-	printf("\n");
-}
-
-int FileSystem_GetFilesCount(void)
-{
-	return filesCount;
-}
-
-Mp3File_t FileSystem_ResetFiles(void)
-{
-	filesCount = 0;
-	return FileSystem_GetFirstFile();
 }
