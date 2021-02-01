@@ -40,7 +40,7 @@ static bool start = false;
 SDK_ALIGN(static uint16_t g_bufferRead[BUFFER_SIZE], SD_BUFFER_ALIGN_SIZE);
 SDK_ALIGN(static uint8_t g_bufferRead2[BUFFER_SIZE*2], SD_BUFFER_ALIGN_SIZE);
 
-static pixel_t m_pixel_buffer[DISPLAY_SIZE];
+//static pixel_t m_pixel_buffer[DISPLAY_SIZE];
 void fillBuffer(void);
 /*******************************************************************************
  *******************************************************************************
@@ -49,25 +49,28 @@ void fillBuffer(void);
 void update(void)
 {
 	static uint8_t counter = 0;
-	for(uint8_t j=0; j < DISPLAY_SIZE; j++)
+	static bool state = false;
+	counter++;
+	if(counter == (state?5:30))
 	{
-			if(counter != j)
-			{
-				m_pixel_buffer[j] = blank;
-			}
-			else
-			{
-				m_pixel_buffer[j] = on;
-			}
+		if(!state)
+		{
+			AudioPlayer_Pause();
+		}
+		else
+		{
+			AudioPlayer_Play();
+		}
+		state = !state;
+		counter = 0;
 	}
-	counter = (counter + 1)%(DISPLAY_SIZE-8);
-	md_writeBuffer(m_pixel_buffer);
+
 }
 /* Función que se llama 1 vez, al comienzo del programa */
 void App_Init(void)
 {
 	SysTick_Init();
-	//SysTick_AddCallback(update, 23);
+	//SysTick_AddCallback(update, 1000 /*, false*/);
 	Mm_Init();
 	LCD_Init();
 
@@ -79,13 +82,7 @@ void App_Init(void)
 		f_close(&g_fileObject);
 	}
 	md_Init();
-	/*md_setBrightness(0);
-	for(int i = 0; i <  DISPLAY_SIZE;i++)
-	{
-		m_pixel_buffer[i] = on;
-	}
-	md_writeBuffer(m_pixel_buffer);
-	*/
+
 	AudioPlayer_Init();
 	vumeterRefresh_init();
 }

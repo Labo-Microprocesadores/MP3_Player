@@ -1,4 +1,4 @@
-App.c:49:6:update	16	static
-App.c:67:6:App_Init	280	static
-App.c:94:6:App_Run	32	static
-App.c:126:6:fillBuffer	4656	static
+App.c:49:6:update	8	static
+App.c:70:6:App_Init	280	static
+App.c:91:6:App_Run	32	static
+App.c:123:6:fillBuffer	4656	static

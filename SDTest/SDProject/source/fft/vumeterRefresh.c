@@ -30,7 +30,8 @@ void vumeterRefresh_init()
 int vumeterRefresh_fft(float32_t * inputSignal, float32_t sampleRate, int lowerFreqBand, int higherFreqBand)
 { 
     //float32_t vumeterValues[NUMBER_OF_BANDS];
-    unsigned int usableBins = (SAMPLE_LENGTH / 2 - 1);
+    static char average = 0;
+	unsigned int usableBins = (SAMPLE_LENGTH / 2 - 1);
 
     float32_t nyquistFreq = sampleRate / 2;
     double inv_binWidth = SAMPLE_LENGTH/sampleRate;
@@ -82,12 +83,18 @@ int vumeterRefresh_fft(float32_t * inputSignal, float32_t sampleRate, int lowerF
         }
         int roundedHeight = (int)(temp/MAX_AMPLITUDE);
         //int roundedHeight = floor((vumeterValues[i]/(higherBin - lowerBin))/1000);
-        vumeterMatrix[i] = roundedHeight > VUMETER_HEIGHT ? VUMETER_HEIGHT : roundedHeight;
+        vumeterMatrix[i] += (roundedHeight > VUMETER_HEIGHT ? VUMETER_HEIGHT : roundedHeight)/2;
 
         currentBinFreq = nextBinFreq;
         nextBinFreq *= freqMultiplierPerBand;
     } 
-    vumeterRefresh_write_to_matrix(vumeterMatrix);
+    average = (average+1)%2;
+    if(average == 0)
+    {
+    	vumeterRefresh_write_to_matrix(vumeterMatrix);
+    	for(int j = 0; j <  NUMBER_OF_BANDS; j++)
+    		 vumeterMatrix[j] = 0;
+    }
     return 0;//???
 }
     //TODO

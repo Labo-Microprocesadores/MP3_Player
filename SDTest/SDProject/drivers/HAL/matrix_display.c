@@ -33,7 +33,7 @@
 
 #define PRE			(0U)
 #define POST		(0U)
-#define PIXELS		(DISPLAY_SIZE * PIXEL_SIZE)
+#define PIXELS		((DISPLAY_SIZE+8) * PIXEL_SIZE)
 #define MATRIX_LEN	(PRE + PIXELS + POST)
 
 #define ZERO 	LOW_DUTY//(10U)
@@ -143,9 +143,9 @@ void md_writeBuffer(pixel_t *new_buffer)
 	{
 		pixel_buffer[i] = new_buffer[i];
 
-		backBuffer[PRE + i * 24 +  8 - bright] = new_buffer[i].G ? ONE : ZERO;
-		backBuffer[PRE + i * 24 + 16 - bright] = new_buffer[i].R ? ONE : ZERO;
-		backBuffer[PRE + i * 24 + 24 - bright] = new_buffer[i].B ? ONE : ZERO;
+		backBuffer[PRE + i * 24 +  7 - bright] = new_buffer[i].G ? ONE : ZERO;
+		backBuffer[PRE + i * 24 + 15 - bright] = new_buffer[i].R ? ONE : ZERO;
+		backBuffer[PRE + i * 24 + 23 - bright] = new_buffer[i].B ? ONE : ZERO;
 	}
 //	change_buffer = true;
 

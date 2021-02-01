@@ -11796,3 +11796,252 @@ Caused by: java.io.FileNotFoundException: D:\Facultad\GitMicros\TpFinal\SDTest\S
 
 !ENTRY com.crt.log 1 0 2021-01-31 17:47:00.340
 !MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.crt.utils 1 0 2021-01-31 17:56:01.638
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.crt.log 1 0 2021-01-31 17:56:01.696
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-31 17:56:01.703
+!MESSAGE PEMicro continuous memory service session connected on port 10224->53719 @ 127.0.0.1
+
+!ENTRY org.eclipse.cdt.core 1 0 2021-01-31 19:36:37.484
+!MESSAGE Indexed 'frdmk64f_rtc_func' (0 sources, 0 headers) in 0 sec: 0 declarations; 0 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0 %)
+
+!ENTRY com.crt.log 4 -1 2021-01-31 19:36:53.403
+!MESSAGE Attempted to beginRule: R/, does not match outer scope rule: MultiRule[P/LCDProject,P/Math,P/SDProject]
+!STACK 0
+java.lang.Exception: org.eclipse.core.runtime.CoreException: Attempted to beginRule: R/, does not match outer scope rule: MultiRule[P/LCDProject,P/Math,P/SDProject]
+	at com.crt.utils.general.Reporter.log(Reporter.java:580)
+	at com.nxp.mcuxpresso.core.datamodels.SDKChipVendorDatabase.save(SDKChipVendorDatabase.java:513)
+	at com.crt.config.database.ChipVendor.save(ChipVendor.java:741)
+	at com.crt.config.database.TargetConfig.save(TargetConfig.java:1524)
+	at com.crt.config.SaveViewInfo.saving(SaveViewInfo.java:102)
+	at org.eclipse.core.internal.resources.SaveManager.executeLifecycle(SaveManager.java:387)
+	at org.eclipse.core.internal.resources.SaveManager$1.run(SaveManager.java:204)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.core.internal.resources.SaveManager.broadcastLifecycle(SaveManager.java:207)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1164)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1143)
+	at org.eclipse.core.internal.resources.Project.close(Project.java:197)
+	at org.eclipse.ui.actions.CloseResourceAction.invokeOperation(CloseResourceAction.java:171)
+	at org.eclipse.ui.actions.WorkspaceAction.execute(WorkspaceAction.java:159)
+	at org.eclipse.ui.actions.WorkspaceAction$1.runInWorkspace(WorkspaceAction.java:459)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:42)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: org.eclipse.core.runtime.CoreException: Attempted to beginRule: R/, does not match outer scope rule: MultiRule[P/LCDProject,P/Math,P/SDProject]
+	at org.eclipse.cdt.internal.core.settings.model.ExceptionFactory.createCoreException(ExceptionFactory.java:29)
+	at org.eclipse.cdt.internal.core.settings.model.AbstractCProjectDescriptionStorage.setProjectDescription(AbstractCProjectDescriptionStorage.java:210)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionStorageManager.setProjectDescription(CProjectDescriptionStorageManager.java:153)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.setProjectDescription(CProjectDescriptionManager.java:866)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.setProjectDescription(CProjectDescriptionManager.java:816)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.setProjectDescription(CProjectDescriptionManager.java:809)
+	at org.eclipse.cdt.core.model.CoreModel.setProjectDescription(CoreModel.java:1400)
+	at com.nxp.mcuxpresso.core.datamodels.SDKChipVendorDatabase.save(SDKChipVendorDatabase.java:508)
+	... 15 more
+Caused by: java.lang.IllegalArgumentException: Attempted to beginRule: R/, does not match outer scope rule: MultiRule[P/LCDProject,P/Math,P/SDProject]
+	at org.eclipse.core.runtime.Assert.isLegal(Assert.java:66)
+	at org.eclipse.core.internal.jobs.ThreadJob.illegalPush(ThreadJob.java:137)
+	at org.eclipse.core.internal.jobs.ThreadJob.push(ThreadJob.java:392)
+	at org.eclipse.core.internal.jobs.ImplicitJobs.begin(ImplicitJobs.java:66)
+	at org.eclipse.core.internal.jobs.JobManager.beginRule(JobManager.java:298)
+	at org.eclipse.core.internal.resources.WorkManager.checkIn(WorkManager.java:124)
+	at org.eclipse.core.internal.resources.Workspace.prepareOperation(Workspace.java:2242)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2287)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2317)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.runOperation(CModelOperation.java:644)
+	at org.eclipse.cdt.internal.core.settings.model.AbstractCProjectDescriptionStorage.setProjectDescription(AbstractCProjectDescriptionStorage.java:208)
+	... 21 more
+
+!ENTRY com.crt.utils 1 0 2021-01-31 20:35:14.799
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-31 20:35:14.821
+!MESSAGE PEMicro continuous memory service session connected on port 10224->53036 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-01-31 20:35:14.833
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.crt.utils 1 0 2021-01-31 20:38:04.037
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-31 20:38:04.052
+!MESSAGE PEMicro continuous memory service session connected on port 10224->53150 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-01-31 20:38:04.076
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.crt.utils 1 0 2021-01-31 20:47:18.325
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-31 20:47:18.342
+!MESSAGE PEMicro continuous memory service session connected on port 10224->54002 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-01-31 20:47:18.361
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.crt.utils 1 0 2021-01-31 20:49:01.701
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-31 20:49:01.714
+!MESSAGE PEMicro continuous memory service session connected on port 10224->54193 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-01-31 20:49:01.736
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.crt.utils 1 0 2021-01-31 21:03:21.838
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-31 21:03:21.853
+!MESSAGE PEMicro continuous memory service session connected on port 10224->55574 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-01-31 21:03:21.876
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.crt.utils 1 0 2021-01-31 21:07:27.907
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-31 21:07:27.922
+!MESSAGE PEMicro continuous memory service session connected on port 10224->55983 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-01-31 21:07:27.941
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.crt.utils 1 0 2021-01-31 21:23:17.402
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-31 21:23:17.418
+!MESSAGE PEMicro continuous memory service session connected on port 10224->57555 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-01-31 21:23:17.439
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.crt.utils 1 0 2021-01-31 21:24:54.685
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-31 21:24:54.703
+!MESSAGE PEMicro continuous memory service session connected on port 10224->57734 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-01-31 21:24:54.721
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.crt.utils 1 0 2021-01-31 21:49:05.882
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-31 21:49:05.905
+!MESSAGE PEMicro continuous memory service session connected on port 10224->60129 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-01-31 21:49:05.919
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.crt.utils 1 0 2021-01-31 21:53:00.340
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-31 21:53:00.355
+!MESSAGE PEMicro continuous memory service session connected on port 10224->60543 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-01-31 21:53:00.634
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.nxp.mcuxpresso.core.debug 4 0 2021-01-31 21:53:02.691
+!MESSAGE An error occurred while getting register xpsr
+
+!ENTRY org.eclipse.cdt.dsf.gdb 4 10001 2021-01-31 21:53:02.699
+!MESSAGE Connection is shut down
+
+!ENTRY com.crt.utils 1 0 2021-01-31 22:00:18.396
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-31 22:00:18.414
+!MESSAGE PEMicro continuous memory service session connected on port 10224->61271 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-01-31 22:00:18.428
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.crt.utils 1 0 2021-01-31 22:00:49.220
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-31 22:00:49.235
+!MESSAGE PEMicro continuous memory service session connected on port 10224->61343 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-01-31 22:00:49.254
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.crt.utils 1 0 2021-01-31 22:03:19.725
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-31 22:03:19.742
+!MESSAGE PEMicro continuous memory service session connected on port 10224->61610 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-01-31 22:03:19.760
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.crt.utils 1 0 2021-01-31 22:06:22.922
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-31 22:06:22.936
+!MESSAGE PEMicro continuous memory service session connected on port 10224->61939 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-01-31 22:06:22.952
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.crt.utils 1 0 2021-01-31 22:08:19.509
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-31 22:08:19.523
+!MESSAGE PEMicro continuous memory service session connected on port 10224->62153 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-01-31 22:08:19.545
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.nxp.mcuxpresso.core.debug 4 0 2021-01-31 23:28:56.301
+!MESSAGE There is already a running debug session for the launch configuration 'SDProject PE Debug'.
+
+!ENTRY org.eclipse.cdt.dsf.gdb 4 10001 2021-01-31 23:29:01.888
+!MESSAGE Connection is shut down
+
+!ENTRY com.crt.utils 1 0 2021-01-31 23:29:52.196
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-31 23:29:52.215
+!MESSAGE PEMicro continuous memory service session connected on port 10224->53717 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-01-31 23:29:52.235
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.crt.utils 1 0 2021-01-31 23:30:55.596
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-31 23:30:55.611
+!MESSAGE PEMicro continuous memory service session connected on port 10224->53833 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-01-31 23:30:55.634
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.crt.utils 1 0 2021-01-31 23:32:11.720
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-31 23:32:11.735
+!MESSAGE PEMicro continuous memory service session connected on port 10224->53976 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-01-31 23:32:11.751
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.crt.utils 1 0 2021-01-31 23:33:11.764
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-31 23:33:11.780
+!MESSAGE PEMicro continuous memory service session connected on port 10224->54095 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-01-31 23:33:11.802
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.crt.utils 1 0 2021-01-31 23:34:23.641
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-01-31 23:34:23.656
+!MESSAGE PEMicro continuous memory service session connected on port 10224->54234 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-01-31 23:34:23.682
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
