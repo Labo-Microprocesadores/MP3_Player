@@ -7,17 +7,16 @@
 #ifndef FILE_SYSTEM_MANAGER_H_
 #define FILE_SYSTEM_MANAGER_H_
 
-
 #include <stdbool.h>
-#define STR_SIZE	255
+#define STR_SIZE 255
 /*******************************************************************************
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
  ******************************************************************************/
 typedef struct
 {
-	char path[STR_SIZE];
-	int index;
-}Mp3File_t;
+  char path[STR_SIZE];
+  int index;
+} Mp3File_t;
 
 /*******************************************************************************
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
@@ -26,14 +25,13 @@ typedef struct
 /*
  * @brief Detects if a file's path corresponds to a .mp3 file.
  * */
-bool FileSystem_isMp3File(char * path);
+bool FileSystem_isMp3File(char *path);
 /*
  * @brief Adds a file to the file system.
  * @param path: complete file's path.
  *
  * */
-void FileSystem_AddFile(char * path);
-
+void FileSystem_AddFile(char *path);
 
 /*
  * @brief Gets the first file of the file system.
@@ -63,7 +61,7 @@ Mp3File_t FileSystem_GetPreviousFile(Mp3File_t currentFile);
  * @return char * file's name. (Ex.: if file's path is "/dir0/dir1/hello.mp3", it's file's name is "hello");
  *
  * */
-char * FileSystem_GetFileName(Mp3File_t file);
+char *FileSystem_GetFileName(Mp3File_t file);
 
 /*
  * @brief Runs tests on each function of the FileSystem's driver.
@@ -79,7 +77,6 @@ void FileSystem_Test(void);
  * */
 void FileSystem_PrintFiles(bool completePath);
 
-
 /*
  * @brief Gets the amount of files that exist in the file system.
  */
@@ -91,6 +88,5 @@ int FileSystem_GetFilesCount(void);
  *
  * */
 Mp3File_t FileSystem_ResetFiles(void);
-
 
 #endif /* FILE_SYSTEM_MANAGER_H_ */

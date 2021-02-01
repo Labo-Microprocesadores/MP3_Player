@@ -8,7 +8,7 @@
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
  ******************************************************************************/
 
-#define TITLE_TIME  5000
+#define TITLE_TIME 5000
 
 /*******************************************************************************
  * INCLUDE HEADER FILES
@@ -16,11 +16,18 @@
 #include <stdbool.h>
 #include "file_selection_state.h"
 #include "queue.h"
+#include "AudioPlayer.h"
+#include "Timer.h"
+
+//incluir mp3 decoder
+
 /*******************************************************************************
  * GLOBAL VARIABLES WITH FILE LEVEL SCOPE
  ******************************************************************************/
 static bool showingTitle;
 static int titleTimerID = -1;
+uint16_t *firstSongFrame;
+uint16_t sampleRate;
 
 /*******************************************************************************
  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
@@ -40,6 +47,15 @@ static void stopShowingTitle(void);
  */
 static void userInteractionStopsTitle(void);
 
+/**
+ * @brief Fetches the files that exist in the current SD.
+ */
+static void initialFileFetching(void);
+
+/**
+ * @brief Prints the file's name and artist
+ */
+static void printFileInfo(void);
 
 /*******************************************************************************
  *******************************************************************************
@@ -49,25 +65,40 @@ static void userInteractionStopsTitle(void);
 
 void FileSelection_initState(void)
 {
-    showTitle();    //Shows the state's title.
-    //TODO: fetch files.
-    //TODO: Show the first file.
+	showTitle(); //Shows the state's title.
+	titleTimerID = Timer_AddCallback(&stopShowingTitle, TITLE_TIME, true);
 }
 
 void FileSelection_NextFile(void)
 {
-
+	//TODO: get file.
+	printFileInfo(); //TODO: add file parameter.
 }
 
 void FileSelection_PreviousFile(void)
 {
-
+	//TODO: get file.
+	printFileInfo(); //TODO: add file parameter.
 }
-
 
 void FileSelection_SelectFile(void)
 {
+	//TODO: Estas dos cosas vienen del mp3 decoder
+	//uint16_t * firstSongFrame = ;
+	//uint16_t sampleRate = ;
 
+	/*f_open(&g_fileObject, _T(currFile.path), (FA_READ));
+	fillBuffer();
+
+	char track[] = "TRACK __";
+	track[6] = currFile.index / 10 + '0';
+	track[7] = currFile.index % 10 + '0';
+	LCD_writeStrInPos(track, 8, 0, 0);
+	LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path) - 1, 1, 0, MIDIUM);
+
+	AudioPlayer_LoadSongInfo(firstSongFrame, sampleRate);
+	AudioPlayer_Play();
+	fillBuffer();*/
 }
 /*******************************************************************************
  *******************************************************************************
@@ -76,25 +107,37 @@ void FileSelection_SelectFile(void)
  ******************************************************************************/
 static void showTitle(void)
 {
-	//TODO: show Title "Select File".
+	LCD_clearDisplay();
+	LCD_writeStrInPos("Elegir Archivo", 14, 0, 0);
 	showingTitle = true;
-	titleTimerID = Timer_AddCallback(&stopShowingTitle,TITLE_TIME, true );
+	titleTimerID = Timer_AddCallback(&stopShowingTitle, TITLE_TIME, true);
 }
-
 
 static void stopShowingTitle(void)
 {
-	    showingTitle = false;
-	    //   TODO: erase screen
-	    showFiles();
-
+	showingTitle = false;
+	LCD_clearDisplay();
+	showFiles();
 }
 
 static void userInteractionStopsTitle(void)
 {
-		Timer_Delete(titleTimerID);
-		titleTimerID = -1;
-		stopShowingTitle();
+	Timer_Delete(titleTimerID);
+	titleTimerID = -1;
+	stopShowingTitle();
 }
 
+static void initialFileFetching(void)
+{
+	//TODO: fetch files.
+	printFileInfo(); //TODO: send first file
+}
 
+//TODO: Add file parameter
+static void printFileInfo(void)
+{
+	LCD_clearDisplay();
+	//TODO: Show the file's name and data.
+	LCD_writeStrInPos("Archivo Prueba", 14, 0, 0);
+	LCD_writeStrInPos("Artista Prueba", 14, 0, 0);
+}

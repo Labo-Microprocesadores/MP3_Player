@@ -10,13 +10,13 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define FILE_ARRAY_SIZE	200
+#define FILE_ARRAY_SIZE 200
 
 /*******************************************************************************
  * PRIVATE VARIABLES WITH FILE LEVEL SCOPE
  ******************************************************************************/
 
-Mp3File_t files [FILE_ARRAY_SIZE] = {};
+Mp3File_t files[FILE_ARRAY_SIZE] = {};
 int filesCount = 0;
 
 /*******************************************************************************
@@ -25,22 +25,22 @@ int filesCount = 0;
  *******************************************************************************
  ******************************************************************************/
 
-bool FileSystem_isMp3File(char * path)
+bool FileSystem_isMp3File(char *path)
 {
-    char *extension;
-    if ((extension = strrchr(path, '.')) != NULL)
-    {
-        if (strcmp(extension, ".mp3") == 0)
-        {
-            return true;
-        }
-    }
-    return false;
+	char *extension;
+	if ((extension = strrchr(path, '.')) != NULL)
+	{
+		if (strcmp(extension, ".mp3") == 0)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
-void FileSystem_AddFile(char * path)
+void FileSystem_AddFile(char *path)
 {
-	Mp3File_t * newFile = &files[filesCount];
+	Mp3File_t *newFile = &files[filesCount];
 	strcpy(newFile->path, path);
 	newFile->index = filesCount;
 	filesCount++;
@@ -59,7 +59,7 @@ Mp3File_t FileSystem_GetFirstFile(void)
 Mp3File_t FileSystem_GetNextFile(Mp3File_t currentFile)
 {
 	int nextFileIndex = currentFile.index + 1;
-	if(currentFile.index == filesCount)
+	if (currentFile.index == filesCount)
 	{
 		nextFileIndex = 0;
 	}
@@ -69,14 +69,14 @@ Mp3File_t FileSystem_GetNextFile(Mp3File_t currentFile)
 Mp3File_t FileSystem_GetPreviousFile(Mp3File_t currentFile)
 {
 	int previousFileIndex = currentFile.index - 1;
-	if(currentFile.index == 0)
+	if (currentFile.index == 0)
 	{
 		previousFileIndex = filesCount - 1;
 	}
 	return files[previousFileIndex];
 }
 
-char * FileSystem_GetFileName(Mp3File_t file)
+char *FileSystem_GetFileName(Mp3File_t file)
 {
 	char str[STR_SIZE];
 	strcpy(str, file.path);
@@ -89,14 +89,43 @@ char * FileSystem_GetFileName(Mp3File_t file)
 		strcpy(fileNamePart, pch);
 		pch = strtok(NULL, "/");
 	}
-	char * fileName;
+	char *fileName;
 	fileName = strtok(fileNamePart, ".");
 	return fileName;
 }
 
-void FileSystem_Test (void)
+
+void FileSystem_PrintFiles(bool completePath)
 {
-	 /*TEST*/
+	printf("Files list: \n");
+	for (int i = 0; i < filesCount; i++)
+	{
+		if (completePath)
+		{
+			printf("Track: %d -> %s\n", i, files[i].path);
+		}
+		else
+		{
+			char *fileName = FileSystem_GetFileName(files[i]);
+			printf("Track: %d -> %s\n", i, fileName);
+		}
+	}
+	printf("\n");
+}
+
+int FileSystem_GetFilesCount(void)
+{
+	return filesCount;
+}
+
+Mp3File_t FileSystem_ResetFiles(void)
+{
+	filesCount = 0;
+	return FileSystem_GetFirstFile();
+}
+void FileSystem_Test(void)
+{
+	/*TEST*/
 	char *filename = "/dir0/hola.mp3";
 	char *filename2 = "/dir0/hola2.mp3";
 	char *filename3 = "/dir11/dir1/hola3.mp3";
@@ -110,11 +139,11 @@ void FileSystem_Test (void)
 
 	/* Test File Addition & Test Get File Name */
 	printf("Test File Addition & Test Get File Name\n");
-	for (int i = 0; i< filesCount; i++)
+	for (int i = 0; i < filesCount; i++)
 	{
-		printf("File n%d path: %s\n", i ,files[i].path);
-		char * fileName = FileSystem_GetFileName(files[i]);
-		printf("File n%d name: %s\n", i ,fileName);
+		printf("File n%d path: %s\n", i, files[i].path);
+		char *fileName = FileSystem_GetFileName(files[i]);
+		printf("File n%d name: %s\n", i, fileName);
 	}
 	printf("\n");
 	/* Test Mp3 Recognition */
@@ -136,13 +165,13 @@ void FileSystem_Test (void)
 
 	/*Test File System Navigation*/
 	printf("Test File System Navigation\n");
-	for (int j = 0 ; j<2; j++)
+	for (int j = 0; j < 2; j++)
 	{
 		currentFile = FileSystem_GetNextFile(currentFile);
 		printf("Archivo Siguiente: %s\n", currentFile.path);
 	}
 
-	for (int k = 0; k<2; k++)
+	for (int k = 0; k < 2; k++)
 	{
 		currentFile = FileSystem_GetPreviousFile(currentFile);
 		printf("Anterior Archivo: %s\n", currentFile.path);
@@ -153,44 +182,15 @@ void FileSystem_Test (void)
 	printf("Test File System Overflow\n");
 	currentFile = FileSystem_GetFirstFile();
 	printf("Index: %d\n", currentFile.index);
-	for (int l = 0 ; l<10; l++)
+	for (int l = 0; l < 10; l++)
 	{
 		currentFile = FileSystem_GetNextFile(currentFile);
 		printf("Index Siguiente: %d\n", currentFile.index);
 	}
-	for (int m = 0; m<10; m++)
+	for (int m = 0; m < 10; m++)
 	{
 		currentFile = FileSystem_GetPreviousFile(currentFile);
 		printf("Index Anterior: %d\n", currentFile.index);
 	}
 	printf("\n");
-
-}
-
-void FileSystem_PrintFiles(bool completePath)
-{
-	printf("Files list: \n");
-	for (int i = 0; i< filesCount; i++)
-	{
-		if (completePath)
-		{
-			printf("Track: %d -> %s\n", i ,files[i].path);
-		}else
-		{
-			char * fileName = FileSystem_GetFileName(files[i]);
-			printf("Track: %d -> %s\n", i ,fileName);
-		}
-	}
-	printf("\n");
-}
-
-int FileSystem_GetFilesCount(void)
-{
-	return filesCount;
-}
-
-Mp3File_t FileSystem_ResetFiles(void)
-{
-	filesCount = 0;
-	return FileSystem_GetFirstFile();
 }
