@@ -7,7 +7,7 @@
 /*******************************************************************************
  * INCLUDE HEADER FILES
  ******************************************************************************/
-#include "file_system_manager.h"
+//#include "file_system_manager.h"
 
 #include <stdio.h>
 
@@ -19,6 +19,7 @@
 #include "diskio.h"
 #include "sdmmc_config.h"
 
+#include "memory_manager.h"
 /*******************************************************************************
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
  ******************************************************************************/
@@ -36,7 +37,9 @@ static bool SD_connected = false;
 static bool SD_error = false;
 static bool SD_HostInitDone = false;
 static FATFS g_fileSystem;
-static Mp3File_t firstFile;
+
+
+static mm_callback my_cd;
 /*******************************************************************************
  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
  ******************************************************************************/
@@ -51,9 +54,11 @@ static void Mm_ScanFiles(char * path);
                         GLOBAL FUNCTION DEFINITIONS
  *******************************************************************************
  ******************************************************************************/
-void Mm_Init(void)
+void Mm_Init(mm_callback cd)
 {
-	firstFile = FileSystem_GetFirstFile();
+	my_cd = cd;
+
+	//firstFile = FileSystem_GetFirstFile();
 	SYSMPU->CESR &= ~SYSMPU_CESR_VLD_MASK;
 
 	BOARD_SD_Config(&g_sd, Mm_Callback, BOARD_SDMMC_SD_HOST_IRQ_PRIORITY, NULL);
@@ -72,7 +77,10 @@ void Mm_Init(void)
 	}
 }
 
-
+bool Mm_IsSDPresent(void)
+{
+	return SD_connected;
+}
 /*******************************************************************************
  *******************************************************************************
                         LOCAL FUNCTION DEFINITIONS
@@ -101,7 +109,7 @@ static void Mm_OnDesconection(void)
 	const TCHAR driverNumberBuffer[3U] = {SDDISK + '0', ':', '/'};
 	f_mount(NULL, driverNumberBuffer, 1U);
 	g_sd.initReady = false;
-	firstFile = FileSystem_ResetFiles();
+	//firstFile = FileSystem_ResetFiles();
 	printf("fuera\r\n");
 }
 
@@ -124,15 +132,12 @@ static void Mm_OnConnection(void)
 		return;
 	}
 
-	printf("\r\nList the file in that directory......\r\n");
-
 	char buff[100];
 	for (int i = 0; i<100;i++){buff[i] = 0;}
 
 	Mm_ScanFiles(buff);
 
 	//FileSystem_PrintFiles(true);
-	printf("Fin\r\n");
 }
 
 
@@ -172,8 +177,9 @@ static void Mm_ScanFiles(char * path)
 			char * fn = fileInformation.fname;
 			*(path+i) = '/'; strcpy(path+i+1, fn);
 
-			if (FileSystem_isMp3File(path))
-				FileSystem_AddFile(path);
+			//if (FileSystem_isMp3File(path))
+			//	FileSystem_AddFile(path);
+			my_cd(path);
 
 			*(path+i) = 0;
 		}

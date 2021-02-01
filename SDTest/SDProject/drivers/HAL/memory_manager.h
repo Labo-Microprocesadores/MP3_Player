@@ -19,10 +19,23 @@
  ******************************************************************************/
 #define SD_BUFFER_ALIGN_SIZE 	(4U)
 
+/*
+ * Callback to buid filesystem
+ */
+typedef void(*mm_callback)(char * path);
 /*******************************************************************************
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
 
-void Mm_Init(void);
+/*
+ * Init routine
+ * cd: a callback to receive and store the scanned files
+ */
+void Mm_Init(mm_callback cd);
+
+/*
+ * SD present or not
+ */
+bool Mm_IsSDPresent(void);
 
 #endif /* MEMORY_MANAGER_H_ */

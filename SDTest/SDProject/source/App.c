@@ -13,16 +13,21 @@
 #include <stdint.h>
 
 #include "fsl_common.h"
-#include "memory_manager.h"
-#include "LCD_GDM1602A.h"
-#include "AudioPlayer.h"
-#include "file_system_manager.h"
-#include "ff.h"
-#include "matrix_display.h"
+
 #include "gpio.h"
 #include "SysTick.h"
+
+#include "memory_manager.h"
+#include "file_system_manager.h"
+#include "ff.h"
+
+#include "LCD_GDM1602A.h"
+#include "matrix_display.h"
+#include "AudioPlayer.h"
 #include "vumeterRefresh.h"
 
+#include "board.h"
+#include "button.h"
 /*******************************************************************************
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
  ******************************************************************************/
@@ -36,6 +41,7 @@ static FIL g_fileObject;
 static Mp3File_t currFile;
 static int maxFile = 0;
 static bool start = false;
+static bool playing = false;
 
 SDK_ALIGN(static uint16_t g_bufferRead[BUFFER_SIZE], SD_BUFFER_ALIGN_SIZE);
 SDK_ALIGN(static uint8_t g_bufferRead2[BUFFER_SIZE * 2], SD_BUFFER_ALIGN_SIZE);
@@ -46,32 +52,70 @@ void fillBuffer(void);
  *******************************************************************************
                         GLOBAL FUNCTION DEFINITIONS
  *******************************************************************************/
-void update(void)
+void getEvents(void)
 {
-	static uint8_t counter = 0;
-	static bool state = false;
-	counter++;
-	if(counter == (state?5:30))
+	if(wasTap(PIN_SW_A))
 	{
-		if(!state)
-		{
+		if(playing)
 			AudioPlayer_Pause();
-		}
 		else
-		{
 			AudioPlayer_Play();
-		}
-		state = !state;
-		counter = 0;
+		playing = !playing;
 	}
+
+	if(wasTap(PIN_SW_B))
+	{
+		f_close(&g_fileObject);
+
+		currFile = FileSystem_GetPreviousFile(currFile);
+
+		char track[] = "TRACK __";
+		track[6] = currFile.index / 10 + '0';
+		track[7] = currFile.index % 10 + '0';
+		LCD_writeStrInPos(track, 8, 0, 0);
+		LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path) - 1, 1, 0, MIDIUM);
+		printf("TRACK %d: %s\r\n", currFile.index, currFile.path);
+		f_open(&g_fileObject, _T(currFile.path), (FA_READ));
+	}
+
+	if(wasTap(PIN_SW_C))
+	{
+		f_close(&g_fileObject);
+
+		currFile = FileSystem_GetNextFile(currFile);
+
+		char track[] = "TRACK __";
+		track[6] = currFile.index / 10 + '0';
+		track[7] = currFile.index % 10 + '0';
+		LCD_writeStrInPos(track, 8, 0, 0);
+		LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path) - 1, 1, 0, MIDIUM);
+		printf("TRACK %d: %s\r\n", currFile.index, currFile.path);
+		f_open(&g_fileObject, _T(currFile.path), (FA_READ));
+	}
+}
+void aux(char * path)
+{
+	if(FileSystem_isMp3File(path))
+		FileSystem_AddFile(path);
 }
 /* Función que se llama 1 vez, al comienzo del programa */
 void App_Init(void)
 {
 	SysTick_Init();
-	//SysTick_AddCallback(update, 1000 /*, false*/);
-	Mm_Init();
-	LCD_Init();
+
+	Mm_Init(aux); //Memory manager
+	LCD_Init();   //LCD Driver
+
+	md_Init();	  //NeoPixel matrix
+
+	AudioPlayer_Init();	//Audio Player
+	vumeterRefresh_init(); // FFT
+
+	buttonsInit();
+	buttonConfiguration(PIN_SW_A, LKP, 20); //20*50=1seg
+	buttonConfiguration(PIN_SW_B, LKP, 20);
+	buttonConfiguration(PIN_SW_C, LKP, 20);
+	buttonConfiguration(PIN_SW_D, LKP, 20);
 
 	maxFile = FileSystem_GetFilesCount();
 	if (maxFile != 0)
@@ -80,10 +124,7 @@ void App_Init(void)
 		printf("TRACK %d: %s\r\n", currFile.index, currFile.path);
 		f_close(&g_fileObject);
 	}
-	md_Init();
 
-	AudioPlayer_Init();
-	vumeterRefresh_init();
 }
 
 /* Función que se llama constantemente en un ciclo infinito */
@@ -105,16 +146,20 @@ void App_Run(void)
 
 			AudioPlayer_LoadSongInfo(g_bufferRead, 44100);
 			AudioPlayer_Play();
+			playing = true;
 			fillBuffer();
 		}
 		return;
 	}
-
-	if (AudioPlayer_IsBackBufferFree())
+	else
 	{
-		AudioPlayer_UpdateBackBuffer(g_bufferRead);
-		/* Prepare buffer for next time */
-		fillBuffer();
+		if (AudioPlayer_IsBackBufferFree())
+		{
+			AudioPlayer_UpdateBackBuffer(g_bufferRead);
+			/* Prepare buffer for next time */
+			fillBuffer();
+		}
+		getEvents();
 	}
 }
 

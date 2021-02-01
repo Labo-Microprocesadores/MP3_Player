@@ -12045,3 +12045,42 @@ Caused by: java.lang.IllegalArgumentException: Attempted to beginRule: R/, does 
 
 !ENTRY com.crt.log 1 0 2021-01-31 23:34:23.682
 !MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY org.eclipse.cdt.core 1 0 2021-02-01 00:02:48.152
+!MESSAGE Indexed 'SDProject' (46 sources, 74 headers) in 1.7 sec: 12,647 declarations; 36,079 references; 3 unresolved inclusions; 24 syntax errors; 271 unresolved names (0.55 %)
+
+!ENTRY com.crt.utils 1 0 2021-02-01 00:47:13.569
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-02-01 00:47:13.585
+!MESSAGE PEMicro continuous memory service session connected on port 10224->49579 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-02-01 00:47:13.604
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.crt.utils 1 0 2021-02-01 00:48:47.466
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-02-01 00:48:47.482
+!MESSAGE PEMicro continuous memory service session connected on port 10224->49752 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-02-01 00:48:47.503
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.crt.utils 1 0 2021-02-01 00:50:47.232
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-02-01 00:50:47.253
+!MESSAGE PEMicro continuous memory service session connected on port 10224->49962 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-02-01 00:50:47.272
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
+
+!ENTRY com.crt.utils 1 0 2021-02-01 00:52:07.965
+!MESSAGE Connected to 127.0.0.1 on port 10224.
+
+!ENTRY com.nxp.mcuxpresso.trace.core 1 0 2021-02-01 00:52:07.981
+!MESSAGE PEMicro continuous memory service session connected on port 10224->50105 @ 127.0.0.1
+
+!ENTRY com.crt.log 1 0 2021-02-01 00:52:08.003
+!MESSAGE Generic cortexM4 ROM base address will be used: e00ff000
