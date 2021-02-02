@@ -15,15 +15,12 @@
 #include <stdint.h>
 #include <string.h>
 
-#define ID3_MAX_SIZE      50
-#define TRACK_MAX_SIZE    10
-#define YEAR_MAX_SIZE     10
-
-
 
 /*******************************************************************************
 *				  CONSTANT AND MACRO DEFINITIONS USING #DEFINE
 ******************************************************************************/
+#define ID3_MAX_NUM_CHARS 50
+
 
 #define DECODED_BUFFER_SIZE 5000  
 
@@ -40,24 +37,6 @@ typedef enum
 	DECODER_OVERFLOW
 } decoder_return_t;
 
-typedef struct
-{
-	uint16_t    bitRate;
-	uint8_t     channelCount;
-	uint16_t	sampleRate;
-	uint16_t    binitsPerSample;
-	uint16_t    sampleCount;
-} decoder_data_t;
-
-typedef struct
-{
-	uint8_t title[ID3_MAX_SIZE];
-	uint8_t artist[ID3_MAX_SIZE];
-	uint8_t album[ID3_MAX_SIZE];
-	uint8_t trackNum[TRACK_MAX_SIZE];
-	uint8_t year[YEAR_MAX_SIZE];
-
-} decoder_tag_t;
 
 /*******************************************************************************
  *					FUNCTION PROTOTYPES WITH GLOBAL SCOPE
@@ -66,14 +45,14 @@ typedef struct
 /*
 * @brief Initialize the values inside the decoder_t decoder struct
 */
-void MP3DecoderInit(void);
+void decoder_MP3DecoderInit(void);
 
 /**
  * @brief This function open the encoded mp3 file, if it was open 
 		  close it reset the values and open again
  * @return true if it can open the mp3 file and false if it can not.
  */
-bool MP3LoadFile(const char* filename);
+bool decoder_MP3LoadFile(const char* filename);
 
 /**
  * @brief If the depth is not bigger than the MAX_DEPTH value 
@@ -90,23 +69,32 @@ bool MP3LoadFile(const char* filename);
  * @params decodedsamples: The pointer to an uint_16 data to store there the number of samples decoded
  * @return true if it can open the mp3 file and false if it can not.
  */
-decoder_return_t MP3DecodedFrame(short* outBuffer, uint16_t bufferSize, uint16_t* Decodedsamples);
+decoder_return_t decoder_MP3DecodedFrame(short* outBuffer, uint16_t bufferSize, uint16_t* Decodedsamples);
 
 
 /**
  * @brief get the info of the last frame data and store it inside 
-		  the pointers data passed as an argument
- * @params data: pointer to a variable where we can store the data of the frame 
+		  the pointer channelCount passed as an argument
+ * @params channelCount: pointer to a variable where we will store the number of channels.
  * @return true if the function can get the info of the last frame 
 		   and false if it can not (usually because there was no last frame)
  */
-bool MP3GetLastFrameData(decoder_data_t* data);
+bool decoder_MP3GetLastFrameChannelCount(uint8_t* channelCount);
 
 /**
  * @brief get the Data of the mp3's tag.
- * @params data: pointer to a variable where we can store the data of the mp3 tag.
+ * @params title: pointer to the char array where we will store the songs title.
+ * @params album: pointer to the char array where we will store the songs album.
+ * @params artist: pointer to the char array where we will store the songs artist.
+ * @params trackNum: pointer to the uint8_t array where we will store the songs track number in the album.
+ * @params year: pointer to the uint8_t array where we will store the album year.
  */
-bool MP3GetTagData(decoder_tag_t* data);
+void decoder_MP3GetTagData(char* title_, char* album_, char* artist_, uint8_t* trackNum_, uint8_t* year_);
 
+/**
+ * @brief getter of hasID3
+ * @return: the value of hasID3, true if the son has ID3 false if it hasnt.
+ */
+bool decoder_hasID3(void);
 
 #endif /* _DECODER_H_ */

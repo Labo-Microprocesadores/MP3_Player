@@ -61,24 +61,23 @@ int main(void)
 	uint16_t sampleCount;
 	// if there are 
 	uint16_t sampleRate = 0;
-	decoder_data_t frameData;
-	////WavFile* wav_file;
-	decoder_tag_t ID3Data;
-
-	////! initialize the wav part of the program
-	////wav_file = wav_open(FILEPATH_WAV, "wb");
-	////wav_set_format(wav_file, SAMPLE_FORMAT);
-	////wav_set_num_channels(wav_file, 1);
+	char title[ID3_MAX_NUM_CHARS];                                        // Title of the song
+	char artist[ID3_MAX_NUM_CHARS];                                       // Artist of the song
+	char album[ID3_MAX_NUM_CHARS];                                        // Album of the song
+	uint8_t trackNum[ID3_MAX_NUM_CHARS];                                  // Number of the track inside the album of the song
+	uint8_t year[ID3_MAX_NUM_CHARS];                                      // year of the songs album
+	uint8_t channelCount;
 
 	// we initializate the data to use the decoder.
-	MP3DecoderInit();
+	decoder_MP3DecoderInit();
 
 	// if we can open the mp3 file
-	if (MP3LoadFile(FILEPATH))
+	if (decoder_MP3LoadFile(FILEPATH))
 	{
-		// we show the info of the song
-		if (MP3GetTagData(&ID3Data))
-		{
+		if (decoder_hasID3()) {
+			//here we get the ID3data in our variables.
+			decoder_MP3GetTagData(title, artist, album, trackNum, year);
+			// we show the info of the song
 			//*************************************************
 			//! Here we can use the data to print in the screen
 			//*************************************************
@@ -90,6 +89,7 @@ int main(void)
 			printf("TRACK NUMBER: %s\n", ID3Data.trackNum);
 			printf("YEAR: %s\n \n", ID3Data.year);*/
 		}
+
 		// variable frames to count the number of frames decoded
 		int frames = 0;
 		int reference = 0;
@@ -98,19 +98,19 @@ int main(void)
 		while(true)
 		{
 			// with this function we update the sampleCount number
-			decoder_return_t check = MP3DecodedFrame(buffer, DECODED_BUFFER_SIZE, &sampleCount);
+			decoder_return_t check = decoder_MP3DecodedFrame(buffer, DECODED_BUFFER_SIZE, &sampleCount);
 			if (check == DECODER_WORKED)
 			{
 				// if there are a last frame get the data
-				MP3GetLastFrameData(&frameData);
+				if (!decoder_MP3GetLastFrameChannelCount(&channelCount)) {
+					//if you are here the decoder couldnt get the last frame channel count because there were no last frame it is the fist frame :)
+				}
 				// we update the number of frames decoded
 				
 				if (ref == false) {
 					// we inform the sample count
-					////printf("sample count: %d \n\n", sampleCount);
 					// configutates the wav_file to the right sampleRate according to the information inside the mp3 file.
 					// we do it statement here because we need to know the sample rate and we know that after using the MP3GetLastFrameData function
-					////wav_set_sample_rate(wav_file, frameData.sampleRate);
 					// set ref in true to not go back here never ever, you are banished from the kingdom of this if
 					ref = true;
 				}
@@ -126,12 +126,9 @@ int main(void)
 
 				// Aqui es donde podemos poner la info del buffer
 
-				////wav_write(wav_file, auxBuffer, sampleCount / frameData.channelCount);
 			}
 			else if (check == DECODER_END_OF_FILE)
 			{
-				////printf("\n\nFILE ENDED. Decoded %d frames.\n", frames - 1);
-				////wav_close(wav_file);
 				break;
 			}
 		}
@@ -139,7 +136,6 @@ int main(void)
 	else
 	{
 		// if you are here the mp3 file couldnt be open
-		////printf("Couldnt open file\n");
 	}
 	return 0;
 }
