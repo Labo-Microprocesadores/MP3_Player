@@ -12,7 +12,6 @@
 
 #include <stdint.h>
 
-
 /*******************************************************************************
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
@@ -34,6 +33,5 @@ void FileSelection_PreviousFile(void);
  * @brief	Selects the current file.
  */
 void FileSelection_SelectFile(void);
-
 
 #endif //FILE_SELECTION_STATE_H

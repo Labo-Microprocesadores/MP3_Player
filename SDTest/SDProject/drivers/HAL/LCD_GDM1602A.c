@@ -1,9 +1,8 @@
-/*
- * LCD_GDM1602A.c
- *
- *  Created on: 16 ene. 2021
- *      Author: Santi
- */
+ /***************************************************************************
+  @file     LCD_GDM1602A.c
+  @brief    LCD controller
+  @author   Grupo 2 - Lab de Micros
+ ******************************************************************************/
 
 /*************************************************************
  * 		INCLUDES
@@ -135,6 +134,7 @@ bool LCD_setCursor(uint8_t row, uint8_t column)
 	{
 		uint8_t address = column + row * 0x40;
 		LCD_writeInstruction(SET_DDRAM(address));
+		lcdLines[row].state = NOTHING;
 		return true;
 	}
 	return false;
@@ -142,6 +142,7 @@ bool LCD_setCursor(uint8_t row, uint8_t column)
 
 void LCD_writeDataInPos(uint8_t data, uint8_t row, uint8_t column)
 {
+
 	if(LCD_setCursor(row, column))
 	{
 		LCD_writeData(data);

@@ -11,6 +11,7 @@ RM := rm -rf
 -include startup/subdir.mk
 -include source/fsm/States/subdir.mk
 -include source/fsm/subdir.mk
+-include source/file_manager/subdir.mk
 -include source/fft/subdir.mk
 -include source/subdir.mk
 -include drivers/SDK/SD/subdir.mk

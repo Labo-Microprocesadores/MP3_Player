@@ -38,6 +38,6 @@ struct state_diagram_edge
 // Interfaz
 STATE *fsm(STATE *p_tabla_estado, event evento_actual);
 
-void changeCurrentId(uint8_t * currentID);
+void changeCurrentId(uint8_t *currentID);
 
 #endif /* FSM_H_ */

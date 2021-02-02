@@ -24,6 +24,7 @@ drivers/SDK/SD \
 drivers/SDK \
 source \
 source/fft \
+source/file_manager \
 source/fsm/States \
 source/fsm \
 startup \

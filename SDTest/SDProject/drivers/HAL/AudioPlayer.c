@@ -71,8 +71,8 @@ static int16_t buffers[2][AUDIO_PLAYER_BUFF_SIZE];
 static int16_t * activeBuffer = buffers[0];
 static int16_t * backBuffer= buffers[1];
 static bool backBufferFree = false;
-
-
+static bool pause = false;
+static int16_t mute[DAC_DATL_COUNT] = {2048U};
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -83,6 +83,11 @@ void AudioPlayer_DEMOMode(void)
 
 void AudioPlayer_Init(void)
 {
+	for(uint8_t i = 0; i < DAC_DATL_COUNT; i++)
+	{
+		mute[i] = 0;
+	}
+
 	/* Initialize DMAMUX. */
 	DMAMUX_Configuration();
 	/* Initialize EDMA. */
@@ -222,6 +227,12 @@ bool AudioPlayer_IsBackBufferFree(void)
 void AudioPlayer_Play(void)
 {
 	g_index = 0U;
+
+	if(pause)
+	{
+		pause = false;
+		return;
+	}
 	// DMAMUX:
     DMAMUX_EnableChannel(DEMO_DMAMUX_BASEADDR, DEMO_DMA_CHANNEL);
 
@@ -254,15 +265,25 @@ void AudioPlayer_Play(void)
 
 void AudioPlayer_Pause(void)
 {
+	// Set pause
+	// load next buffer with 2048
+	/*
 	// DMAMUX:
 	DMAMUX_DisableChannel(DEMO_DMAMUX_BASEADDR, DEMO_DMA_CHANNEL);
 
 	// PDB:
 	PDB_DisableInterrupts(DEMO_PDB_BASEADDR, kPDB_DelayInterruptEnable);
+
+	// DAC set 0V
+	//DAC_SetBufferValue(DEMO_DAC_BASEADDR, 0, 2048);
+	//DAC_DoSoftwareTriggerBuffer(DEMO_DAC_BASEADDR);
+	*/
+	pause = true;
 }
 
 void AudioPlayer_Stop(void)
 {
+
 	// DMAMUX:
 	DMAMUX_DisableChannel(DEMO_DMAMUX_BASEADDR, DEMO_DMA_CHANNEL);
 
@@ -271,6 +292,7 @@ void AudioPlayer_Stop(void)
 
 	g_index = 0U;
 	//currentSongFrame = firstSongFrame;
+
 }
 
 static void EDMA_Configuration(void)
@@ -346,45 +368,26 @@ static void Edma_Callback(edma_handle_t *handle, void *userData, bool transferDo
     EDMA_ClearChannelStatusFlags(DEMO_DMA_BASEADDR, DEMO_DMA_CHANNEL, kEDMA_InterruptFlag);
     /* Setup transfer */
 
-    /*
-    g_index += DAC_DATL_COUNT;
-    if (g_index == DEMO_DAC_USED_BUFFER_SIZE)
+    void * srcAdd = NULL;
+    if(pause)
+	{
+		srcAdd = mute;
+	}
+    else
     {
-        g_index = 0U;
-        if(used_buffer == 1)
-        {
-        	used_buffer = 2;
-        }
-        else if(used_buffer == 2)
-        {
-        	used_buffer = 1;
-        }
+    	g_index += DAC_DATL_COUNT; //TODO: si esto queda aca, tiene que haber una primera transferencia antes.
+		if (g_index == AUDIO_PLAYER_BUFF_SIZE)
+		{
+			g_index = 0U;
+			void * temp = activeBuffer;
+			activeBuffer = backBuffer;
+			backBuffer = temp;
+			backBufferFree = true;
+		}
+		srcAdd = (activeBuffer + g_index);
     }
 
-    if(used_buffer == 1)
-    {
-        EDMA_PrepareTransfer(&g_transferConfig, (void *)(g_dacDataArray + g_index), sizeof(uint16_t),
-                             (void *)DAC_DATA_REG_ADDR, sizeof(uint16_t), DAC_DATL_COUNT * sizeof(uint16_t),
-                             DAC_DATL_COUNT * sizeof(uint16_t), kEDMA_MemoryToMemory);
-    }
-    else if(used_buffer == 2)
-    {
-        EDMA_PrepareTransfer(&g_transferConfig, (void *)(g_dacDataArray2 + g_index), sizeof(uint16_t),
-                             (void *)DAC_DATA_REG_ADDR, sizeof(uint16_t), DAC_DATL_COUNT * sizeof(uint16_t),
-                             DAC_DATL_COUNT * sizeof(uint16_t), kEDMA_MemoryToMemory);
-    }
-     */
-
-    g_index += DAC_DATL_COUNT; //TODO: si esto queda aca, tiene que haber una primera transferencia antes.
-    if (g_index == AUDIO_PLAYER_BUFF_SIZE)
-    {
-        g_index = 0U;
-        void * temp = activeBuffer;
-        activeBuffer = backBuffer;
-        backBuffer = temp;
-        backBufferFree = true;
-    }
-    EDMA_PrepareTransfer(&g_transferConfig, (void *)(activeBuffer + g_index), sizeof(uint16_t),
+    EDMA_PrepareTransfer(&g_transferConfig, (void *)(srcAdd), sizeof(uint16_t),
                         (void *)DAC_DATA_REG_ADDR, sizeof(uint16_t), DAC_DATL_COUNT * sizeof(uint16_t),
                         DAC_DATL_COUNT * sizeof(uint16_t), kEDMA_MemoryToMemory);
 

@@ -8,13 +8,8 @@
  * INCLUDE HEADER FILES
  ******************************************************************************/
 #include <fsm/States/effects_state.h>
+#include <../drivers/HAL/LCD_GDM1602A.h>
 #include "queue.h"
-/*******************************************************************************
- * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
- ******************************************************************************/
-/*******************************************************************************
- * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
- ******************************************************************************/
 
 /*******************************************************************************
  * GLOBAL VARIABLES WITH FILE LEVEL SCOPE
@@ -24,7 +19,7 @@ static int titleTimerID = -1;
 /*******************************************************************************
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
  ******************************************************************************/
-#define TITLE_TIME  2000
+#define TITLE_TIME 2000
 
 /*******************************************************************************
  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
@@ -48,7 +43,7 @@ static void userInteractionStopsTitle(void);
 
 void Effects_initState(void)
 {
-    showTitle();
+	showTitle();
 }
 
 /*******************************************************************************
@@ -58,23 +53,22 @@ void Effects_initState(void)
  ******************************************************************************/
 static void showTitle(void)
 {
-	//TODO: show Title "Effects".
+	LCD_clearDisplay();
+	LCD_writeStrInPos("Efectos", 7, 0, 0);
 	showingTitle = true;
-	titleTimerID = Timer_AddCallback(&stopShowingTitle,TITLE_TIME, true );
+	titleTimerID = Timer_AddCallback(&stopShowingTitle, TITLE_TIME, true);
 }
-
 
 static void stopShowingTitle(void)
 {
-	    showingTitle = false;
-	    //   TODO: erase screen
-	    setCurrentOption();
-
+	showingTitle = false;
+	LCD_clearDisplay();
+	setCurrentOption();
 }
 
 static void userInteractionStopsTitle(void)
 {
-		Timer_Delete(titleTimerID);
-		titleTimerID = -1;
-		stopShowingTitle();
+	Timer_Delete(titleTimerID);
+	titleTimerID = -1;
+	stopShowingTitle();
 }

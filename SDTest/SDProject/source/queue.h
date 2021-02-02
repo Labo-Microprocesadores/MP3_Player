@@ -1,4 +1,4 @@
-/***************************************************************************//**
+/***************************************************************************/ /**
   @file     queue.h
   @brief
   @author   Grupo 2 - Lab de Micros
@@ -27,7 +27,7 @@ typedef enum
   ENCODER_LEFT_EV,
   ENCODER_PRESS_EV,
   TIMEOUT_EV,
-  
+
   START_EV,
   CHANGE_MODE_EV,
   EFF_SELECTED_EV,
@@ -54,7 +54,7 @@ typedef struct
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
  ******************************************************************************/
 
-#define QUEUE_SIZE 50 
+#define QUEUE_SIZE 50
 
 /*******************************************************************************
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
