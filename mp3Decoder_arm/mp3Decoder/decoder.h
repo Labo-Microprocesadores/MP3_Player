@@ -102,7 +102,10 @@ decoder_return_t MP3DecodedFrame(short* outBuffer, uint16_t bufferSize, uint16_t
  */
 bool MP3GetLastFrameData(decoder_data_t* data);
 
-
+/**
+ * @brief get the Data of the mp3's tag.
+ * @params data: pointer to a variable where we can store the data of the mp3 tag.
+ */
 bool MP3GetTagData(decoder_tag_t* data);
 
 
