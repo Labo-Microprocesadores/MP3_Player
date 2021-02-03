@@ -31,9 +31,9 @@
 #define LOW_DUTY       20                                              // Duty value for '0' binit
 #define OFF_DUTY	   1
 
-#define PRE			(0U)
-#define POST		(0U)
-#define PIXELS		((DISPLAY_SIZE+8) * PIXEL_SIZE)
+#define PRE			(5U)
+#define POST		(5U)
+#define PIXELS		((DISPLAY_SIZE) * PIXEL_SIZE)
 #define MATRIX_LEN	(PRE + PIXELS + POST)
 
 #define ZERO 	LOW_DUTY//(10U)
@@ -43,19 +43,19 @@
 /***************************************************************************
 *	LOCAL VARIABLES WITH FILE LEVEL SCOPE
 ****************************************************************************/
-static bool is_init = false;
-static uint16_t buffers[2][MATRIX_LEN];
-static uint16_t * currBuffer;
+static volatile bool is_init = false;
+static volatile uint16_t buffers[2][MATRIX_LEN];
+static volatile uint16_t * currBuffer;
 
-static pixel_t pixel_buffer[DISPLAY_SIZE];
-static bool change_buffer = false;
-static uint8_t bright = 0;
+//static volatile pixel_t pixel_buffer[DISPLAY_SIZE];
+static volatile bool change_buffer = false;
+static volatile uint8_t bright = 0;
 
-static edma_handle_t g_EDMA_Handle;                             /* Edma handler */
-static edma_transfer_config_t g_transferConfig;                 /* Edma transfer config. */
+static volatile edma_handle_t g_EDMA_Handle;                             /* Edma handler */
+static volatile edma_transfer_config_t g_transferConfig;                 /* Edma transfer config. */
 
-static uint8_t timer_id;
-static bool transfer_done = false;
+static volatile uint8_t timer_id;
+static volatile bool transfer_done = false;
 /***************************************************************************
 *	LOCAL FUNCTION DECLARATION
 ****************************************************************************/
@@ -72,7 +72,7 @@ void md_Init(void)
 	if(!is_init)
 	{
 		SysTick_Init();
-		timer_id = SysTick_AddCallback(md_timerCallback, 2);
+		timer_id = SysTick_AddCallback(md_timerCallback, 5);
 		Systick_PauseCallback(timer_id);
 
 		for (int i = 0; i < PRE ; i++)
@@ -123,10 +123,10 @@ void md_Init(void)
 	}
 }
 
-void md_writeBuffer(pixel_t *new_buffer)
+void md_writeBuffer(colors_t *new_buffer)
 {
 	uint16_t i = 0;
-	uint16_t * backBuffer = (currBuffer == buffers[0]) ? buffers[1]:buffers[0];
+	volatile uint16_t * backBuffer = (currBuffer == buffers[0]) ? buffers[1]:buffers[0];
 
 	while(!transfer_done)
 	{
@@ -141,15 +141,28 @@ void md_writeBuffer(pixel_t *new_buffer)
 
 	for (i = 0; i < DISPLAY_SIZE; i++)
 	{
-		pixel_buffer[i] = new_buffer[i];
-
-		backBuffer[PRE + i * 24 +  7 - bright] = new_buffer[i].G ? ONE : ZERO;
-		backBuffer[PRE + i * 24 + 15 - bright] = new_buffer[i].R ? ONE : ZERO;
-		backBuffer[PRE + i * 24 + 23 - bright] = new_buffer[i].B ? ONE : ZERO;
+		//pixel_buffer[i] = new_buffer[i];
+		backBuffer[PRE + i * 24 + 23 - bright] = ZERO;
+		switch (new_buffer[i])
+		{
+		case RED:
+			backBuffer[PRE + i * 24 +  7 - bright] = ZERO;
+			backBuffer[PRE + i * 24 + 15 - bright] = ONE;
+			break;
+		case YELLOW:
+			backBuffer[PRE + i * 24 +  7 - bright] = ONE;
+			backBuffer[PRE + i * 24 + 15 - bright] = ONE;
+			break;
+		case GREEN:
+			backBuffer[PRE + i * 24 +  7 - bright] = ONE;
+			backBuffer[PRE + i * 24 + 15 - bright] = ZERO;
+			break;
+		default: break;
+		}
 	}
-//	change_buffer = true;
+	change_buffer = true;
 
-	currBuffer = backBuffer;
+/*	currBuffer = backBuffer;
 
 	EDMA_PrepareTransfer(&g_transferConfig, (void *)(currBuffer), sizeof(uint16_t),
 								(void *)FTM_GetCnVAddress(0, 0), sizeof(uint16_t),
@@ -162,7 +175,7 @@ void md_writeBuffer(pixel_t *new_buffer)
 	FTM_StartClock(0);
 	while(!FTM_IsInterruptPending (0,FTM_CH_0)){}; // Sync with CHF
 	FTM_offOM(0,0);
-
+*/
 }
 
 pixel_t md_makeColor(bool r, bool g, bool b)
@@ -174,14 +187,14 @@ pixel_t md_makeColor(bool r, bool g, bool b)
 
 void md_setBrightness(uint8_t brigthness)
 {
-	uint8_t new_b = brigthness / 32;
+	/*uint8_t new_b = brigthness / 32;
 	//if(new_b == 0){new_b = 1;}
 	if(new_b >= 7){new_b = 6;}
 	if(bright != new_b)
 	{
 		bright = new_b;
 		md_writeBuffer(pixel_buffer);
-	}
+	}*/
 }
 
 /***************************************************************************
@@ -194,7 +207,7 @@ static void md_dmaCallback(edma_handle_t *handle, void *userData, bool transferD
 
 	while(!FTM_IsInterruptPending (0,FTM_CH_0)){}; // Sync with CHF
 	FTM_StopClock(0);
-	//Systick_ResumeCallback(timer_id);
+	Systick_ResumeCallback(timer_id);
 	FTM_onOM(0,0);
 
 	transfer_done = true;
@@ -215,16 +228,14 @@ static void md_timerCallback(void)
 	}
 
 	EDMA_PrepareTransfer(&g_transferConfig, (void *)(currBuffer), sizeof(uint16_t),
-							(void *)FTM_GetCnVAddress(0, 0), sizeof(uint16_t),
-							sizeof(uint16_t), (MATRIX_LEN) * sizeof(uint16_t) ,
-							kEDMA_MemoryToPeripheral);
+									(void *)FTM_GetCnVAddress(0, 0), sizeof(uint16_t),
+									sizeof(uint16_t), (MATRIX_LEN) * sizeof(uint16_t) ,
+									kEDMA_MemoryToPeripheral);
 
 	EDMA_SetTransferConfig(DMA0, DMA_CHANEL, &g_transferConfig, NULL);
 	EDMA_StartTransfer(&g_EDMA_Handle);
-	//while(!FTM_IsInterruptPending (0,FTM_CH_0)){}; // Sync with CHF
-	//FTM_SetCounter(0, FTM_CH_0, currBuffer[0]);
-	FTM_StartClock(0);
 
+	FTM_StartClock(0);
 	while(!FTM_IsInterruptPending (0,FTM_CH_0)){}; // Sync with CHF
 	FTM_offOM(0,0);
 }

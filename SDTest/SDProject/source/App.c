@@ -25,6 +25,7 @@
 #include "matrix_display.h"
 #include "AudioPlayer.h"
 #include "vumeterRefresh.h"
+#include "decoder.h"
 
 #include "board.h"
 #include "button.h"
@@ -32,6 +33,7 @@
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
  ******************************************************************************/
 #define BUFFER_SIZE (AUDIO_PLAYER_BUFF_SIZE)
+
 const pixel_t blank = {false, false, false};
 const pixel_t on = {true, true, true};
 /*******************************************************************************
@@ -44,7 +46,7 @@ static bool start = false;
 static bool playing = false;
 
 SDK_ALIGN(static uint16_t g_bufferRead[BUFFER_SIZE], SD_BUFFER_ALIGN_SIZE);
-SDK_ALIGN(static uint8_t g_bufferRead2[BUFFER_SIZE * 2], SD_BUFFER_ALIGN_SIZE);
+//SDK_ALIGN(static uint8_t g_bufferRead2[BUFFER_SIZE * 2], SD_BUFFER_ALIGN_SIZE);
 
 //static pixel_t m_pixel_buffer[DISPLAY_SIZE];
 void fillBuffer(void);
@@ -69,11 +71,27 @@ void getEvents(void)
 
 		currFile = FileSystem_GetPreviousFile(currFile);
 
-		char track[] = "TRACK __";
+		char track[] = "TRACK __        ";
 		track[6] = currFile.index / 10 + '0';
 		track[7] = currFile.index % 10 + '0';
-		LCD_writeStrInPos(track, 8, 0, 0);
-		LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path) - 1, 1, 0, MIDIUM);
+		LCD_writeStrInPos(track, 16, 0, 0);
+		char path[50];
+
+		uint8_t len = strlen(currFile.path)-1 ;
+		uint8_t mod = len%DISPLAY_COLUMNS;
+		if(mod == 0)
+		{
+			len+=DISPLAY_COLUMNS;
+		}
+		else
+		{
+			len += DISPLAY_COLUMNS-mod;
+		}
+
+		memset(path, 0x20, 50);
+		memcpy(path, &currFile.path[1],  strlen(currFile.path) - 1);
+		LCD_writeShiftingStr(path,  len, 1 , MIDIUM);
+
 		printf("TRACK %d: %s\r\n", currFile.index, currFile.path);
 		f_open(&g_fileObject, _T(currFile.path), (FA_READ));
 	}
@@ -84,11 +102,28 @@ void getEvents(void)
 
 		currFile = FileSystem_GetNextFile(currFile);
 
-		char track[] = "TRACK __";
+		char track[] = "TRACK __        ";
 		track[6] = currFile.index / 10 + '0';
 		track[7] = currFile.index % 10 + '0';
-		LCD_writeStrInPos(track, 8, 0, 0);
-		LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path) - 1, 1, 0, MIDIUM);
+		LCD_writeStrInPos(track, 16, 0, 0);
+
+		char path[50];
+
+		uint8_t len = strlen(currFile.path)-1 ;
+		uint8_t mod = len%DISPLAY_COLUMNS;
+		if(mod == 0)
+		{
+			len+=DISPLAY_COLUMNS;
+		}
+		else
+		{
+			len += DISPLAY_COLUMNS-mod;
+		}
+
+		memset(path, 0x20, 50);
+		memcpy(path, &currFile.path[1],  strlen(currFile.path) - 1);
+		LCD_writeShiftingStr(path,  len, 1 , MIDIUM);
+
 		printf("TRACK %d: %s\r\n", currFile.index, currFile.path);
 		f_open(&g_fileObject, _T(currFile.path), (FA_READ));
 	}
@@ -108,6 +143,8 @@ void App_Init(void)
 
 	md_Init();	  //NeoPixel matrix
 
+	decoder_MP3DecoderInit(); // Init decoder
+
 	AudioPlayer_Init();	//Audio Player
 	vumeterRefresh_init(); // FFT
 
@@ -122,7 +159,7 @@ void App_Init(void)
 	{
 		currFile = FileSystem_GetFirstFile();
 		printf("TRACK %d: %s\r\n", currFile.index, currFile.path);
-		f_close(&g_fileObject);
+		//f_close(&g_fileObject);
 	}
 
 }
@@ -135,14 +172,30 @@ void App_Run(void)
 		if (LCD_isInit())
 		{
 			start = true;
-			f_open(&g_fileObject, _T(currFile.path), (FA_READ));
+			//f_open(&g_fileObject, _T(currFile.path), (FA_READ));
+
+			decoder_MP3LoadFile(currFile.path);
+
+			printf("TRACK %d: %s\r\n", currFile.index, currFile.path);
 			fillBuffer();
 
-			char track[] = "TRACK __";
+			char track[] = "TRACK __        ";
 			track[6] = currFile.index / 10 + '0';
 			track[7] = currFile.index % 10 + '0';
-			LCD_writeStrInPos(track, 8, 0, 0);
-			LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path) - 1, 1, 0, MIDIUM);
+			LCD_writeStrInPos(track, 16, 0, 0);
+
+			char path[50];
+
+			uint8_t len = strlen(currFile.path)-1 ;
+			uint8_t mod = len%DISPLAY_COLUMNS;
+			if(mod == 0)
+				len+=DISPLAY_COLUMNS;
+			else
+				len += DISPLAY_COLUMNS-mod;
+
+			memset(path, 0x20, 50);
+			memcpy(path, &currFile.path[1],  strlen(currFile.path) - 1);
+			LCD_writeShiftingStr(path,  len, 1 , MIDIUM);
 
 			AudioPlayer_LoadSongInfo(g_bufferRead, 44100);
 			AudioPlayer_Play();
@@ -162,12 +215,84 @@ void App_Run(void)
 		getEvents();
 	}
 }
-
+#ifndef NO_DECODER
 void fillBuffer(void)
+{
+	short buffer[2*BUFFER_SIZE];
+	uint16_t sampleCount = 0;
+	uint8_t channelCount = 1;
+	float arr[FFT_SIZE];
+
+	memset(g_bufferRead, 0, sizeof(g_bufferRead));
+	memset(buffer, 0, sizeof(buffer));
+
+	decoder_return_t check = decoder_MP3DecodedFrame(buffer, BUFFER_SIZE, &sampleCount);
+
+	decoder_MP3GetLastFrameChannelCount(&channelCount);
+
+	uint16_t fin = (sampleCount / channelCount);
+	if(fin > BUFFER_SIZE)
+	{
+		fin = BUFFER_SIZE;
+		printf("ERROR BUFFER LARGER !!!!!!!!!!!!!!!!");
+	}
+
+	for (uint32_t index = 0; index < fin; index++)
+	{
+		g_bufferRead[index] = ((buffer[channelCount * index]*0.0625)+2048);
+		if(index < FFT_SIZE)
+			arr[index] = 1.0 * g_bufferRead[index];
+	}
+
+	if (check == DECODER_END_OF_FILE)
+	{
+		for (uint32_t index = (sampleCount / channelCount); index < BUFFER_SIZE ; index++)
+		{
+			g_bufferRead[index] = 2048;
+		}
+
+		if (currFile.index == maxFile)
+		{
+			currFile = FileSystem_GetFirstFile();
+		}
+		else
+		{
+			currFile = FileSystem_GetNextFile(currFile);
+		}
+
+		char track[] = "TRACK __        ";
+		track[6] = currFile.index / 10 + '0';
+		track[7] = currFile.index % 10 + '0';
+		LCD_writeStrInPos(track, 16, 0, 0);
+
+		char path[50];
+
+		uint8_t len = strlen(currFile.path)-1 ;
+		uint8_t mod = len%DISPLAY_COLUMNS;
+		if(mod == 0)
+			len+=DISPLAY_COLUMNS;
+		else
+			len += DISPLAY_COLUMNS-mod;
+
+		memset(path, 0x20, 50);
+		memcpy(path, &currFile.path[1],  strlen(currFile.path) - 1);
+		LCD_writeShiftingStr(path,  len, 1 , MIDIUM);
+
+		printf("TRACK %d: %s\r\n", currFile.index, currFile.path);
+//		f_open(&g_fileObject, _T(currFile.path), (FA_READ));
+
+		decoder_MP3LoadFile(currFile.path);
+
+	}
+
+	vumeterRefresh_fft(arr, 44100.0, 80, 10000);
+}
+#else
+void fillBuffer_read(void)
 {
 	FRESULT error;
 	UINT bytesRead;
-	float arr[1024];
+	float arr[FFT_SIZE];
 
 	memset(g_bufferRead2, 0, sizeof(g_bufferRead2));
 	memset(g_bufferRead, 0, sizeof(g_bufferRead));
@@ -181,7 +306,7 @@ void fillBuffer(void)
 	{
 		for (uint16_t i = (bytesRead / sizeof(uint16_t)); i < 1024U; i++)
 		{
-			g_bufferRead[i] = 1024U;
+			g_bufferRead[i] = 2048U;
 		}
 
 		f_close(&g_fileObject);
@@ -194,18 +319,32 @@ void fillBuffer(void)
 			currFile = FileSystem_GetNextFile(currFile);
 		}
 
-		char track[] = "TRACK __";
+		char track[] = "TRACK __        ";
 		track[6] = currFile.index / 10 + '0';
 		track[7] = currFile.index % 10 + '0';
-		LCD_writeStrInPos(track, 8, 0, 0);
-		LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path) - 1, 1, 0, MIDIUM);
+		LCD_writeStrInPos(track, 16, 0, 0);
+
+		char path[50];
+
+		uint8_t len = strlen(currFile.path)-1 ;
+		uint8_t mod = len%DISPLAY_COLUMNS;
+		if(mod == 0)
+			len+=DISPLAY_COLUMNS;
+		else
+			len += DISPLAY_COLUMNS-mod;
+
+		memset(path, 0x20, 50);
+		memcpy(path, &currFile.path[1],  strlen(currFile.path) - 1);
+		LCD_writeShiftingStr(path,  len, 1 , MIDIUM);
+
 		printf("TRACK %d: %s\r\n", currFile.index, currFile.path);
 		f_open(&g_fileObject, _T(currFile.path), (FA_READ));
 	}
 	//update();
-	for (uint16_t i = 0; i < 1024; i++)
+	for (uint16_t i = 0; i < FFT_SIZE; i++)
 	{
 		arr[i] = 1.0 * g_bufferRead[i];
 	}
 	vumeterRefresh_fft(arr, 44100.0, 80, 10000);
 }
+#endif

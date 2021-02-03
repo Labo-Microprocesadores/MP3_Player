@@ -20,6 +20,9 @@ RM := rm -rf
 -include drivers/HAL/subdir.mk
 -include device/subdir.mk
 -include component/lists/subdir.mk
+-include component/id3/subdir.mk
+-include component/helix/real/subdir.mk
+-include component/helix/subdir.mk
 -include component/fatfs/fsl_sd_disk/subdir.mk
 -include component/fatfs/subdir.mk
 -include subdir.mk

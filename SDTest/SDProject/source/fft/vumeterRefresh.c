@@ -6,17 +6,17 @@
 #include "vumeterRefresh.h"
 
 
-#define SAMPLE_LENGTH       1024
+#define SAMPLE_LENGTH       FFT_SIZE
 #define NUMBER_OF_BANDS     8  
 #define VUMETER_HEIGHT      8
 #define NOISE               100
-#define MAX_AMPLITUDE       50000
+#define MAX_AMPLITUDE       60000
+#define AVERAGE				2
 
-
-static  arm_rfft_fast_instance_f32 rfft_fast_instance;
-static float32_t output[SAMPLE_LENGTH];
-static float32_t outputFft[SAMPLE_LENGTH / 2];
-static int vumeterMatrix[NUMBER_OF_BANDS];
+static volatile arm_rfft_fast_instance_f32 rfft_fast_instance;
+static volatile float32_t output[SAMPLE_LENGTH];
+static volatile float32_t outputFft[SAMPLE_LENGTH / 2];
+static volatile int vumeterMatrix[NUMBER_OF_BANDS];
 
 float32_t fpowf(float32_t base, uint16_t n); //Fast exponenciation
 
@@ -83,12 +83,12 @@ int vumeterRefresh_fft(float32_t * inputSignal, float32_t sampleRate, int lowerF
         }
         int roundedHeight = (int)(temp/MAX_AMPLITUDE);
         //int roundedHeight = floor((vumeterValues[i]/(higherBin - lowerBin))/1000);
-        vumeterMatrix[i] += (roundedHeight > VUMETER_HEIGHT ? VUMETER_HEIGHT : roundedHeight)/2;
+        vumeterMatrix[i] += (roundedHeight > VUMETER_HEIGHT ? VUMETER_HEIGHT : roundedHeight)/AVERAGE;
 
         currentBinFreq = nextBinFreq;
         nextBinFreq *= freqMultiplierPerBand;
     } 
-    average = (average+1)%2;
+    average = (average+1)%AVERAGE;
     if(average == 0)
     {
     	vumeterRefresh_write_to_matrix(vumeterMatrix);
@@ -103,21 +103,13 @@ int vumeterRefresh_fft(float32_t * inputSignal, float32_t sampleRate, int lowerF
 void vumeterRefresh_write_to_matrix(int * vumeterMatrix)
 {
 
-    pixel_t redPixel = {.R = 1, .G = 0, .B = 0};
+    /*pixel_t redPixel = {.R = 1, .G = 0, .B = 0};
     pixel_t yellowPixel = {.R = 1, .G = 1, .B = 0};
     pixel_t greenPixel = {.R = 0, .G = 1, .B = 0};
     pixel_t blackPixel = {.R = 0, .G = 0, .B = 0};
-    pixel_t auxMatrix[VUMETER_HEIGHT * NUMBER_OF_BANDS];
-    uint16_t size_m = VUMETER_HEIGHT * NUMBER_OF_BANDS;
-/*
-    for(int i = 0 ; i < NUMBER_OF_BANDS ; i++)
-    {
-        for(int j = 0 ; j < vumeterMatrix[i] ; j++)
-        {
-            auxMatrix[i * (VUMETER_HEIGHT - vumeterMatrix[i] + j)] = ;
-        }
-    }
     */
+	colors_t auxMatrix[VUMETER_HEIGHT * NUMBER_OF_BANDS];
+    uint16_t size_m = VUMETER_HEIGHT * NUMBER_OF_BANDS;
 
     for(int i = VUMETER_HEIGHT-1 ; i >= 0 ; i--)
     {
@@ -126,14 +118,14 @@ void vumeterRefresh_write_to_matrix(int * vumeterMatrix)
             if(vumeterMatrix[j] >= (VUMETER_HEIGHT - i))
             {
                 if(i < (1 * VUMETER_HEIGHT / 8))
-                    auxMatrix[size_m - VUMETER_HEIGHT * i - j] = redPixel;
+                    auxMatrix[size_m - VUMETER_HEIGHT * i - j] = RED;
                 else if(i < (4 * VUMETER_HEIGHT / 8))
-                    auxMatrix[size_m - VUMETER_HEIGHT * i - j] = yellowPixel;
+                    auxMatrix[size_m - VUMETER_HEIGHT * i - j] = YELLOW;
                 else 
-                    auxMatrix[size_m - VUMETER_HEIGHT * i - j] = greenPixel;
+                    auxMatrix[size_m - VUMETER_HEIGHT * i - j] = GREEN;
             }
             else
-                auxMatrix[size_m - VUMETER_HEIGHT * i - j] = blackPixel;
+                auxMatrix[size_m - VUMETER_HEIGHT * i - j] = CLEAN;
         }
     }
     md_writeBuffer(auxMatrix);

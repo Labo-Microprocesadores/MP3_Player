@@ -59,7 +59,7 @@ static void Edma_Callback(edma_handle_t *handle, void *userData, bool transferDo
  ******************************************************************************/
 static edma_handle_t g_EDMA_Handle;                             /* Edma handler */
 static edma_transfer_config_t g_transferConfig;                 /* Edma transfer config. */
-static volatile uint32_t g_index                          = 0U; /* Index of the g_dacDataArray array. */
+static volatile uint32_t g_index = 0U; 							/* Index of the g_dacDataArray array. */
 
 
 /*
@@ -297,18 +297,23 @@ void AudioPlayer_Stop(void)
 
 static void EDMA_Configuration(void)
 {
-    //edma_config_t userConfig;
+    /*
+     *
+    edma_config_t userConfig;
 
-    //EDMA_GetDefaultConfig(&userConfig);
-    //EDMA_Init(DEMO_DMA_BASEADDR, &userConfig);
-    EDMA_CreateHandle(&g_EDMA_Handle, DEMO_DMA_BASEADDR, DEMO_DMA_CHANNEL);
+    EDMA_GetDefaultConfig(&userConfig);
+    EDMA_Init(DEMO_DMA_BASEADDR, &userConfig);
+     *
+     *
+     */
+	EDMA_CreateHandle(&g_EDMA_Handle, DEMO_DMA_BASEADDR, DEMO_DMA_CHANNEL);
     EDMA_SetCallback(&g_EDMA_Handle, Edma_Callback, NULL);
 }
 
 static void DMAMUX_Configuration(void)
 {
     /* Configure DMAMUX */
-   // DMAMUX_Init(DEMO_DMAMUX_BASEADDR);
+    // Init en matrix // DMAMUX_Init(DEMO_DMAMUX_BASEADDR);
     DMAMUX_SetSource(DEMO_DMAMUX_BASEADDR, DEMO_DMA_CHANNEL, DEMO_DMA_DAC_SOURCE); /* Map ADC source to channel 0 */
 }
 

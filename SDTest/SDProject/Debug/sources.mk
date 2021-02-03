@@ -16,6 +16,9 @@ C_DEPS :=
 SUBDIRS := \
 component/fatfs \
 component/fatfs/fsl_sd_disk \
+component/helix \
+component/helix/real \
+component/id3 \
 component/lists \
 device \
 drivers/HAL \

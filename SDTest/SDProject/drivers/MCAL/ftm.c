@@ -7,8 +7,8 @@
 #include "ftm.h"
 #include "MK64F12.h"
 
-FTM_Type *p_ftm[] = FTM_BASE_PTRS;
-PORT_Type *p_ports[] = PORT_BASE_PTRS;
+volatile FTM_Type *p_ftm[] = FTM_BASE_PTRS;
+volatile PORT_Type *p_ports[] = PORT_BASE_PTRS;
 
 void PWM_Init(FTM_t id, FTM_Channel_t channel, FTM_Prescal_t prescaler,
 			  uint8_t port_ftm, uint8_t pin_ftm, uint8_t pin_alt, FTMLogic_t logic,

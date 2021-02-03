@@ -1,6 +1,3 @@
-startup_mk64f12.c:427:6:data_init	4	static
-startup_mk64f12.c:436:6:bss_init	0	static
-startup_mk64f12.c:461:6:ResetISR	8	static
 startup_mk64f12.c:567:14:NMI_Handler	0	static
 startup_mk64f12.c:571:14:HardFault_Handler	0	static
 startup_mk64f12.c:575:14:MemManage_Handler	0	static
@@ -10,6 +7,9 @@ startup_mk64f12.c:587:14:SVC_Handler	0	static
 startup_mk64f12.c:591:14:DebugMon_Handler	0	static
 startup_mk64f12.c:595:14:PendSV_Handler	0	static
 startup_mk64f12.c:599:14:SysTick_Handler	0	static
+startup_mk64f12.c:427:6:data_init	4	static
+startup_mk64f12.c:436:6:bss_init	0	static
+startup_mk64f12.c:461:6:ResetISR	8	static
 startup_mk64f12.c:607:14:IntDefaultHandler	0	static
 startup_mk64f12.c:617:11:DMA0_IRQHandler	8	static
 startup_mk64f12.c:621:11:DMA1_IRQHandler	8	static
@@ -87,11 +87,11 @@ startup_mk64f12.c:905:11:DAC1_IRQHandler	8	static
 startup_mk64f12.c:909:11:ADC1_IRQHandler	8	static
 startup_mk64f12.c:913:11:I2C2_IRQHandler	8	static
 startup_mk64f12.c:917:11:CAN0_ORed_Message_buffer_IRQHandler	8	static
-startup_mk64f12.c:921:11:CAN0_Bus_Off_IRQHandler	8	static
-startup_mk64f12.c:925:11:CAN0_Error_IRQHandler	8	static
-startup_mk64f12.c:929:11:CAN0_Tx_Warning_IRQHandler	8	static
-startup_mk64f12.c:933:11:CAN0_Rx_Warning_IRQHandler	8	static
-startup_mk64f12.c:937:11:CAN0_Wake_Up_IRQHandler	8	static
+startup_mk64f12.c:921:11:CAN0_Bus_Off_IRQHandler	0	static
+startup_mk64f12.c:925:11:CAN0_Error_IRQHandler	0	static
+startup_mk64f12.c:929:11:CAN0_Tx_Warning_IRQHandler	0	static
+startup_mk64f12.c:933:11:CAN0_Rx_Warning_IRQHandler	0	static
+startup_mk64f12.c:937:11:CAN0_Wake_Up_IRQHandler	0	static
 startup_mk64f12.c:941:11:SDHC_IRQHandler	8	static
 startup_mk64f12.c:945:11:ENET_1588_Timer_IRQHandler	8	static
 startup_mk64f12.c:949:11:ENET_Transmit_IRQHandler	8	static

@@ -12,7 +12,7 @@ typedef enum
     AP_ERROR_BB_NOT_FREE
 } audioPlayerError;
 
-#define AUDIO_PLAYER_BUFF_SIZE 1024U
+#define AUDIO_PLAYER_BUFF_SIZE 1152U//2560U
 
 /*!
  * @brief Initialize the Audio Player.

@@ -9,6 +9,9 @@
 
 #include <stdbool.h>
 
+#define DISPLAY_ROWS			2
+#define DISPLAY_COLUMNS			16
+
 typedef  enum{
 	SLOW,
 	MIDIUM,

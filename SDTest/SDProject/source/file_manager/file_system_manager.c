@@ -59,7 +59,7 @@ Mp3File_t FileSystem_GetFirstFile(void)
 Mp3File_t FileSystem_GetNextFile(Mp3File_t currentFile)
 {
 	int nextFileIndex = currentFile.index + 1;
-	if (currentFile.index == filesCount)
+	if (nextFileIndex == filesCount)
 	{
 		nextFileIndex = 0;
 	}

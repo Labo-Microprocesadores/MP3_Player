@@ -21,7 +21,7 @@
 /***************************************************************************
 *	STRUCTS DEFINITIONS
 ****************************************************************************/
-
+typedef enum { RED, YELLOW, GREEN, CLEAN}colors_t;
 typedef struct
 {
   bool R;
@@ -46,7 +46,7 @@ void md_Init(void);
  * @param: buffer, new buffer to write MUST be DISPLAY_SIZE long
  * @return:-
  */
-void md_writeBuffer(pixel_t *buffer);
+void md_writeBuffer(colors_t *buffer);
 
 /*
  * @brief: Create a pixel_t with the given conditions

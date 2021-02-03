@@ -33,9 +33,8 @@
 #define BLOCK(e, rs, v) 		(ENABLE(e) | RS(rs) | VAL(v)				)
 
 #define INIT_INSTRUCTIONS		10
-#define DISPLAY_ROWS			2
-#define DISPLAY_COLUMNS			16
-#define SHIFTING_BUFFER_LEN		50
+
+#define SHIFTING_BUFFER_LEN		(4*DISPLAY_COLUMNS)
 
 #define CURSOR_VISIBLE			0
 #define CURSOR_BLINK			0
@@ -134,7 +133,7 @@ bool LCD_setCursor(uint8_t row, uint8_t column)
 	{
 		uint8_t address = column + row * 0x40;
 		LCD_writeInstruction(SET_DDRAM(address));
-		lcdLines[row].state = NOTHING;
+		//lcdLines[row].state = NOTHING;
 		return true;
 	}
 	return false;
@@ -164,6 +163,7 @@ void LCD_writeStrInPos(char * str, uint8_t len, uint8_t row, uint8_t column)
 void LCD_clearRow(uint8_t row)
 {
 	uint8_t i;
+	memset(lcdLines[row].buffer, 0x20, SHIFTING_BUFFER_LEN);
 	if(LCD_setCursor(row, 0))
 	{
 		for(i = 0; i<DISPLAY_COLUMNS; i++)
@@ -171,6 +171,7 @@ void LCD_clearRow(uint8_t row)
 			LCD_writeData(BLANCK_SPACE);
 		}
 		LCD_setCursor(row, 0); // back to the beginning of the row
+		lcdLines[row].state = NOTHING;
 	}
 }
 
@@ -184,12 +185,14 @@ void LCD_clearDisplay(void)
 	{
 		LCD_writeData(BLANCK_SPACE);
 	}
+	lcdLines[0].state = NOTHING;
 	LCD_setCursor(1, 0);
 	for(i = 0; i<DISPLAY_COLUMNS; i++)
 	{
 		LCD_writeData(BLANCK_SPACE);
 	}
 	LCD_setCursor(0, 0); // back to the beginning of the display
+	lcdLines[0].state = NOTHING;
 }
 
 void LCD_writeShiftingStr(char * str, uint8_t len, uint8_t row, lcd_shift_speed_t speed)
@@ -212,11 +215,13 @@ void LCD_writeShiftingStr(char * str, uint8_t len, uint8_t row, lcd_shift_speed_
 		}
 
 		lcdLines[row].state = SHIFTING;
+		lcdLines[row].length = len;
 		lcdLines[row].pointer = 0;
 		lcdLines[row].begin = 0;
 	}
 }
 
+/*
 void LCD_writeBouncingStr(char * str, uint8_t len, uint8_t row, uint8_t begin, lcd_shift_speed_t speed)
 {
 	uint8_t i;
@@ -248,7 +253,7 @@ void LCD_writeBouncingStr(char * str, uint8_t len, uint8_t row, uint8_t begin, l
 		lcdLines[row].length = len;
 		lcdLines[row].direction = true;
 	}
-}
+}*/
 
 void LCD_changeState(bool state)
 {
@@ -344,10 +349,10 @@ static void shifttingCallback(void)
 			uint8_t start = lcdLines[i].begin;
 			for(int j = 0; j<(DISPLAY_COLUMNS-start); j++)
 			{
-				buffer[j] = lcdLines[i].buffer[(lcdLines[i].pointer + j)%SHIFTING_BUFFER_LEN];
+				buffer[j] = lcdLines[i].buffer[(lcdLines[i].pointer + j)%lcdLines[i].length];
 			}
 
-			if(curr == BOUNCING)
+			/*if(curr == BOUNCING)
 			{
 				if(!lcdLines[i].direction && lcdLines[i].pointer==0)
 					lcdLines[i].direction = true;
@@ -356,10 +361,8 @@ static void shifttingCallback(void)
 
 				lcdLines[i].pointer += lcdLines[i].direction?1:-1;
 			}
-			else
-			{
-				lcdLines[i].pointer = (lcdLines[i].pointer + 1)%SHIFTING_BUFFER_LEN;
-			}
+			else*/
+			lcdLines[i].pointer = (lcdLines[i].pointer + 1)%SHIFTING_BUFFER_LEN;
 
 			LCD_writeStrInPos(buffer, DISPLAY_COLUMNS-start, i, start);
 		}
