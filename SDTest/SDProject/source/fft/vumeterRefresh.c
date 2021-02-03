@@ -13,10 +13,10 @@
 #define MAX_AMPLITUDE       60000
 #define AVERAGE				2
 
-static volatile arm_rfft_fast_instance_f32 rfft_fast_instance;
-static volatile float32_t output[SAMPLE_LENGTH];
-static volatile float32_t outputFft[SAMPLE_LENGTH / 2];
-static volatile int vumeterMatrix[NUMBER_OF_BANDS];
+static arm_rfft_fast_instance_f32 rfft_fast_instance;
+static float32_t output[SAMPLE_LENGTH];
+static float32_t outputFft[SAMPLE_LENGTH / 2];
+static int vumeterMatrix[NUMBER_OF_BANDS];
 
 float32_t fpowf(float32_t base, uint16_t n); //Fast exponenciation
 

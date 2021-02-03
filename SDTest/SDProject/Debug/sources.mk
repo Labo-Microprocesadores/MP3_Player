@@ -26,6 +26,7 @@ drivers/MCAL \
 drivers/SDK/SD \
 drivers/SDK \
 source \
+source/equalizer \
 source/fft \
 source/file_manager \
 source/fsm/States \

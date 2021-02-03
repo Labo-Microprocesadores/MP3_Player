@@ -29,6 +29,9 @@
 
 #include "board.h"
 #include "button.h"
+
+#include "equalizer.h"
+
 /*******************************************************************************
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
  ******************************************************************************/
@@ -46,7 +49,8 @@ static bool start = false;
 static bool playing = false;
 
 SDK_ALIGN(static uint16_t g_bufferRead[BUFFER_SIZE], SD_BUFFER_ALIGN_SIZE);
-//SDK_ALIGN(static uint8_t g_bufferRead2[BUFFER_SIZE * 2], SD_BUFFER_ALIGN_SIZE);
+static float effects_in[BUFFER_SIZE], effects_out[BUFFER_SIZE];
+short decoder_buffer[2*BUFFER_SIZE];
 
 //static pixel_t m_pixel_buffer[DISPLAY_SIZE];
 void fillBuffer(void);
@@ -162,6 +166,8 @@ void App_Init(void)
 		//f_close(&g_fileObject);
 	}
 
+	equalizer_init();
+
 }
 
 /* Función que se llama constantemente en un ciclo infinito */
@@ -218,15 +224,13 @@ void App_Run(void)
 #ifndef NO_DECODER
 void fillBuffer(void)
 {
-	short buffer[2*BUFFER_SIZE];
 	uint16_t sampleCount = 0;
 	uint8_t channelCount = 1;
-	float arr[FFT_SIZE];
 
 	memset(g_bufferRead, 0, sizeof(g_bufferRead));
-	memset(buffer, 0, sizeof(buffer));
+	memset(decoder_buffer, 0, sizeof(decoder_buffer));
 
-	decoder_return_t check = decoder_MP3DecodedFrame(buffer, BUFFER_SIZE, &sampleCount);
+	decoder_return_t check = decoder_MP3DecodedFrame(decoder_buffer, BUFFER_SIZE, &sampleCount);
 
 	decoder_MP3GetLastFrameChannelCount(&channelCount);
 
@@ -237,11 +241,16 @@ void fillBuffer(void)
 		printf("ERROR BUFFER LARGER !!!!!!!!!!!!!!!!");
 	}
 
+	float coef = 1.0/32768.0;
 	for (uint32_t index = 0; index < fin; index++)
 	{
-		g_bufferRead[index] = ((buffer[channelCount * index]*0.0625)+2048);
-		if(index < FFT_SIZE)
-			arr[index] = 1.0 * g_bufferRead[index];
+		effects_in[index] = decoder_buffer[channelCount * index]*coef;
+	}
+	equalizer_equalize(effects_in, effects_out);
+
+	for (uint32_t index = 0; index < fin; index++)
+	{
+		g_bufferRead[index] = (effects_out[index]+1)*2048;
 	}
 
 	if (check == DECODER_END_OF_FILE)
@@ -285,7 +294,7 @@ void fillBuffer(void)
 
 	}
 
-	vumeterRefresh_fft(arr, 44100.0, 80, 10000);
+	//vumeterRefresh_fft(arr, 44100.0, 80, 10000);
 }
 #else
 void fillBuffer_read(void)
