@@ -9,6 +9,7 @@
  ******************************************************************************/
 #include "idle_state.h"
 #include "queue.h"
+#include "power_mode_switch.h"
 
 /*********************************************************
  * 		LOCAL STRUCTS AND ENUMS
@@ -80,11 +81,11 @@ static void setEnergyConsumptionMode(EnergyConsumptionMode_t energyConsumptionMo
   switch (energyConsumptionMode)
   {
   case LOW_CONSUMPTION:
-    //TODO: Set energy consumption
+	  PowerMode_SetVLPRMode();
     break;
 
   case HIGH_CONSUMPTION:
-    //TODO: Set energy consumption
+	  PowerMode_SetRunMode();
     break;
 
   default:
