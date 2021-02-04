@@ -31,6 +31,7 @@
 #include "button.h"
 
 #include "equalizer.h"
+#include "power_mode_switch.h"
 
 /*******************************************************************************
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
@@ -151,6 +152,7 @@ void App_Init(void)
 
 	AudioPlayer_Init();	//Audio Player
 	vumeterRefresh_init(); // FFT
+	PowerMode_Init();
 
 	buttonsInit();
 	buttonConfiguration(PIN_SW_A, LKP, 20); //20*50=1seg
