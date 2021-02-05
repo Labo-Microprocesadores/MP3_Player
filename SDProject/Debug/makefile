@@ -13,7 +13,6 @@ RM := rm -rf
 -include source/fsm/subdir.mk
 -include source/file_manager/subdir.mk
 -include source/fft/subdir.mk
--include source/equalizer/subdir.mk
 -include source/subdir.mk
 -include drivers/SDK/SD/subdir.mk
 -include drivers/SDK/subdir.mk

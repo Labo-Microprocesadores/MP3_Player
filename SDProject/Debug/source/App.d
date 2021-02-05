@@ -24,7 +24,6 @@ source/App.o source/App.d: ../source/App.c \
  D:\Documentos\GitHub\TPFinal\SDProject\drivers\HAL/decoder.h \
  D:\Documentos\GitHub\TPFinal\SDProject\board/board.h \
  D:\Documentos\GitHub\TPFinal\SDProject\drivers\HAL/button.h \
- D:\Documentos\GitHub\TPFinal\SDProject\source\equalizer/equalizer.h \
  D:\Documentos\GitHub\TPFinal\SDProject\drivers\SDK/power_mode_switch.h \
  d:\documentos\github\tpfinal\sdproject\drivers\sdk\fsl_common.h
 
@@ -77,8 +76,6 @@ D:\Documentos\GitHub\TPFinal\SDProject\drivers\HAL/decoder.h:
 D:\Documentos\GitHub\TPFinal\SDProject\board/board.h:
 
 D:\Documentos\GitHub\TPFinal\SDProject\drivers\HAL/button.h:
-
-D:\Documentos\GitHub\TPFinal\SDProject\source\equalizer/equalizer.h:
 
 D:\Documentos\GitHub\TPFinal\SDProject\drivers\SDK/power_mode_switch.h:
 
