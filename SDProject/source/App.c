@@ -48,6 +48,7 @@ static Mp3File_t currFile;
 static int maxFile = 0;
 static bool start = false;
 static bool playing = false;
+int veces;
 
 SDK_ALIGN(static uint16_t g_bufferRead[BUFFER_SIZE], SD_BUFFER_ALIGN_SIZE);
 static float effects_in[BUFFER_SIZE], effects_out[BUFFER_SIZE];
@@ -244,10 +245,23 @@ void fillBuffer(void)
 	}
 
 	float coef = 1.0/32768.0;
-	for (uint32_t index = 0; index < fin; index++)
+
+	  for(int i=1152*veces; i<1152*(veces+1); i++)
+	  {
+		  effects_in[i] += 0.125*arm_sin_f32(2*3.1415926f*80*i/44100);
+		  effects_in[i] += 0.125*arm_sin_f32(2*3.1415926f*160*i/44100);
+		  effects_in[i] += 0.125*arm_sin_f32(2*3.1415926f*320*i/44100);
+		  effects_in[i] += 0.125*arm_sin_f32(2*3.1415926f*640*i/44100);
+		  effects_in[i] += 0.125*arm_sin_f32(2*3.1415926f*1280*i/44100);
+		  effects_in[i] += 0.125*arm_sin_f32(2*3.1415926f*2500*i/44100);
+		  effects_in[i] += 0.125*arm_sin_f32(2*3.1415926f*5000*i/44100);
+		  effects_in[i] += 0.125*arm_sin_f32(2*3.1415926f*10000*i/44100);
+	  }
+	  veces++;
+	/*for (uint32_t index = 0; index < fin; index++)
 	{
 		effects_in[index] = decoder_buffer[channelCount * index]*coef;
-	}
+	}*/
 	equalizer_equalize(effects_in, effects_out);
 
 	for (uint32_t index = 0; index < fin; index++)
