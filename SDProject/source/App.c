@@ -26,11 +26,8 @@
 #include "AudioPlayer.h"
 #include "vumeterRefresh.h"
 #include "decoder.h"
-
 #include "board.h"
 #include "button.h"
-
-#include "equalizer.h"
 #include "power_mode_switch.h"
 
 /*******************************************************************************
@@ -168,8 +165,6 @@ void App_Init(void)
 		//f_close(&g_fileObject);
 	}
 
-	equalizer_init();
-
 }
 
 /* Función que se llama constantemente en un ciclo infinito */
@@ -248,7 +243,6 @@ void fillBuffer(void)
 	{
 		effects_in[index] = decoder_buffer[channelCount * index]*coef;
 	}
-	equalizer_equalize(effects_in, effects_out);
 
 	for (uint32_t index = 0; index < fin; index++)
 	{
