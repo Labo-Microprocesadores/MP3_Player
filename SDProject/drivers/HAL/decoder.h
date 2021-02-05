@@ -102,9 +102,24 @@ bool decoder_hasID3(void);
  */
 bool decoder_shutDown(void);
 
+/**
+ * @brief: Get the current file's title.
+ */
 char * decoder_getFileTitle();
+/**
+ * @brief: Get the current file's album.
+ */
 char * decoder_getFileAlbum();
+/**
+ * @brief: Get the current file's artist.
+ */
 char * decoder_getFileArtist();
+/**
+ * @brief: Get the current file's year.
+ */
 uint8_t * decoder_getFileYear();
+/**
+ * @brief: Get the current file's track number.
+ */
 uint8_t * decoder_getFileTrackNum();
 #endif /* _DECODER_H_ */
