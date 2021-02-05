@@ -180,6 +180,12 @@ void App_Run(void)
 			decoder_MP3LoadFile(currFile.path);
 
 			printf("TRACK %d: %s\r\n", currFile.index, currFile.path);
+			char * fileName = decoder_getFileTitle();
+			char * fileArtist = decoder_getFileArtist();
+			char * fileAlbum = decoder_getFileAlbum();
+			char * fileYear = (char *)decoder_getFileYear();
+			char * trackNum = (char *)decoder_getFileTrackNum();
+			printf("Name: %s.\nArtist: %s.\nAlbum: %s.\nYear: %s.\nTrackNum: %s.\n", fileName, fileArtist, fileAlbum, fileYear, trackNum);
 			fillBuffer();
 
 			char track[] = "TRACK __        ";

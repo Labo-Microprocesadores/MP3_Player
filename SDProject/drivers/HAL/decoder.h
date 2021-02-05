@@ -98,7 +98,13 @@ void decoder_MP3GetTagData(char* title_, char* album_, char* artist_, uint8_t* t
 bool decoder_hasID3(void);
 
 /**
- * Close file if open
+ * @brief: Close file if open
  */
 bool decoder_shutDown(void);
+
+char * decoder_getFileTitle();
+char * decoder_getFileAlbum();
+char * decoder_getFileArtist();
+uint8_t * decoder_getFileYear();
+uint8_t * decoder_getFileTrackNum();
 #endif /* _DECODER_H_ */

@@ -389,3 +389,28 @@ void decoder_readID3Tag(void)
         f_rewind(&mp3File);
     }
 }
+
+char * decoder_getFileTitle()
+{
+	return title;
+}
+
+char * decoder_getFileAlbum()
+{
+	return album;
+}
+
+char * decoder_getFileArtist()
+{
+	return artist;
+}
+
+uint8_t * decoder_getFileYear()
+{
+	return year;
+}
+
+uint8_t * decoder_getFileTrackNum()
+{
+	return trackNum;
+}
