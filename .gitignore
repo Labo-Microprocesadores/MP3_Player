@@ -3,3 +3,5 @@
 *.map
 *.ld
 *.d
+/.metadata/
+/.mcuxpressoide_packages_support/
