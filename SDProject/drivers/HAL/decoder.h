@@ -61,12 +61,12 @@ bool decoder_MP3LoadFile(const char* filename);
 		  want store the next frame info and decode it.
 		  if there were no errors decoding, then update the pointers
 		  to use in the next decoder instance.
- * @params outBuffer: the buffer were we will store the de decoded data. this has to be short because 
+ * @param outBuffer: the buffer were we will store the de decoded data. this has to be short because 
 					  with that we insure that it uses 16 bits (if it had been int we can not assure 
 					  that because int could be 16 or 32 bits). Anyway it could be uint_16 but with that 
 					  we would be ensuring that the data is an unsigned data and we dont know that
- * @params bufferSize: the size of the buffer were we will store the decoded data.
- * @params decodedsamples: The pointer to an uint_16 data to store there the number of samples decoded
+ * @param bufferSize: the size of the buffer were we will store the decoded data.
+ * @param decodedsamples: The pointer to an uint_16 data to store there the number of samples decoded
  * @return true if it can open the mp3 file and false if it can not.
  */
 decoder_return_t decoder_MP3DecodedFrame(short* outBuffer, uint16_t bufferSize, uint16_t* Decodedsamples);
@@ -75,7 +75,7 @@ decoder_return_t decoder_MP3DecodedFrame(short* outBuffer, uint16_t bufferSize, 
 /**
  * @brief get the info of the last frame data and store it inside 
 		  the pointer channelCount passed as an argument
- * @params channelCount: pointer to a variable where we will store the number of channels.
+ * @param channelCount: pointer to a variable where we will store the number of channels.
  * @return true if the function can get the info of the last frame 
 		   and false if it can not (usually because there was no last frame)
  */
@@ -83,11 +83,11 @@ bool decoder_MP3GetLastFrameChannelCount(uint8_t* channelCount);
 
 /**
  * @brief get the Data of the mp3's tag.
- * @params title: pointer to the char array where we will store the songs title.
- * @params album: pointer to the char array where we will store the songs album.
- * @params artist: pointer to the char array where we will store the songs artist.
- * @params trackNum: pointer to the uint8_t array where we will store the songs track number in the album.
- * @params year: pointer to the uint8_t array where we will store the album year.
+ * @param title: pointer to the char array where we will store the songs title.
+ * @param album: pointer to the char array where we will store the songs album.
+ * @param artist: pointer to the char array where we will store the songs artist.
+ * @param trackNum: pointer to the uint8_t array where we will store the songs track number in the album.
+ * @param year: pointer to the uint8_t array where we will store the album year.
  */
 void decoder_MP3GetTagData(char* title_, char* album_, char* artist_, uint8_t* trackNum_, uint8_t* year_);
 
@@ -103,23 +103,28 @@ bool decoder_hasID3(void);
 bool decoder_shutDown(void);
 
 /**
- * @brief: Get the current file's title.
+ * @brief: Get the current file's title it changes the char* passed as a pointer to pointer to char
+ * @param title_: is a pointer to the char pointer (array of chars) that forms the title word.
  */
-char * decoder_getFileTitle();
+bool decoder_getFileTitle(char ** title_);
 /**
- * @brief: Get the current file's album.
+ * @brief: Get the current file's album, it changes the char* passed as a pointer to pointer to char
+ * @param album_: is a pointer to the char pointer (array of chars) that forms the album word.
  */
-char * decoder_getFileAlbum();
+bool decoder_getFileAlbum(char** album_);
 /**
- * @brief: Get the current file's artist.
+ * @brief: Get the current file's artist, it changes the char* passed as a pointer to pointer to char
+ * @param artist_: is a pointer to the char pointer (array of chars) that forms the artist word.
  */
-char * decoder_getFileArtist();
+bool decoder_getFileArtist(char** artist_);
 /**
- * @brief: Get the current file's year.
+ * @brief: Get the current file's year, it changes the char* passed as a pointer to pointer to char
+ * @param year_: is a pointer to the char pointer (array of chars) that forms the year word, because is a number forms with the ascii values (chars)
  */
-uint8_t * decoder_getFileYear();
+bool decoder_getFileYear(char** year_);
 /**
- * @brief: Get the current file's track number.
+ * @brief: Get the current file's track number, it changes the char* passed as a pointer to pointer to char
+ * @param trackNum_: is a pointer to the char pointer (array of chars) that forms the Track number word, because is a number forms with the ascii values (chars)
  */
-uint8_t * decoder_getFileTrackNum();
+bool decoder_getFileTrackNum(char** trackNum_);
 #endif /* _DECODER_H_ */
