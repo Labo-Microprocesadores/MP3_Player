@@ -32,6 +32,7 @@
 #include "board.h"
 #include "button.h"
 #include "power_mode_switch.h"
+#include "time_service.h"
 
 /*******************************************************************************
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
@@ -40,7 +41,7 @@
 /*******************************************************************************
  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
  ******************************************************************************/
-
+static void printCurrentTime(void);
 /*******************************************************************************
  *******************************************************************************
                         GLOBAL FUNCTION DEFINITIONS
@@ -101,20 +102,31 @@ void App_Init(void)
 	vumeterRefresh_init(); // FFT
 	PowerMode_Init();
 
+	TimeService_Init();
 	buttonsInit();
 	buttonConfiguration(PIN_SW_A, LKP, 20); //20*50=1seg
 	buttonConfiguration(PIN_SW_B, LKP, 20);
 	buttonConfiguration(PIN_SW_C, LKP, 20);
 	//buttonConfiguration(PIN_SW_D, LKP, 20);
+	Timer_AddCallback(printCurrentTime, 2000, false);
 	initQueue();
 	currentState = FSM_GetInitState();
 }
 
 void App_Run(void)
 {
-	getEvents();
+
+	/*getEvents();
 	if(!queueIsEmpty())
 	{
 		currentState = fsm(currentState, getEvent());
-	}
+	}*/
+}
+
+static void printCurrentTime(void)
+{
+	TimeServiceDate_t date = TimeService_GetCurrentDateTime();
+
+	printf("%02hd-%02hd-%04hd %02hd:%02hd:%02hd\r\n", date.day, date.month, date.year, date.hour,
+			   date.minute, date.second);
 }
