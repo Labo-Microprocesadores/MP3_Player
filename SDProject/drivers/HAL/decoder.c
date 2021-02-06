@@ -91,8 +91,8 @@ static bool                  hasID3;								  // True if the file has valid ID3 
 char title[ID3_MAX_NUM_CHARS];                                        // Title of the song
 char artist[ID3_MAX_NUM_CHARS];                                       // Artist of the song
 char album[ID3_MAX_NUM_CHARS];                                        // Album of the song
-uint8_t trackNum[ID3_MAX_NUM_CHARS];                                  // Number of the track inside the album of the song
-uint8_t year[ID3_MAX_NUM_CHARS];                                      // year of the songs album
+char trackNum[ID3_MAX_NUM_CHARS];                                  // Number of the track inside the album of the song
+char year[ID3_MAX_NUM_CHARS];                                      // year of the songs album
 
 
 /*******************************************************************************
@@ -257,7 +257,7 @@ bool decoder_MP3GetLastFrameChannelCount(uint8_t* channelCount)
     return ret;
 }
 
-void decoder_MP3GetTagData(char* _title_, char* _album_, char* _artist_, uint8_t* _trackNum_, uint8_t* _year_)
+void decoder_MP3GetTagData(char* _title_, char* _album_, char* _artist_, char* _trackNum_, char* _year_)
 {
     strcpy(album, _album_);
     strcpy(artist, _artist_);
@@ -267,7 +267,6 @@ void decoder_MP3GetTagData(char* _title_, char* _album_, char* _artist_, uint8_t
     	trackNum[i] = _trackNum_[i];
     	year[i] = _year_[i];
     }
-
 }
 
 bool decoder_hasID3(void) {
@@ -292,6 +291,85 @@ bool decoder_shutDown(void)
 	}
 	return true;
 }
+
+
+bool decoder_getFileTitle(char ** title_)
+{
+    if(hasID3)
+    {
+        //here we verify that the title is not Unknown
+        if ( strcmp(title,"Unknown") != 0)
+        {
+            //if you are here it means that the song has tags and the title is not Unknown
+            (*title_) = title;
+            return true;
+        }
+    }
+    return false;
+}
+
+
+
+bool decoder_getFileAlbum(char** album_)
+{
+	if(hasID3)
+    {
+        //here we verify that the album is not Unknown
+        if ( strcmp(album,"Unknown") != 0)
+        {
+            //if you are here it means that the song has tags and the album is not Unknown
+            (*album_) = album;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool decoder_getFileArtist(char** artist_)
+{
+	if(hasID3)
+    {
+        //here we verify that the artist is not Unknown
+        if ( strcmp(artist,"Unknown") != 0)
+        {
+            //if you are here it means that the song has tags and the artist is not Unknown
+            (*artist_) = artist;
+            return true;
+        }
+    }
+    return false
+}
+
+bool decoder_getFileYear(char** year_)
+{
+	if(hasID3)
+    {
+        //here we verify that the year is not Unknown
+        if ( strcmp(year,"Unknown") != 0)
+        {
+            //if you are here it means that the song has tags and the year is not Unknown
+            (*year_) = year;
+            return true;
+        }
+    }
+    return false
+}
+
+bool decoder_getFileTrackNum(char** trackNum_)
+{
+	if(hasID3)
+    {
+        //here we verify that the trackNum is not Unknown
+        if ( strcmp(trackNum,"Unknown") != 0)
+        {
+            //if you are here it means that the song has tags and the trackNum is not Unknown
+            (*trackNum_) = trackNum;
+            return true;
+        }
+    }
+    return false
+}
+
 /*******************************************************************************
                         LOCAL FUNCTION DEFINITIONS
  ******************************************************************************/
@@ -390,27 +468,4 @@ void decoder_readID3Tag(void)
     }
 }
 
-char * decoder_getFileTitle()
-{
-	return title;
-}
 
-char * decoder_getFileAlbum()
-{
-	return album;
-}
-
-char * decoder_getFileArtist()
-{
-	return artist;
-}
-
-uint8_t * decoder_getFileYear()
-{
-	return year;
-}
-
-uint8_t * decoder_getFileTrackNum()
-{
-	return trackNum;
-}
