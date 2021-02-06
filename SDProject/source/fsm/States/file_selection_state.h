@@ -34,4 +34,9 @@ void FileSelection_PreviousFile(void);
  */
 void FileSelection_SelectFile(void);
 
+/*
+ * @brief Start playing the next song in the background
+ */
+void FileSelection_PlayNextSong(void);
+
 #endif //FILE_SELECTION_STATE_H

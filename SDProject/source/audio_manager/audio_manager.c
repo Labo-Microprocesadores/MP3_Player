@@ -9,6 +9,7 @@
  ******************************************************************************/
 #include <stdint.h>
 
+#include "audio_manager.h"
 #include "file_system_manager.h"
 #include "memory_manager.h"
 #include "AudioPlayer.h"
@@ -23,6 +24,7 @@
  ******************************************************************************/
 
 #define BUFFER_SIZE (AUDIO_PLAYER_BUFF_SIZE)
+#define MAX_VOLUME	(40U)
 /*******************************************************************************
  * LOCAL VARIABLES
  ******************************************************************************/
@@ -34,12 +36,13 @@ SDK_ALIGN(static uint16_t g_bufferRead[BUFFER_SIZE] , SD_BUFFER_ALIGN_SIZE);
 SDK_ALIGN(static short decoder_buffer[2*BUFFER_SIZE], SD_BUFFER_ALIGN_SIZE);
 static float effects_in[BUFFER_SIZE], effects_out[BUFFER_SIZE];
 
-
+static uint8_t vol = 15;
 /******************************************************************************
  *
  ******************************************************************************/
 void Audio_init(void)
 {
+	Mm_OnConnection(); //Init the SD;
 	FileSystem_ScanFiles(); // Build file system tree
 	currFile = FileSystem_GetFirstFile();
 	maxFile = FileSystem_GetFilesCount();
@@ -69,7 +72,12 @@ void Audio_selectFile(void)
 
 char * Audio_getCurrentName(void)
 {
-	return FileSystem_GetFileName(currFile);
+	char * ret;
+	if(!decoder_getFileTitle(&ret))
+	{
+		ret = FileSystem_GetFileName(currFile);
+	}
+	return ret;
 }
 
 void Audio_updateBuffer(void)
@@ -97,9 +105,10 @@ void Audio_updateBuffer(void)
 
 	/* aca van los efectos */
 	/* Scale to 12 bits, to fit in the DAC */
-	for (uint32_t index = 0; index < fin; index++)
+	coef = (vol*1.0)/MAX_VOLUME;
+	for (uint32_t index = 0; index < BUFFER_SIZE; index++)
 	{
-		g_bufferRead[index] = (effects_in/*out*/[index]+1)*2048;
+		g_bufferRead[index] = (effects_in/*out*/[index]*coef+1)*2048;
 	}
 
 	if (check == DECODER_END_OF_FILE)
@@ -127,7 +136,7 @@ void Audio_updateBuffer(void)
 
 	}
 
-	vumeterRefresh_fft(arr, 44100.0, 80, 10000);
+	vumeterRefresh_fft(effects_in/*out*/, 44100.0, 80, 10000);
 }
 
 
@@ -149,17 +158,45 @@ void Audio_stop(void)
 
 char * Audio_getArtist(void)
 {
-	return decoder_getFileArtist();
+	char * ret;
+	if(!decoder_getFileArtist(&ret))
+	{
+		ret = "-";
+	}
+	return ret;
 }
 
-char * Aduio_getAlbum(void)
+char * Audio_getAlbum(void)
 {
-	return decoder_getFileAlbum();
+	char * ret;
+	if(!decoder_getFileAlbum(&ret))
+	{
+		ret = "-";
+	}
+	return ret;
 }
 
 char * Audio_getYear(void)
 {
-	return (char *)decoder_getFileYear();
+	char * ret;
+	if(!decoder_getFileYear(&ret))
+	{
+		ret = "-";
+	}
+	return ret;
 }
 
+void Audio_IncVolume(void)
+{
+	vol = (vol + 1)%MAX_VOLUME;
+}
 
+void Audio_DecVolume(void)
+{
+	vol = (vol != 0) ? (vol - 1) : 0;
+}
+
+char Audio_getVolume(void)
+{
+	return (char)vol;
+}

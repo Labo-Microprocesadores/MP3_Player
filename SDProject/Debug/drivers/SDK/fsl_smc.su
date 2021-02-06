@@ -1,3 +1,4 @@
+fsl_smc.c:74:13:SMC_EnterStopRamFunc	8	static
 fsl_smc.c:105:6:SMC_PreEnterStopModes	0	static
 fsl_smc.c:117:6:SMC_PostExitStopModes	0	static
 fsl_smc.c:128:6:SMC_PreEnterWaitModes	0	static

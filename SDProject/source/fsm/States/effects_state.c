@@ -41,7 +41,7 @@ static void userInteractionStopsTitle(void);
  * FUNCTIONS WITH GLOBAL SCOPE
  ******************************************************************************/
 
-void Effects_initState(void)
+void Effects_InitState(void)
 {
 	showTitle();
 }
@@ -56,19 +56,19 @@ static void showTitle(void)
 	LCD_clearDisplay();
 	LCD_writeStrInPos("Efectos", 7, 0, 0);
 	showingTitle = true;
-	titleTimerID = Timer_AddCallback(&stopShowingTitle, TITLE_TIME, true);
+	//titleTimerID = Timer_AddCallback(&stopShowingTitle, TITLE_TIME, true);
 }
 
 static void stopShowingTitle(void)
 {
 	showingTitle = false;
 	LCD_clearDisplay();
-	setCurrentOption();
+//	setCurrentOption();
 }
 
 static void userInteractionStopsTitle(void)
 {
-	Timer_Delete(titleTimerID);
+//	Timer_Delete(titleTimerID);
 	titleTimerID = -1;
-	stopShowingTitle();
+	//stopShowingTitle();
 }

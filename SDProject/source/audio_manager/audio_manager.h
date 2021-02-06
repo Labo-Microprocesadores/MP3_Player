@@ -19,7 +19,7 @@ char * Audio_getCurrentName(void);
 
 char * Audio_getArtist(void);
 
-char * Aduio_getAlbum(void);
+char * Audio_getAlbum(void);
 
 char * Audio_getYear(void);
 
@@ -30,5 +30,11 @@ void Audio_play(void);
 void Audio_pause(void);
 
 void Audio_stop(void);
+
+void Audio_IncVolume(void);
+
+void Audio_DecVolume(void);
+
+char Audio_getVolume(void);
 
 #endif /* AUDIO_MANAGER_AUDIO_MANAGER_H_ */

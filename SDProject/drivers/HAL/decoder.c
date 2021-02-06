@@ -337,7 +337,7 @@ bool decoder_getFileArtist(char** artist_)
             return true;
         }
     }
-    return false
+    return false;
 }
 
 bool decoder_getFileYear(char** year_)
@@ -352,7 +352,7 @@ bool decoder_getFileYear(char** year_)
             return true;
         }
     }
-    return false
+    return false;
 }
 
 bool decoder_getFileTrackNum(char** trackNum_)
@@ -367,7 +367,7 @@ bool decoder_getFileTrackNum(char** trackNum_)
             return true;
         }
     }
-    return false
+    return false;
 }
 
 /*******************************************************************************

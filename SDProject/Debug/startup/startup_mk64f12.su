@@ -87,11 +87,11 @@ startup_mk64f12.c:905:11:DAC1_IRQHandler	8	static
 startup_mk64f12.c:909:11:ADC1_IRQHandler	8	static
 startup_mk64f12.c:913:11:I2C2_IRQHandler	8	static
 startup_mk64f12.c:917:11:CAN0_ORed_Message_buffer_IRQHandler	8	static
-startup_mk64f12.c:921:11:CAN0_Bus_Off_IRQHandler	0	static
-startup_mk64f12.c:925:11:CAN0_Error_IRQHandler	0	static
-startup_mk64f12.c:929:11:CAN0_Tx_Warning_IRQHandler	0	static
-startup_mk64f12.c:933:11:CAN0_Rx_Warning_IRQHandler	0	static
-startup_mk64f12.c:937:11:CAN0_Wake_Up_IRQHandler	0	static
+startup_mk64f12.c:921:11:CAN0_Bus_Off_IRQHandler	8	static
+startup_mk64f12.c:925:11:CAN0_Error_IRQHandler	8	static
+startup_mk64f12.c:929:11:CAN0_Tx_Warning_IRQHandler	8	static
+startup_mk64f12.c:933:11:CAN0_Rx_Warning_IRQHandler	8	static
+startup_mk64f12.c:937:11:CAN0_Wake_Up_IRQHandler	8	static
 startup_mk64f12.c:941:11:SDHC_IRQHandler	8	static
 startup_mk64f12.c:945:11:ENET_1588_Timer_IRQHandler	8	static
 startup_mk64f12.c:949:11:ENET_Transmit_IRQHandler	8	static

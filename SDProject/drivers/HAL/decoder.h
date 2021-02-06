@@ -89,7 +89,7 @@ bool decoder_MP3GetLastFrameChannelCount(uint8_t* channelCount);
  * @param trackNum: pointer to the uint8_t array where we will store the songs track number in the album.
  * @param year: pointer to the uint8_t array where we will store the album year.
  */
-void decoder_MP3GetTagData(char* title_, char* album_, char* artist_, uint8_t* trackNum_, uint8_t* year_);
+void decoder_MP3GetTagData(char* _title_, char* _album_, char* _artist_, char* _trackNum_, char* _year_);
 
 /**
  * @brief getter of hasID3

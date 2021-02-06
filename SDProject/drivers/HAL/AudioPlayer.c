@@ -171,8 +171,8 @@ void AudioPlayer_UpdateSampleRate(uint16_t sampleRate) //PDB_Configuration
 	{
 		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor1;
 		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider2;
-		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 567);
-		PDB_SetDACTriggerIntervalValue(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, 567);
+		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 568);
+		PDB_SetDACTriggerIntervalValue(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, 568);
 	}
 	else if(sampleRate == 48000)
 	{

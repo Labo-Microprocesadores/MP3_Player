@@ -24,5 +24,5 @@ void Init_StartAll(void)
 		emitEvent(SD_IN_EV);
 	}
 	// Start the idle state, not best practise to do here ( ͡° ͜ʖ ͡°)
-	idle_initState();
+	Idle_InitState();
 }

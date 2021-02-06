@@ -20,20 +20,20 @@
 
 #include "file_selection_state.h"
 #include "queue.h"
-#include "AudioPlayer.h"
+//#include "AudioPlayer.h"
 #include "Timer.h"
 #include "LCD_GDM1602A.h"
-#include "memory_manager.h"
-#include "file_system_manager.h"
-#include "decoder.h"
-//incluir mp3 decoder
+//#include "memory_manager.h"
+//#include "file_system_manager.h"
+//#include "decoder.h"
+#include "power_mode_switch.h"
 
 /*******************************************************************************
  * GLOBAL VARIABLES WITH FILE LEVEL SCOPE
  ******************************************************************************/
 static bool showingTitle;
 static int titleTimerID = -1;
-static Mp3File_t currFile;
+
 /*******************************************************************************
  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
  ******************************************************************************/
@@ -68,10 +68,10 @@ static void printFileInfo(void);
  *******************************************************************************
  ******************************************************************************/
 
-void FileSelection_initState(void)
+void FileSelection_InitState(void)
 {
+	PowerMode_SetRunMode();
 	showTitle(); //Shows the state's title.
-	Mm_OnConnection(); //Init the SD;
 	Audio_init();
 }
 
@@ -91,24 +91,18 @@ void FileSelection_SelectFile(void)
 {
 	/* Start decoding the file and play the audio player */
 	Audio_selectFile();
-
-	//TODO: Estas dos cosas vienen del mp3 decoder
-	//uint16_t * firstSongFrame = ;
-	//uint16_t sampleRate = ;
-
-	/*f_open(&g_fileObject, _T(currFile.path), (FA_READ));
-	fillBuffer();
-
-	char track[] = "TRACK __";
-	track[6] = currFile.index / 10 + '0';
-	track[7] = currFile.index % 10 + '0';
-	LCD_writeStrInPos(track, 8, 0, 0);
-	LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path) - 1, 1, 0, MIDIUM);
-
-	AudioPlayer_LoadSongInfo(firstSongFrame, sampleRate);
-	AudioPlayer_Play();
-	fillBuffer();*/
+	Audio_play();
+	emitEvent(FILE_SELECTED_EV);
 }
+
+void FileSelection_PlayNextSong(void)
+{
+	Audio_nextFile();
+	Audio_selectFile();
+	Audio_play();
+}
+
+
 /*******************************************************************************
  *******************************************************************************
  *                         LOCAL FUNCTION DEFINITIONS
@@ -116,8 +110,8 @@ void FileSelection_SelectFile(void)
  ******************************************************************************/
 static void showTitle(void)
 {
-	LCD_clearDisplay();
 	LCD_writeStrInPos("Elegir Archivo  ", 16, 0, 0);
+	LCD_clearRow(1);
 	showingTitle = true;
 	titleTimerID = Timer_AddCallback(&stopShowingTitle, TITLE_TIME, true);
 }
@@ -125,7 +119,7 @@ static void showTitle(void)
 static void stopShowingTitle(void)
 {
 	showingTitle = false;
-	LCD_clearDisplay();
+	//LCD_clearDisplay();
 	printFileInfo();
 	//showFiles();
 }

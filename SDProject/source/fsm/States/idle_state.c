@@ -45,14 +45,14 @@ static void setEnergyConsumptionMode(EnergyConsumptionMode_t energyConsumptionMo
  *******************************************************************************
  ******************************************************************************/
 
-void idle_initState(void)
+void Idle_InitState(void)
 {
 
   showTime();
   setEnergyConsumptionMode(LOW_CONSUMPTION);
 }
 
-void idle_onUserInteraction(void)
+void Idle_OnUserInteraction(void)
 {
   setEnergyConsumptionMode(HIGH_CONSUMPTION);
   stopShowingTime();

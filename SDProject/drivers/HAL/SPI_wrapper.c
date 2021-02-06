@@ -15,7 +15,7 @@
 #include "SPI_wrapper.h"
 #include "hardware.h"
 
-#define MAX_SIZE 300
+#define MAX_SIZE 500
 #define MSG_LEN(rear, front, max) (((rear) + (max) - (front)) % ((max)-1)) // MSG_LEN(rear, front, max_len)
 #define BUFFER_FULL(rear, front, max) ((((rear) + 2) % ((max)-1)) == (front))
 

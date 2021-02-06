@@ -16,6 +16,9 @@
 #include "States/file_selection_state.h"
 #include "States/player_state.h"
 #include "States/effects_state.h"
+
+#include "audio_manager.h"
+
 #include "queue.h"
 
 
@@ -61,6 +64,7 @@ STATE effects[] =
 {
 	{PRESS_EV,				effects, 				NULL},
 	{LKP_EV, 				effects, 				NULL},
+
 	{TIMEOUT_EV, 			idle, 					Idle_InitState},
 	{CHANGE_MODE_EV,		player,					Player_InitState},
 	{SD_OUT_EV, 			idle, 					Idle_InitState},
@@ -73,9 +77,20 @@ STATE file_selection[] =
 {
 	{SD_OUT_EV, 			idle, 					Idle_InitState},
 	{TIMEOUT_EV,			idle,					Idle_InitState},
+
 	{PRESS_EV,				file_selection, 		NULL},
 	{LKP_EV, 				file_selection, 		NULL},
+
+	{ENCODER_PRESS_EV,		file_selection, 		FileSelection_SelectFile},
+	{ENCODER_RIGHT_EV,		file_selection, 		FileSelection_NextFile},
+	{ENCODER_LEFT_EV,		file_selection,			FileSelection_PreviousFile},
+
+	{FILE_SELECTED_EV, 		player, 				Player_InitState},
 	{CHANGE_MODE_EV, 		effects, 				Effects_InitState},
+
+	{FILL_BUFFER_EV, 		file_selection,			Audio_updateBuffer},
+	{NEXT_SONG_EV, 			file_selection,			FileSelection_PlayNextSong},
+
 	{FIN_TABLA, 			file_selection, 		do_nothing}
 };
 
@@ -84,9 +99,18 @@ STATE player[] =
 {
 	{PRESS_EV,				player, 				NULL},
 	{LKP_EV, 				player, 				NULL},
+
+	{ENCODER_PRESS_EV,		file_selection, 		FileSelection_SelectFile},
+	{ENCODER_RIGHT_EV,		player, 				Player_IncVolume},
+	{ENCODER_LEFT_EV,		player,					Player_DecVolume},
+
 	{CHANGE_MODE_EV, 		file_selection, 		FileSelection_InitState},
 	{SD_OUT_EV, 			idle, 					Idle_InitState},
 	{TIMEOUT_EV,			idle,	 				Idle_InitState},
+
+	{FILL_BUFFER_EV, 		player,					Audio_updateBuffer},
+	{NEXT_SONG_EV, 			player,					Player_PlayNextSong},
+
 	{FIN_TABLA, 			player, 				do_nothing}
 };
 

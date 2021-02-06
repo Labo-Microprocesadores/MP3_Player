@@ -9,8 +9,8 @@
 #define SAMPLE_LENGTH       FFT_SIZE
 #define NUMBER_OF_BANDS     8  
 #define VUMETER_HEIGHT      8
-#define NOISE               100
-#define MAX_AMPLITUDE       60000
+#define NOISE               5
+#define MAX_AMPLITUDE       600
 #define AVERAGE				2
 
 static arm_rfft_fast_instance_f32 rfft_fast_instance;
@@ -29,29 +29,19 @@ void vumeterRefresh_init()
 
 int vumeterRefresh_fft(float32_t * inputSignal, float32_t sampleRate, int lowerFreqBand, int higherFreqBand)
 { 
-    //float32_t vumeterValues[NUMBER_OF_BANDS];
-    static char average = 0;
-	unsigned int usableBins = (SAMPLE_LENGTH / 2 - 1);
+    static volatile char average = 0;
+    volatile unsigned int usableBins = (SAMPLE_LENGTH / 2 - 1);
 
-    float32_t nyquistFreq = sampleRate / 2;
-    double inv_binWidth = SAMPLE_LENGTH/sampleRate;
-    double base = higherFreqBand / lowerFreqBand;
-	double exp = 1.0f / (NUMBER_OF_BANDS - 1.0f );
-	float32_t freqMultiplierPerBand = pow(base,exp);
+    volatile double inv_binWidth = SAMPLE_LENGTH/sampleRate;
+    volatile double base = higherFreqBand / lowerFreqBand;
+    volatile double exp = 1.0f / (NUMBER_OF_BANDS - 1.0f );
+    volatile float32_t freqMultiplierPerBand = pow(base,exp);
 
-    //float32_t realHigherFreqBand = higherFreqBand  < nyquistFreq * 0.99 ? higherFreqBand :  nyquistFreq * 0.99;
-    //double base2 = 20000/80;
-    //float32_t base3 = 20000/80;
-    //int base4 = 20000/80;
-
-   
-    //GPIOC->PDOR |= (1 << 17);
     arm_rfft_fast_f32(&rfft_fast_instance, inputSignal, output, 0);
-    /* Process the data through the Complex Magnitude Module for
-    calculating the magnitude at each bin */
+
     for(uint16_t j = 0; j < SAMPLE_LENGTH/2; j++)
     {
-    	float32_t temp = output[2*j]*output[2*j] + output[2*j+1]*output[2*j+1];
+    	volatile float32_t temp = output[2*j]*output[2*j] + output[2*j+1]*output[2*j+1];
     	arm_sqrt_f32(temp, &outputFft[j]);
     }
     //arm_cmplx_mag_f32(output, outputFft, SAMPLE_LENGTH);
@@ -59,13 +49,13 @@ int vumeterRefresh_fft(float32_t * inputSignal, float32_t sampleRate, int lowerF
     ///GPIOC->PDOR &= ~(1 << 17);
 
     //unsigned int binFreq[NUMBER_OF_BANDS];
-    float32_t currentBinFreq = lowerFreqBand;
-    float32_t nextBinFreq = lowerFreqBand * freqMultiplierPerBand;
-    float32_t currentCenterBin;
-    float32_t nextCenterBin;
-    float32_t lowerBin = 0;
-    float32_t higherBin;
-    float32_t temp;
+    volatile float32_t currentBinFreq = lowerFreqBand;
+    volatile float32_t nextBinFreq = lowerFreqBand * freqMultiplierPerBand;
+    volatile float32_t currentCenterBin;
+    volatile float32_t nextCenterBin;
+    volatile float32_t lowerBin = 0;
+    volatile float32_t higherBin;
+    volatile float32_t temp;
     for (size_t i = 0; i < NUMBER_OF_BANDS; i++)
     {
         //currentBinFreq = lowerFreqBand * fpowf(freqMultiplierPerBand, i);

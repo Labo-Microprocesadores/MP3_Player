@@ -13,6 +13,7 @@
 
 #include "queue.h"
 #include "audio_manager.h"
+#include "LCD_GDM1602A.h"
 
 #include "vumeterRefresh.h"
 
@@ -25,11 +26,8 @@
 /*******************************************************************************
  * GLOBAL VARIABLES WITH FILE LEVEL SCOPE
  ******************************************************************************/
-// Estas dos cosas vienen del mp3 decoder
-static uint16_t *currentSongFrame;
-static uint16_t sampleRate;
 
-static Mp3File_t currFile;
+static void printFileInfo(void);
 /*******************************************************************************
  *******************************************************************************
                         GLOBAL FUNCTION DEFINITIONS
@@ -37,7 +35,7 @@ static Mp3File_t currFile;
  ******************************************************************************/
 void Player_InitState(void)
 {
-
+	printFileInfo();
 }
 
 void Player_Pause(void)
@@ -63,6 +61,7 @@ void Player_PlayNextSong(void)
 	Audio_nextFile();
 	Audio_selectFile();
 	Audio_play();
+	printFileInfo();
 }
 
 void Player_PlayPreviousSong(void)
@@ -70,8 +69,26 @@ void Player_PlayPreviousSong(void)
 	Audio_prevFile();
 	Audio_selectFile();
 	Audio_play();
+	printFileInfo();
 }
 
+void Player_IncVolume(void)
+{
+	// algo de mostrar en el display por un tiempo
+	Audio_IncVolume();
+}
+
+void Player_DecVolume(void)
+{
+	// algo de mostrar en el display por un tiempo
+	Audio_DecVolume();
+}
+
+/*******************************************************************************
+ *******************************************************************************
+                        LOCAL FUNCTION DEFINITIONS
+ *******************************************************************************
+ ******************************************************************************/
 static void printFileInfo(void)
 {
 	char path[50], data[400];
