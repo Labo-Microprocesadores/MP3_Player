@@ -1,35 +1,35 @@
 drivers/SDK/clock_config.o drivers/SDK/clock_config.d: \
  ../drivers/SDK/clock_config.c ../drivers/SDK/fsl_smc.h \
  ../drivers/SDK/fsl_common.h \
- D:\Documentos\GitHub\TPFinal\SDProject\device/fsl_device_registers.h \
- D:\Documentos\GitHub\TPFinal\SDProject\device/MK64F12.h \
- D:\Documentos\GitHub\TPFinal\SDProject\CMSIS/core_cm4.h \
- D:\Documentos\GitHub\TPFinal\SDProject\CMSIS/cmsis_version.h \
- D:\Documentos\GitHub\TPFinal\SDProject\CMSIS/cmsis_compiler.h \
- D:\Documentos\GitHub\TPFinal\SDProject\CMSIS/cmsis_gcc.h \
- D:\Documentos\GitHub\TPFinal\SDProject\device/system_MK64F12.h \
- D:\Documentos\GitHub\TPFinal\SDProject\device/MK64F12_features.h \
+ C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\device/fsl_device_registers.h \
+ C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\device/MK64F12.h \
+ C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\CMSIS/core_cm4.h \
+ C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\CMSIS/cmsis_version.h \
+ C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\CMSIS/cmsis_compiler.h \
+ C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\CMSIS/cmsis_gcc.h \
+ C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\device/system_MK64F12.h \
+ C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\device/MK64F12_features.h \
  ../drivers/SDK/fsl_clock.h ../drivers/SDK/clock_config.h
 
 ../drivers/SDK/fsl_smc.h:
 
 ../drivers/SDK/fsl_common.h:
 
-D:\Documentos\GitHub\TPFinal\SDProject\device/fsl_device_registers.h:
+C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\device/fsl_device_registers.h:
 
-D:\Documentos\GitHub\TPFinal\SDProject\device/MK64F12.h:
+C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\device/MK64F12.h:
 
-D:\Documentos\GitHub\TPFinal\SDProject\CMSIS/core_cm4.h:
+C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\CMSIS/core_cm4.h:
 
-D:\Documentos\GitHub\TPFinal\SDProject\CMSIS/cmsis_version.h:
+C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\CMSIS/cmsis_version.h:
 
-D:\Documentos\GitHub\TPFinal\SDProject\CMSIS/cmsis_compiler.h:
+C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\CMSIS/cmsis_compiler.h:
 
-D:\Documentos\GitHub\TPFinal\SDProject\CMSIS/cmsis_gcc.h:
+C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\CMSIS/cmsis_gcc.h:
 
-D:\Documentos\GitHub\TPFinal\SDProject\device/system_MK64F12.h:
+C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\device/system_MK64F12.h:
 
-D:\Documentos\GitHub\TPFinal\SDProject\device/MK64F12_features.h:
+C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\device/MK64F12_features.h:
 
 ../drivers/SDK/fsl_clock.h:
 
