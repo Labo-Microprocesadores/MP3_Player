@@ -11,6 +11,8 @@
 #include "queue.h"
 #include "power_mode_switch.h"
 #include "LCD_GDM1602A.h"
+#include "time_service.h"
+#include "Timer.h"
 
 /*********************************************************
  * 		LOCAL STRUCTS AND ENUMS
@@ -22,10 +24,14 @@ typedef enum
 } EnergyConsumptionMode_t;
 
 /*******************************************************************************
+ * PRIVATE VARIABLES WITH FILE LEVEL SCOPE
+ ******************************************************************************/
+int timeCallbackId = -1;
+/*******************************************************************************
  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
  ******************************************************************************/
 /**
- * @brief Show the current time on the display. If the user interacts with the system, the time will stop showing.
+ * @brief Shows the current time on the display.
  */
 static void showTime(void);
 /**
@@ -38,6 +44,11 @@ static void stopShowingTime(void);
  * @param EnergyConsumptionMode_t energy mode.
  */
 static void setEnergyConsumptionMode(EnergyConsumptionMode_t energyConsumptionMode);
+
+/**
+ * @brief Fetches the current time and shows it on the display.
+ */
+static void updateDisplayTime();
 
 /*******************************************************************************
  *******************************************************************************
@@ -66,15 +77,30 @@ void Idle_OnUserInteraction(void)
  ******************************************************************************/
 static void showTime(void)
 {
-  //TODO: fetch current time and show it on the display.
+  updateDisplayTime();
+  timeCallbackId = Timer_AddCallback(updateDisplayTime, 1000, false);
+}
+
+static void updateDisplayTime()
+{
+  TimeServiceDate_t date = TimeService_GetCurrentDateTime();
+
+  char dateString[10];
+  char timeString[5];
+  snprintf(dateString, sizeof(dateString), "%02hd-%02hd-%04hd", date.day, date.month, date.year);
+  snprintf(timeString, sizeof(timeString), "%02hd:%02hd", date.hour,
+		   date.minute);
+
   LCD_clearDisplay();
-  LCD_writeStrInPos("20:03PM", 7, 0, 0);
-  LCD_writeStrInPos("31/01/21", 8, 1, 0);
+  LCD_writeStrInPos(timeString, 10, 0, 0);
+  LCD_writeStrInPos(dateString, 5, 1, 0);
 }
 
 static void stopShowingTime(void)
 {
+  Timer_Delete(timeCallbackId);
   LCD_clearDisplay();
+
 }
 
 static void setEnergyConsumptionMode(EnergyConsumptionMode_t energyConsumptionMode)

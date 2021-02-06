@@ -41,7 +41,6 @@
 /*******************************************************************************
  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
  ******************************************************************************/
-static void printCurrentTime(void);
 /*******************************************************************************
  *******************************************************************************
                         GLOBAL FUNCTION DEFINITIONS
@@ -108,7 +107,6 @@ void App_Init(void)
 	buttonConfiguration(PIN_SW_B, LKP, 20);
 	buttonConfiguration(PIN_SW_C, LKP, 20);
 	//buttonConfiguration(PIN_SW_D, LKP, 20);
-	Timer_AddCallback(printCurrentTime, 2000, false);
 	initQueue();
 	currentState = FSM_GetInitState();
 }
@@ -116,17 +114,11 @@ void App_Init(void)
 void App_Run(void)
 {
 
-	/*getEvents();
+	getEvents();
 	if(!queueIsEmpty())
 	{
 		currentState = fsm(currentState, getEvent());
-	}*/
+	}
 }
 
-static void printCurrentTime(void)
-{
-	TimeServiceDate_t date = TimeService_GetCurrentDateTime();
 
-	printf("%02hd-%02hd-%04hd %02hd:%02hd:%02hd\r\n", date.day, date.month, date.year, date.hour,
-			   date.minute, date.second);
-}
