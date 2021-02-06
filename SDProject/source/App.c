@@ -60,24 +60,30 @@ void fillBuffer(void);
  *******************************************************************************
                         GLOBAL FUNCTION DEFINITIONS
  *******************************************************************************/
-
+void aux(char * path)
+{
+	if(FileSystem_isMp3File(path))
+	{
+		FileSystem_AddFile(path);
+	}
+}
 /* Función que se llama 1 vez, al comienzo del programa */
 void App_Init(void)
 {
 	SysTick_Init();
 
-	//Mm_Init(aux); //Memory manager
+	Mm_Init(aux); //Memory manager
 	LCD_Init();   //LCD Driver
 
 	md_Init();	  //NeoPixel matrix
 
-	//decoder_MP3DecoderInit(); // Init decoder
+	decoder_MP3DecoderInit(); // Init decoder
 
 	AudioPlayer_Init();	//Audio Player
 	vumeterRefresh_init(); // FFT
 	//PowerMode_Init();
 
-	/*
+
 	buttonsInit();
 	buttonConfiguration(PIN_SW_A, LKP, 20); //20*50=1seg
 	buttonConfiguration(PIN_SW_B, LKP, 20);
@@ -89,18 +95,19 @@ void App_Init(void)
 	if (maxFile != 0)
 	{
 		currFile = FileSystem_GetFirstFile();
-		printf("TRACK %d: %s\r\n", currFile.index, currFile.path);
+		//printf("TRACK %d: %s\r\n", currFile.index, currFile.path);
 		//f_close(&g_fileObject);
 	}
-*/
+
 	equalizer_init();
 
-	  int hello[8] = {-5, -3, -3, -5, 0, 3, 5, 1};
+	  int hello[8] = {-5, -3, -3, -5, 0, 3, 1, 1};
 	  for(int j = 1; j<=8; j++)
 	  {
-		 // equalizer_set_band_gain(j,0);//hello[j-1]);
+		 equalizer_set_band_gain(j,hello[j-1]);//hello[j-1]);
 	  }
-
+	  equalizer_set_band_gain(5,10);
+	  equalizer_set_band_gain(8,-10);
 }
 
 /* Función que se llama constantemente en un ciclo infinito */
@@ -113,12 +120,12 @@ void App_Run(void)
 			start = true;
 			//f_open(&g_fileObject, _T(currFile.path), (FA_READ));
 
-			//decoder_MP3LoadFile(currFile.path);
+			decoder_MP3LoadFile(currFile.path);
 
-			//printf("TRACK %d: %s\r\n", currFile.index, currFile.path);
+			printf("TRACK %d: %s\r\n", currFile.index, currFile.path);
 			fillBuffer();
 
-			/*
+
 			char track[] = "TRACK __        ";
 			track[6] = currFile.index / 10 + '0';
 			track[7] = currFile.index % 10 + '0';
@@ -136,7 +143,7 @@ void App_Run(void)
 			memset(path, 0x20, 50);
 			memcpy(path, &currFile.path[1],  strlen(currFile.path) - 1);
 			LCD_writeShiftingStr(path,  len, 1 , MIDIUM);
-			*/
+
 
 			AudioPlayer_LoadSongInfo(g_bufferRead, 44100);
 			AudioPlayer_Play();
@@ -164,8 +171,8 @@ void fillBuffer(void)
 
 	memset(g_bufferRead, 0, sizeof(g_bufferRead));
 	memset(decoder_buffer, 0, sizeof(decoder_buffer));
-/*
-	decoder_return_t check = decoder_MP3DecodedFrame(decoder_buffer, BUFFER_SIZE, &sampleCount);
+
+	decoder_return_t check = decoder_MP3DecodedFrame(decoder_buffer, 2*BUFFER_SIZE, &sampleCount);
 
 	decoder_MP3GetLastFrameChannelCount(&channelCount);
 
@@ -175,9 +182,9 @@ void fillBuffer(void)
 		fin = BUFFER_SIZE;
 		printf("ERROR BUFFER LARGER !!!!!!!!!!!!!!!!");
 	}
-*/
-	float coef = 1.0/32768.0;
 
+	float coef = 1.0/32768.0;
+/*
 	  for(int i=1152*veces; i<1152*(veces+1); i++)
 	  {
 		  effects_in[i%1152] = 0;
@@ -186,26 +193,26 @@ void fillBuffer(void)
 		  effects_in[i%1152] += 0.125*arm_sin_f32(2*3.1415926f*160*i/44100);
 		  effects_in[i%1152] += 0.125*arm_sin_f32(2*3.1415926f*320*i/44100);
 		  effects_in[i%1152] += 0.125*arm_sin_f32(2*3.1415926f*640*i/44100);
-		  effects_in[i%1152] += 0.0625*arm_sin_f32(2*3.1415926f*1280*i/44100);
+		  effects_in[i%1152] += 0.125*arm_sin_f32(2*3.1415926f*1280*i/44100);
 		  effects_in[i%1152] += 0.125*arm_sin_f32(2*3.1415926f*2500*i/44100);
 		  effects_in[i%1152] += 0.125*arm_sin_f32(2*3.1415926f*5000*i/44100);
 		  effects_in[i%1152] += 0.125*arm_sin_f32(2*3.1415926f*10000*i/44100);
 
 	  }
 	  veces++;
+*/
 
-
-	/*for (uint32_t index = 0; index < fin; index++)
+	for (uint32_t index = 0; index < fin; index++)
 	{
 		effects_in[index] = decoder_buffer[channelCount * index]*coef;
-	}*/
+	}
 	equalizer_equalize(effects_in, effects_out);
 
 	for (uint32_t index = 0; index < 1152; index++)
 	{
 		g_bufferRead[index] = (effects_out[index]+1)*2048;
 	}
-/*
+
 	if (check == DECODER_END_OF_FILE)
 	{
 		for (uint32_t index = (sampleCount / channelCount); index < BUFFER_SIZE ; index++)
@@ -245,7 +252,7 @@ void fillBuffer(void)
 
 		decoder_MP3LoadFile(currFile.path);
 
-	}*/
+	}
 
 	//vumeterRefresh_fft(arr, 44100.0, 80, 10000);
 }

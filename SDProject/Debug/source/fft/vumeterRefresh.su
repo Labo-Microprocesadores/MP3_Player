@@ -1,4 +1,0 @@
-vumeterRefresh.c:23:6:vumeterRefresh_init	0	static
-vumeterRefresh.c:103:6:vumeterRefresh_write_to_matrix	112	static
-vumeterRefresh.c:30:5:vumeterRefresh_fft	72	static
-vumeterRefresh.c:135:11:fpowf	0	static

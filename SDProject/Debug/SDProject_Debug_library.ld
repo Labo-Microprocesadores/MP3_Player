@@ -1,3 +1,4 @@
+
 /*
  * GENERATED FILE - DO NOT EDIT
  * Copyright (c) 2008-2013 Code Red Technologies Ltd,
@@ -6,7 +7,7 @@
  * Generated linker script file for MK64FN1M0xxx12
  * Created from library.ldt by FMCreateLinkLibraries
  * Using Freemarker v2.3.30
- * MCUXpresso IDE v11.3.0 [Build 5222] [2021-01-11] on 06-Feb-2021 02:21:49
+ * MCUXpresso IDE v11.3.0 [Build 5222] [2021-01-11] on 06-Feb-2021 13:01:22
  */
 
 GROUP (

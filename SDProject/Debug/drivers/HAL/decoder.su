@@ -1,9 +1,0 @@
-decoder.c:318:6:decoder_ToBuffer	40	static
-decoder.c:102:6:decoder_MP3DecoderInit	24	static
-decoder.c:156:18:decoder_MP3DecodedFrame	88	static
-decoder.c:248:6:decoder_MP3GetLastFrameChannelCount	0	static
-decoder.c:260:6:decoder_MP3GetTagData	24	static
-decoder.c:273:6:decoder_hasID3	0	static
-decoder.c:277:6:decoder_shutDown	16	static
-decoder.c:355:6:decoder_readID3Tag	16	static
-decoder.c:115:6:decoder_MP3LoadFile	32	static

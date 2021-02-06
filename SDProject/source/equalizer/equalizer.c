@@ -25,12 +25,15 @@ static arm_biquad_casd_df1_inst_q31 S6;
 static arm_biquad_casd_df1_inst_q31 S7;
 static arm_biquad_casd_df1_inst_q31 S8;
 
+static arm_biquad_cas_df1_32x64_ins_q31 * hpFilter [2] = {&S1, &S2};
+static arm_biquad_casd_df1_inst_q31 * lpFilter [6] = {&S3, &S4, &S5, &S6, &S7, &S8};
+
 /* ----------------------------------------------------------------------
 ** Q31 state buffers for Band1, Band2, Band3, Band4, Band5, Band6, Band7 and Band8
 ** ------------------------------------------------------------------- */
 
-static q63_t biquadStateBandQ63[2][4 * 2];
-static q31_t biquadStateBandQ31[6][4 * 2];
+static q63_t biquadStateBandQ63 [2][4 * 2];
+static q31_t biquadStateBandQ31 [6][4 * 2];
 
 
 
@@ -443,7 +446,7 @@ void equalizer_init(void)
 
         arm_biquad_cascade_df1_init_q31(&S6, NUMBER_OF_STAGES,
           (q31_t *) &coeffTable[COEF_PER_FILTER*GAIN_LEVELS*5 + COEF_PER_FILTER*(DEFAULT_GAIN + MAX_GAIN)],
-          &biquadStateBandQ31[3][0], 02);
+          &biquadStateBandQ31[3][0], 2);
 
          arm_biquad_cascade_df1_init_q31(&S7, NUMBER_OF_STAGES,
           (q31_t *) &coeffTable[COEF_PER_FILTER*GAIN_LEVELS*6 + COEF_PER_FILTER*(DEFAULT_GAIN + MAX_GAIN)],
@@ -467,14 +470,14 @@ void equalizer_set_band_gain (int32_t band, int32_t gain)
 {
     if(band < 3 )
     {
-         arm_biquad_cas_df1_32x64_init_q31(&S1, NUMBER_OF_STAGES,
-            (q31_t *) &coeffTable[COEF_PER_FILTER*GAIN_LEVELS*0 + COEF_PER_FILTER*(gain + MAX_GAIN)],
+         arm_biquad_cas_df1_32x64_init_q31(hpFilter[band - 1], NUMBER_OF_STAGES,
+            (q31_t *) &coeffTable[COEF_PER_FILTER*GAIN_LEVELS*(band-1) + COEF_PER_FILTER*(gain + MAX_GAIN)],
             &biquadStateBandQ63[band - 1][0], 2);
     }
     else
     {
-         arm_biquad_cascade_df1_init_q31(&S7, NUMBER_OF_STAGES,
-          (q31_t *) &coeffTable[COEF_PER_FILTER*GAIN_LEVELS*6 + COEF_PER_FILTER*(gain + MAX_GAIN)],
+         arm_biquad_cascade_df1_init_q31(lpFilter[band - 3], NUMBER_OF_STAGES,
+          (q31_t *) &coeffTable[COEF_PER_FILTER*GAIN_LEVELS*(band-1) + COEF_PER_FILTER*(gain + MAX_GAIN)],
           &biquadStateBandQ31[band - 3][0], 2);
     }
 }
