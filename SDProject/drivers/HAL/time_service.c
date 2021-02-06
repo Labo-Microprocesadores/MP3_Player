@@ -43,6 +43,14 @@ rtc_datetime_t date;
  */
 void TimeService_Init(void)
 {
+	/* Set a start date time */
+	date = (rtc_datetime_t) {.year = 2021U,
+			.month = 2U,
+			.day = 6U,
+			.hour = 19U,
+			.minute = 41U,
+			.second = 0};
+
     rtc_config_t rtcConfig;
 
     /* Init RTC */
@@ -74,13 +82,7 @@ void TimeService_Init(void)
 #endif /* FSL_FEATURE_RTC_HAS_OSC_SCXP */
 #endif /* EXAMPLE_CAP_LOAD_VALUE */
 
-    /* Set a start date time and start RT */
-    date = (rtc_datetime_t) {.year = 2021U,
-    		.month = 2U,
-			.day = 6U,
-			.hour = 18U,
-			.minute = 38U,
-			.second = 0};
+
 
     /* RTC time counter has to be stopped before setting the date & time in the TSR register */
     RTC_StopTimer(RTC);

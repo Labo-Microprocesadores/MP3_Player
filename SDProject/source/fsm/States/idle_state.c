@@ -58,9 +58,8 @@ static void updateDisplayTime();
 
 void Idle_InitState(void)
 {
-
-  showTime();
   setEnergyConsumptionMode(LOW_CONSUMPTION);
+  showTime();
 }
 
 void Idle_OnUserInteraction(void)
@@ -78,15 +77,15 @@ void Idle_OnUserInteraction(void)
 static void showTime(void)
 {
   updateDisplayTime();
-  timeCallbackId = Timer_AddCallback(updateDisplayTime, 1000, false);
+  timeCallbackId = Timer_AddCallback(updateDisplayTime, 100, false);
 }
 
 static void updateDisplayTime()
 {
   TimeServiceDate_t date = TimeService_GetCurrentDateTime();
 
-  char dateString[10];
-  char timeString[5];
+  char dateString[15];
+  char timeString[15];
   snprintf(dateString, sizeof(dateString), "%02hd-%02hd-%04hd", date.day, date.month, date.year);
   snprintf(timeString, sizeof(timeString), "%02hd:%02hd", date.hour,
 		   date.minute);
@@ -94,6 +93,7 @@ static void updateDisplayTime()
   LCD_clearDisplay();
   LCD_writeStrInPos(timeString, 10, 0, 0);
   LCD_writeStrInPos(dateString, 5, 1, 0);
+  printf("%s\n%s\n", timeString, dateString);
 }
 
 static void stopShowingTime(void)
