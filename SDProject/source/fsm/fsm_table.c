@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include "fsm.h"
 #include "fsm_table.h"
+#include "States/init_state.h"
 #include "States/idle_state.h"
 #include "States/file_selection_state.h"
 #include "States/player_state.h"
@@ -27,7 +28,7 @@ static void do_nothing(void);
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
  ******************************************************************************/
 /*Foward Declarations*/
-
+extern STATE init[];
 extern STATE idle[];
 extern STATE effects[];
 extern STATE player[];
@@ -35,6 +36,14 @@ extern STATE file_selection[];
 
 
 /*** tablas de estado ***/
+
+/*** Init State ***/
+
+STATE init[]=
+{
+	{START_EV,				idle, 					Init_StartAll},
+	{FIN_TABLA,				init,					do_nothing}
+};
 
 /*** Idle State ***/
 
@@ -91,7 +100,7 @@ STATE player[] =
 //========interfaz=================
 STATE *FSM_GetInitState(void)
 {
-	 return(idle);
+	 return(init);
 }
 
 
@@ -108,5 +117,6 @@ void FSM_StartInitState()
 /*Dummy function*/
 static void do_nothing(void)
 {
-	//take some time off, relax, and KEEP WORKING ////you lazy ass ALU
+	volatile char foo = 0;
+	foo++;
 }

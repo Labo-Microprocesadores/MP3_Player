@@ -34,7 +34,7 @@
 
 #define INIT_INSTRUCTIONS		10
 
-#define SHIFTING_BUFFER_LEN		(4*DISPLAY_COLUMNS)
+#define SHIFTING_BUFFER_LEN		(25*DISPLAY_COLUMNS) //might be excessive...
 
 #define CURSOR_VISIBLE			0
 #define CURSOR_BLINK			0

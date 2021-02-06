@@ -21,6 +21,11 @@ typedef struct
 /*******************************************************************************
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
+/*
+ * @brief Scan all mp3 files in the storage device
+ * @param path: base dir to start searching
+ */
+void FileSystem_ScanFiles();
 
 /*
  * @brief Detects if a file's path corresponds to a .mp3 file.

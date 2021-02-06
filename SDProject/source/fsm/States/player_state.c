@@ -7,11 +7,16 @@
 /*******************************************************************************
  * INCLUDE HEADER FILES
  ******************************************************************************/
-#include <fsm/States/Player_state.h>
+#include <fsm/States/player_state.h>
 #include <stdbool.h>
+#include <string.h>
+
 #include "queue.h"
-#include "AudioPlayer.h"
+#include "audio_manager.h"
+
 #include "vumeterRefresh.h"
+
+#include "AudioPlayer.h"
 #include "ff.h"
 #include "file_system_manager.h"
 
@@ -37,64 +42,62 @@ void Player_InitState(void)
 
 void Player_Pause(void)
 {
-  AudioPlayer_Pause();
-  // y frenar la fft.
+	Audio_pause();
 }
+
 void Player_Play(void)
 {
-	// Estas dos cosas vienen del mp3 decoder
-	//uint16_t * firstSongFrame = ;
-	//uint16_t sampleRate = ;
-
-	// esto tendria que ser algo del decoder, tipo un init con el archivo
-	// decoder(currFile.path ...);
-
-	// Procesar la siguiente muestra, decode y filtros
-	/* fillBuffer();*/
-
-	// Mostrar en el LCD
-
-	/*
-	char track[] = "TRACK __";
-	track[6] = currFile.index / 10 + '0';
-	track[7] = currFile.index % 10 + '0';
-	LCD_writeStrInPos(track, 8, 0, 0);
-	LCD_writeBouncingStr(&currFile.path[1], strlen(currFile.path) - 1, 1, 0, MIDIUM);
-	*/
-
-	// Le mando al audio player
-	AudioPlayer_LoadSongInfo(currentSongFrame, sampleRate);
+/*	AudioPlayer_LoadSongInfo(currentSongFrame, sampleRate);
 	AudioPlayer_Play();
 	// Preparo el siguiente frame
-	fillBuffer();
+	fillBuffer();*/
 }
 
 void Player_Stop(void)
 {
-  AudioPlayer_Stop();
-  //y frenar la fft
-
-  //Tendria que tener algo del decoder que le pida que vuelva al principio del archivo
-
+	Audio_stop();
 }
+
 void Player_PlayNextSong(void)
 {
-  AudioPlayer_Stop();
-  // y frenar fft
-
-  // Estas dos cosas vienen del mp3 decoder
-  //uint16_t * currentSongFrame = ;//el primer frame de la song
-  //uint16_t sampleRate = ;
-
-  // Pido la siguiente cancion al file system y voy a Player Play
-  currFile = FileSystem_GetNextFile(currFile);
-  Player_Play();
+	Audio_nextFile();
+	Audio_selectFile();
+	Audio_play();
 }
 
 void Player_PlayPreviousSong(void)
 {
-  AudioPlayer_Stop();
-  // Pido cancion anterior al file system y voy a Player Play
-  currFile = FileSystem_GetPreviousFile(currFile);
-  Player_Play();
+	Audio_prevFile();
+	Audio_selectFile();
+	Audio_play();
 }
+
+static void printFileInfo(void)
+{
+	char path[50], data[400];
+	memset(data, 0x20, 400);
+	memset(path, 0x20, 50);
+	char * name = Audio_getCurrentName();
+	char * artist = Audio_getArtist();
+	char * album = Audio_getAlbum();
+	char * year = Audio_getYear();
+	char * gather[] = {"Artista: ", artist, " Album: ", album, " Año: ", year};
+
+	uint16_t len = strlen(name);
+	len += (DISPLAY_COLUMNS-(len%DISPLAY_COLUMNS));
+	memcpy(path, name, strlen(name));
+	LCD_writeShiftingStr(path,  len, 0, MIDIUM);
+
+
+
+	len = 0;
+	for(int k = 0; k < sizeof(gather)/sizeof(gather[0]); k++)
+	{
+		memcpy(data + len, gather[k], strlen(gather[k]));
+		len += strlen(gather[k]);
+	}
+	len += (DISPLAY_COLUMNS-(len%DISPLAY_COLUMNS));
+	LCD_writeShiftingStr(data,  len, 1, MIDIUM);
+
+}
+

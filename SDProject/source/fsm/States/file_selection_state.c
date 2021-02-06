@@ -14,11 +14,18 @@
  * INCLUDE HEADER FILES
  ******************************************************************************/
 #include <stdbool.h>
+#include <string.h>
+
+#include "audio_manager.h"
+
 #include "file_selection_state.h"
 #include "queue.h"
 #include "AudioPlayer.h"
 #include "Timer.h"
-
+#include "LCD_GDM1602A.h"
+#include "memory_manager.h"
+#include "file_system_manager.h"
+#include "decoder.h"
 //incluir mp3 decoder
 
 /*******************************************************************************
@@ -26,9 +33,7 @@
  ******************************************************************************/
 static bool showingTitle;
 static int titleTimerID = -1;
-uint16_t *firstSongFrame;
-uint16_t sampleRate;
-
+static Mp3File_t currFile;
 /*******************************************************************************
  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
  ******************************************************************************/
@@ -66,23 +71,27 @@ static void printFileInfo(void);
 void FileSelection_initState(void)
 {
 	showTitle(); //Shows the state's title.
-	titleTimerID = Timer_AddCallback(&stopShowingTitle, TITLE_TIME, true);
+	Mm_OnConnection(); //Init the SD;
+	Audio_init();
 }
 
 void FileSelection_NextFile(void)
 {
-	//TODO: get file.
+	Audio_nextFile();
 	printFileInfo(); //TODO: add file parameter.
 }
 
 void FileSelection_PreviousFile(void)
 {
-	//TODO: get file.
+	Audio_prevFile();
 	printFileInfo(); //TODO: add file parameter.
 }
 
 void FileSelection_SelectFile(void)
 {
+	/* Start decoding the file and play the audio player */
+	Audio_selectFile();
+
 	//TODO: Estas dos cosas vienen del mp3 decoder
 	//uint16_t * firstSongFrame = ;
 	//uint16_t sampleRate = ;
@@ -108,7 +117,7 @@ void FileSelection_SelectFile(void)
 static void showTitle(void)
 {
 	LCD_clearDisplay();
-	LCD_writeStrInPos("Elegir Archivo", 14, 0, 0);
+	LCD_writeStrInPos("Elegir Archivo  ", 16, 0, 0);
 	showingTitle = true;
 	titleTimerID = Timer_AddCallback(&stopShowingTitle, TITLE_TIME, true);
 }
@@ -117,7 +126,8 @@ static void stopShowingTitle(void)
 {
 	showingTitle = false;
 	LCD_clearDisplay();
-	showFiles();
+	printFileInfo();
+	//showFiles();
 }
 
 static void userInteractionStopsTitle(void)
@@ -127,17 +137,22 @@ static void userInteractionStopsTitle(void)
 	stopShowingTitle();
 }
 
-static void initialFileFetching(void)
-{
-	//TODO: fetch files.
-	printFileInfo(); //TODO: send first file
-}
-
 //TODO: Add file parameter
 static void printFileInfo(void)
 {
-	LCD_clearDisplay();
+	//LCD_clearDisplay();
 	//TODO: Show the file's name and data.
-	LCD_writeStrInPos("Archivo Prueba", 14, 0, 0);
-	LCD_writeStrInPos("Artista Prueba", 14, 0, 0);
+	char * name = Audio_getCurrentName();
+	char path[50];
+
+	uint8_t len = strlen(name);
+	uint8_t mod = len%DISPLAY_COLUMNS;
+	len += (DISPLAY_COLUMNS-mod);
+
+	memset(path, 0x20, 50);
+	memcpy(path, name, strlen(name));
+	LCD_writeShiftingStr(path,  len, 0, MIDIUM);
+
+//	LCD_writeStrInPos("Archivo Prueba", 14, 0, 0);
+//	LCD_writeStrInPos("Artista Prueba", 14, 0, 0);
 }

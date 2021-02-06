@@ -37,28 +37,21 @@ static bool SD_connected = false;
 static bool SD_error = false;
 static bool SD_HostInitDone = false;
 static FATFS g_fileSystem;
+static uint8_t SD_status = 0;
 
-
-static mm_callback my_cd;
 /*******************************************************************************
  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
  ******************************************************************************/
 
-static void Mm_OnConnection(void);
-static void Mm_OnDesconection(void);
 static void Mm_Callback(bool isInserted, void *userData);
-static void Mm_ScanFiles(char * path);
 
 /*******************************************************************************
  *******************************************************************************
                         GLOBAL FUNCTION DEFINITIONS
  *******************************************************************************
  ******************************************************************************/
-void Mm_Init(mm_callback cd)
+void Mm_Init()
 {
-	my_cd = cd;
-
-	//firstFile = FileSystem_GetFirstFile();
 	SYSMPU->CESR &= ~SYSMPU_CESR_VLD_MASK;
 
 	BOARD_SD_Config(&g_sd, Mm_Callback, BOARD_SDMMC_SD_HOST_IRQ_PRIORITY, NULL);
@@ -71,15 +64,28 @@ void Mm_Init(mm_callback cd)
 
 	SD_HostInitDone = true;
 
-	if(SD_connected)
-	{
-		Mm_OnConnection();
-	}
 }
+
 
 bool Mm_IsSDPresent(void)
 {
 	return SD_connected;
+}
+
+bool Mm_SDConnection(void)
+{
+	bool ret = SD_status == 1;
+	if(ret)
+		SD_status = 0;
+	return ret;
+}
+
+bool Mm_SDDesconnection(void)
+{
+	bool ret = SD_status == 2;
+	if(ret)
+		SD_status = 0;
+	return ret;
 }
 /*******************************************************************************
  *******************************************************************************
@@ -92,19 +98,21 @@ static void Mm_Callback(bool isInserted, void *userData)
 	{
 		SD_error = true;
 	}
-	else if(SD_HostInitDone && isInserted)
+	else if(isInserted)
 	{
-		Mm_OnConnection();
+		SD_status = 1;
+		//Mm_OnConnection();
 	}
-	else if(SD_HostInitDone && !isInserted)
+	else
 	{
-		Mm_OnDesconection();
+		SD_status = 2;
+		//Mm_OnDesconection();
 	}
 
 	SD_connected = isInserted;
 }
 
-static void Mm_OnDesconection(void)
+void Mm_OnDesconection(void)
 {
 	const TCHAR driverNumberBuffer[3U] = {SDDISK + '0', ':', '/'};
 	f_mount(NULL, driverNumberBuffer, 1U);
@@ -113,10 +121,16 @@ static void Mm_OnDesconection(void)
 	printf("fuera\r\n");
 }
 
-static void Mm_OnConnection(void)
+void Mm_OnConnection(void)
 {
 	FRESULT error;
 	const TCHAR driverNumberBuffer[3U] = {SDDISK + '0', ':', '/'};
+
+	if(!SD_HostInitDone)
+	{
+		SD_error = true;
+		return;
+	}
 
 	if (f_mount(&g_fileSystem, driverNumberBuffer, 1U))
 	{
@@ -129,60 +143,12 @@ static void Mm_OnConnection(void)
 	if (error)
 	{
 		printf("Change drive failed.\r\n");
+		SD_error = true;
 		return;
 	}
 
-	char buff[100];
-	for (int i = 0; i<100;i++){buff[i] = 0;}
-
-	Mm_ScanFiles(buff);
+	//Mm_ScanFiles(buff);
 
 	//FileSystem_PrintFiles(true);
 }
 
-
-static void Mm_ScanFiles(char * path)
-{
-	FRESULT error;
-	DIR directory; /* Directory object */
-	FILINFO fileInformation;
-
-	if (f_opendir(&directory, path))
-	{
-		printf("Open directory failed.\r\n");
-		return;
-	}
-	for (;;)
-	{
-		error = f_readdir(&directory, &fileInformation);
-		if ((error != FR_OK) || (fileInformation.fname[0U] == 0U))
-		{
-			break;
-		}
-		if (fileInformation.fname[0] == '.')
-		{
-			continue;
-		}
-		if (fileInformation.fattrib & AM_DIR)
-		{
-			int i = strlen(path);
-			char * fn = fileInformation.fname;
-			*(path+i) = '/'; strcpy(path+i+1, fn);
-			Mm_ScanFiles(path);
-			*(path+i) = 0;
-		}
-		else
-		{
-			int i = strlen(path);
-			char * fn = fileInformation.fname;
-			*(path+i) = '/'; strcpy(path+i+1, fn);
-
-			//if (FileSystem_isMp3File(path))
-			//	FileSystem_AddFile(path);
-			my_cd(path);
-
-			*(path+i) = 0;
-		}
-	}
-	f_closedir(&directory);
-}

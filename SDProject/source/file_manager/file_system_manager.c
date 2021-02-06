@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "ff.h"
 
 #define FILE_ARRAY_SIZE 200
 
@@ -19,11 +20,17 @@
 Mp3File_t files[FILE_ARRAY_SIZE] = {};
 int filesCount = 0;
 
+static void FileSystem_ScanHelper(char * path);
 /*******************************************************************************
  *******************************************************************************
                         GLOBAL FUNCTION DEFINITIONS
  *******************************************************************************
  ******************************************************************************/
+void FileSystem_ScanFiles(void)
+{
+	char buffer[FILE_ARRAY_SIZE] = {0U};
+	FileSystem_ScanHelper(buffer);
+}
 
 bool FileSystem_isMp3File(char *path)
 {
@@ -193,4 +200,52 @@ void FileSystem_Test(void)
 		printf("Index Anterior: %d\n", currentFile.index);
 	}
 	printf("\n");
+}
+
+/*************************************************************************************
+ * 		LOCAL FUNCTIONS DECLARATIONS
+ ************************************************************************************/
+static void FileSystem_ScanHelper(char * path)
+{
+	FRESULT error;
+	DIR directory; /* Directory object */
+	FILINFO fileInformation;
+
+	if (f_opendir(&directory, path))
+	{
+		printf("Open directory failed.\r\n");
+		return;
+	}
+	for (;;)
+	{
+		error = f_readdir(&directory, &fileInformation);
+		if ((error != FR_OK) || (fileInformation.fname[0U] == 0U))
+		{
+			break;
+		}
+		if (fileInformation.fname[0] == '.')
+		{
+			continue;
+		}
+		if (fileInformation.fattrib & AM_DIR)
+		{
+			int i = strlen(path);
+			char * fn = fileInformation.fname;
+			*(path+i) = '/'; strcpy(path+i+1, fn);
+			FileSystem_ScanHelper(path);
+			*(path+i) = 0;
+		}
+		else
+		{
+			int i = strlen(path);
+			char * fn = fileInformation.fname;
+			*(path+i) = '/'; strcpy(path+i+1, fn);
+
+			if (FileSystem_isMp3File(path))
+				FileSystem_AddFile(path);
+
+			*(path+i) = 0;
+		}
+	}
+	f_closedir(&directory);
 }

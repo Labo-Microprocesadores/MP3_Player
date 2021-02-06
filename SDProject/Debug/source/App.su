@@ -1,5 +1,0 @@
-App.c:135:6:aux	8	static
-App.c:61:6:getEvents	608	static
-App.c:141:6:App_Init	272	static
-App.c:225:6:fillBuffer	616	static
-App.c:174:6:App_Run	96	static

@@ -140,7 +140,7 @@ void App_Init(void)
 {
 	SysTick_Init();
 
-	Mm_Init(aux); //Memory manager
+	Mm_Init();//aux); //Memory manager
 	LCD_Init();   //LCD Driver
 
 	md_Init();	  //NeoPixel matrix

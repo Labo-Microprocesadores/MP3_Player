@@ -10,6 +10,7 @@
 #include "idle_state.h"
 #include "queue.h"
 #include "power_mode_switch.h"
+#include "LCD_GDM1602A.h"
 
 /*********************************************************
  * 		LOCAL STRUCTS AND ENUMS
