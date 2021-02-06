@@ -622,6 +622,8 @@ Discarded input sections
  .text          0x00000000        0x0 ./source/equalizer/equalizer.o
  .data          0x00000000        0x0 ./source/equalizer/equalizer.o
  .bss           0x00000000        0x0 ./source/equalizer/equalizer.o
+ .text.equalizer_set_band_gain
+                0x00000000       0x68 ./source/equalizer/equalizer.o
  .debug_macro   0x00000000      0xade ./source/equalizer/equalizer.o
  .debug_macro   0x00000000       0x10 ./source/equalizer/equalizer.o
  .debug_macro   0x00000000      0x12e ./source/equalizer/equalizer.o
@@ -4888,7 +4890,7 @@ END GROUP
                 0x14001000                __top_FLEX_RAM = 0x14001000
                 0x14001000                __top_RAM3 = 0x14001000
 
-.text           0x00000000    0x1c150
+.text           0x00000000    0x1c0c8
  FILL mask 0xff
                 0x00000000                __vectors_start__ = ABSOLUTE (.)
  *(SORT_BY_ALIGNMENT(.isr_vector))
@@ -4898,19 +4900,19 @@ END GROUP
                 0x00000198                . = ALIGN (0x4)
                 0x00000198                __section_table_start = .
                 0x00000198                __data_section_table = .
-                0x00000198        0x4 LONG 0x1c150 LOADADDR (.data)
+                0x00000198        0x4 LONG 0x1c0c8 LOADADDR (.data)
                 0x0000019c        0x4 LONG 0x20000000 ADDR (.data)
                 0x000001a0        0x4 LONG 0x50 SIZEOF (.data)
-                0x000001a4        0x4 LONG 0x1c150 LOADADDR (.data_RAM2)
+                0x000001a4        0x4 LONG 0x1c0c8 LOADADDR (.data_RAM2)
                 0x000001a8        0x4 LONG 0x1fff0000 ADDR (.data_RAM2)
                 0x000001ac        0x4 LONG 0x0 SIZEOF (.data_RAM2)
-                0x000001b0        0x4 LONG 0x1c150 LOADADDR (.data_RAM3)
+                0x000001b0        0x4 LONG 0x1c0c8 LOADADDR (.data_RAM3)
                 0x000001b4        0x4 LONG 0x14000000 ADDR (.data_RAM3)
                 0x000001b8        0x4 LONG 0x0 SIZEOF (.data_RAM3)
                 0x000001bc                __data_section_table_end = .
                 0x000001bc                __bss_section_table = .
                 0x000001bc        0x4 LONG 0x20000050 ADDR (.bss)
-                0x000001c0        0x4 LONG 0x9998 SIZEOF (.bss)
+                0x000001c0        0x4 LONG 0x7f58 SIZEOF (.bss)
                 0x000001c4        0x4 LONG 0x1fff0000 ADDR (.bss_RAM2)
                 0x000001c8        0x4 LONG 0x0 SIZEOF (.bss_RAM2)
                 0x000001cc        0x4 LONG 0x14000000 ADDR (.bss_RAM3)
@@ -5265,662 +5267,659 @@ END GROUP
                 0x000007a0       0x10 ./source/fft/vumeterRefresh.o
                 0x000007a0                vumeterRefresh_init
  .text.equalizer_init
-                0x000007b0       0xdc ./source/equalizer/equalizer.o
+                0x000007b0       0xcc ./source/equalizer/equalizer.o
                 0x000007b0                equalizer_init
- .text.equalizer_set_band_gain
-                0x0000088c       0x68 ./source/equalizer/equalizer.o
-                0x0000088c                equalizer_set_band_gain
  .text.equalizer_equalize
-                0x000008f4       0xdc ./source/equalizer/equalizer.o
-                0x000008f4                equalizer_equalize
+                0x0000087c       0xdc ./source/equalizer/equalizer.o
+                0x0000087c                equalizer_equalize
  .text.App_Init
-                0x000009d0       0x20 ./source/App.o
-                0x000009d0                App_Init
+                0x00000958       0x20 ./source/App.o
+                0x00000958                App_Init
  .text.fillBuffer
-                0x000009f0      0x314 ./source/App.o
-                0x000009f0                fillBuffer
- .text.App_Run  0x00000d04       0x4c ./source/App.o
-                0x00000d04                App_Run
+                0x00000978      0x308 ./source/App.o
+                0x00000978                fillBuffer
+ .text.App_Run  0x00000c80       0x4c ./source/App.o
+                0x00000c80                App_Run
  .text.SDHC_DriverIRQHandler
-                0x00000d50       0x2c ./drivers/SDK/SD/fsl_sdhc.o
-                0x00000d50                SDHC_DriverIRQHandler
+                0x00000ccc       0x2c ./drivers/SDK/SD/fsl_sdhc.o
+                0x00000ccc                SDHC_DriverIRQHandler
  .text.DAC_Init
-                0x00000d7c       0x60 ./drivers/SDK/fsl_dac.o
-                0x00000d7c                DAC_Init
+                0x00000cf8       0x60 ./drivers/SDK/fsl_dac.o
+                0x00000cf8                DAC_Init
  .text.DAC_GetDefaultConfig
-                0x00000ddc       0x24 ./drivers/SDK/fsl_dac.o
-                0x00000ddc                DAC_GetDefaultConfig
+                0x00000d58       0x24 ./drivers/SDK/fsl_dac.o
+                0x00000d58                DAC_GetDefaultConfig
  .text.DAC_SetBufferConfig
-                0x00000e00       0x5c ./drivers/SDK/fsl_dac.o
-                0x00000e00                DAC_SetBufferConfig
+                0x00000d7c       0x5c ./drivers/SDK/fsl_dac.o
+                0x00000d7c                DAC_SetBufferConfig
  .text.DAC_GetDefaultBufferConfig
-                0x00000e5c       0x24 ./drivers/SDK/fsl_dac.o
-                0x00000e5c                DAC_GetDefaultBufferConfig
+                0x00000dd8       0x24 ./drivers/SDK/fsl_dac.o
+                0x00000dd8                DAC_GetDefaultBufferConfig
  .text.DAC_SetBufferReadPointer
-                0x00000e80       0x24 ./drivers/SDK/fsl_dac.o
-                0x00000e80                DAC_SetBufferReadPointer
+                0x00000dfc       0x24 ./drivers/SDK/fsl_dac.o
+                0x00000dfc                DAC_SetBufferReadPointer
  .text.DAC_EnableBufferInterrupts
-                0x00000ea4       0x10 ./drivers/SDK/fsl_dac.o
-                0x00000ea4                DAC_EnableBufferInterrupts
+                0x00000e20       0x10 ./drivers/SDK/fsl_dac.o
+                0x00000e20                DAC_EnableBufferInterrupts
  .text.DMAMUX_Init
-                0x00000eb4       0x28 ./drivers/SDK/fsl_dmamux.o
-                0x00000eb4                DMAMUX_Init
+                0x00000e30       0x28 ./drivers/SDK/fsl_dmamux.o
+                0x00000e30                DMAMUX_Init
  .text.DSPI_MasterGetDefaultConfig
-                0x00000edc       0x40 ./drivers/SDK/fsl_dspi.o
-                0x00000edc                DSPI_MasterGetDefaultConfig
+                0x00000e58       0x40 ./drivers/SDK/fsl_dspi.o
+                0x00000e58                DSPI_MasterGetDefaultConfig
  .text.DSPI_MasterSetDelayScaler
-                0x00000f1c       0x88 ./drivers/SDK/fsl_dspi.o
-                0x00000f1c                DSPI_MasterSetDelayScaler
+                0x00000e98       0x88 ./drivers/SDK/fsl_dspi.o
+                0x00000e98                DSPI_MasterSetDelayScaler
  .text.DSPI_MasterSetDelayTimes.part.0
-                0x00000fa4       0xf4 ./drivers/SDK/fsl_dspi.o
+                0x00000f20       0xf4 ./drivers/SDK/fsl_dspi.o
  .text.DSPI_MasterInit
-                0x00001098      0x274 ./drivers/SDK/fsl_dspi.o
-                0x00001098                DSPI_MasterInit
+                0x00001014      0x274 ./drivers/SDK/fsl_dspi.o
+                0x00001014                DSPI_MasterInit
  .text.DSPI_EnableInterrupts
-                0x0000130c       0x20 ./drivers/SDK/fsl_dspi.o
-                0x0000130c                DSPI_EnableInterrupts
+                0x00001288       0x20 ./drivers/SDK/fsl_dspi.o
+                0x00001288                DSPI_EnableInterrupts
  .text.SPI1_DriverIRQHandler
-                0x0000132c       0x38 ./drivers/SDK/fsl_dspi.o
-                0x0000132c                SPI1_DriverIRQHandler
+                0x000012a8       0x38 ./drivers/SDK/fsl_dspi.o
+                0x000012a8                SPI1_DriverIRQHandler
  .text.SPI2_DriverIRQHandler
-                0x00001364       0x38 ./drivers/SDK/fsl_dspi.o
-                0x00001364                SPI2_DriverIRQHandler
+                0x000012e0       0x38 ./drivers/SDK/fsl_dspi.o
+                0x000012e0                SPI2_DriverIRQHandler
  .text.EDMA_Init
-                0x0000139c       0x64 ./drivers/SDK/fsl_edma.o
-                0x0000139c                EDMA_Init
+                0x00001318       0x64 ./drivers/SDK/fsl_edma.o
+                0x00001318                EDMA_Init
  .text.EDMA_GetDefaultConfig
-                0x00001400       0x24 ./drivers/SDK/fsl_edma.o
-                0x00001400                EDMA_GetDefaultConfig
+                0x0000137c       0x24 ./drivers/SDK/fsl_edma.o
+                0x0000137c                EDMA_GetDefaultConfig
  .text.EDMA_SetTransferConfig
-                0x00001424       0xb4 ./drivers/SDK/fsl_edma.o
-                0x00001424                EDMA_SetTransferConfig
+                0x000013a0       0xb4 ./drivers/SDK/fsl_edma.o
+                0x000013a0                EDMA_SetTransferConfig
  .text.EDMA_EnableChannelInterrupts
-                0x000014d8       0x4c ./drivers/SDK/fsl_edma.o
-                0x000014d8                EDMA_EnableChannelInterrupts
+                0x00001454       0x4c ./drivers/SDK/fsl_edma.o
+                0x00001454                EDMA_EnableChannelInterrupts
  .text.EDMA_TcdSetTransferConfig
-                0x00001524       0xa8 ./drivers/SDK/fsl_edma.o
-                0x00001524                EDMA_TcdSetTransferConfig
+                0x000014a0       0xa8 ./drivers/SDK/fsl_edma.o
+                0x000014a0                EDMA_TcdSetTransferConfig
  .text.EDMA_ClearChannelStatusFlags
-                0x000015cc       0x2c ./drivers/SDK/fsl_edma.o
-                0x000015cc                EDMA_ClearChannelStatusFlags
+                0x00001548       0x2c ./drivers/SDK/fsl_edma.o
+                0x00001548                EDMA_ClearChannelStatusFlags
  .text.EDMA_CreateHandle
-                0x000015f8       0x98 ./drivers/SDK/fsl_edma.o
-                0x000015f8                EDMA_CreateHandle
+                0x00001574       0x98 ./drivers/SDK/fsl_edma.o
+                0x00001574                EDMA_CreateHandle
  .text.EDMA_SetCallback
-                0x00001690       0x14 ./drivers/SDK/fsl_edma.o
-                0x00001690                EDMA_SetCallback
+                0x0000160c       0x14 ./drivers/SDK/fsl_edma.o
+                0x0000160c                EDMA_SetCallback
  .text.EDMA_PrepareTransfer
-                0x000016a4      0x1b4 ./drivers/SDK/fsl_edma.o
-                0x000016a4                EDMA_PrepareTransfer
+                0x00001620      0x1b4 ./drivers/SDK/fsl_edma.o
+                0x00001620                EDMA_PrepareTransfer
  .text.EDMA_SubmitTransfer
-                0x00001858      0x2d8 ./drivers/SDK/fsl_edma.o
-                0x00001858                EDMA_SubmitTransfer
+                0x000017d4      0x2d8 ./drivers/SDK/fsl_edma.o
+                0x000017d4                EDMA_SubmitTransfer
  .text.EDMA_StartTransfer
-                0x00001b30       0x5c ./drivers/SDK/fsl_edma.o
-                0x00001b30                EDMA_StartTransfer
+                0x00001aac       0x5c ./drivers/SDK/fsl_edma.o
+                0x00001aac                EDMA_StartTransfer
  .text.DMA0_DriverIRQHandler
-                0x00001b8c       0xc8 ./drivers/SDK/fsl_edma.o
-                0x00001b8c                DMA0_DriverIRQHandler
+                0x00001b08       0xc8 ./drivers/SDK/fsl_edma.o
+                0x00001b08                DMA0_DriverIRQHandler
  .text.DMA1_DriverIRQHandler
-                0x00001c54       0xc8 ./drivers/SDK/fsl_edma.o
-                0x00001c54                DMA1_DriverIRQHandler
+                0x00001bd0       0xc8 ./drivers/SDK/fsl_edma.o
+                0x00001bd0                DMA1_DriverIRQHandler
  .text.DMA2_DriverIRQHandler
-                0x00001d1c       0xc8 ./drivers/SDK/fsl_edma.o
-                0x00001d1c                DMA2_DriverIRQHandler
+                0x00001c98       0xc8 ./drivers/SDK/fsl_edma.o
+                0x00001c98                DMA2_DriverIRQHandler
  .text.DMA3_DriverIRQHandler
-                0x00001de4       0xc8 ./drivers/SDK/fsl_edma.o
-                0x00001de4                DMA3_DriverIRQHandler
+                0x00001d60       0xc8 ./drivers/SDK/fsl_edma.o
+                0x00001d60                DMA3_DriverIRQHandler
  .text.DMA4_DriverIRQHandler
-                0x00001eac       0xc8 ./drivers/SDK/fsl_edma.o
-                0x00001eac                DMA4_DriverIRQHandler
+                0x00001e28       0xc8 ./drivers/SDK/fsl_edma.o
+                0x00001e28                DMA4_DriverIRQHandler
  .text.DMA5_DriverIRQHandler
-                0x00001f74       0xc8 ./drivers/SDK/fsl_edma.o
-                0x00001f74                DMA5_DriverIRQHandler
+                0x00001ef0       0xc8 ./drivers/SDK/fsl_edma.o
+                0x00001ef0                DMA5_DriverIRQHandler
  .text.DMA6_DriverIRQHandler
-                0x0000203c       0xc8 ./drivers/SDK/fsl_edma.o
-                0x0000203c                DMA6_DriverIRQHandler
+                0x00001fb8       0xc8 ./drivers/SDK/fsl_edma.o
+                0x00001fb8                DMA6_DriverIRQHandler
  .text.DMA7_DriverIRQHandler
-                0x00002104       0xc8 ./drivers/SDK/fsl_edma.o
-                0x00002104                DMA7_DriverIRQHandler
+                0x00002080       0xc8 ./drivers/SDK/fsl_edma.o
+                0x00002080                DMA7_DriverIRQHandler
  .text.DMA8_DriverIRQHandler
-                0x000021cc       0xc8 ./drivers/SDK/fsl_edma.o
-                0x000021cc                DMA8_DriverIRQHandler
+                0x00002148       0xc8 ./drivers/SDK/fsl_edma.o
+                0x00002148                DMA8_DriverIRQHandler
  .text.DMA9_DriverIRQHandler
-                0x00002294       0xc8 ./drivers/SDK/fsl_edma.o
-                0x00002294                DMA9_DriverIRQHandler
+                0x00002210       0xc8 ./drivers/SDK/fsl_edma.o
+                0x00002210                DMA9_DriverIRQHandler
  .text.DMA10_DriverIRQHandler
-                0x0000235c       0xc8 ./drivers/SDK/fsl_edma.o
-                0x0000235c                DMA10_DriverIRQHandler
+                0x000022d8       0xc8 ./drivers/SDK/fsl_edma.o
+                0x000022d8                DMA10_DriverIRQHandler
  .text.DMA11_DriverIRQHandler
-                0x00002424       0xc8 ./drivers/SDK/fsl_edma.o
-                0x00002424                DMA11_DriverIRQHandler
+                0x000023a0       0xc8 ./drivers/SDK/fsl_edma.o
+                0x000023a0                DMA11_DriverIRQHandler
  .text.DMA12_DriverIRQHandler
-                0x000024ec       0xc8 ./drivers/SDK/fsl_edma.o
-                0x000024ec                DMA12_DriverIRQHandler
+                0x00002468       0xc8 ./drivers/SDK/fsl_edma.o
+                0x00002468                DMA12_DriverIRQHandler
  .text.DMA13_DriverIRQHandler
-                0x000025b4       0xc8 ./drivers/SDK/fsl_edma.o
-                0x000025b4                DMA13_DriverIRQHandler
+                0x00002530       0xc8 ./drivers/SDK/fsl_edma.o
+                0x00002530                DMA13_DriverIRQHandler
  .text.DMA14_DriverIRQHandler
-                0x0000267c       0xc8 ./drivers/SDK/fsl_edma.o
-                0x0000267c                DMA14_DriverIRQHandler
+                0x000025f8       0xc8 ./drivers/SDK/fsl_edma.o
+                0x000025f8                DMA14_DriverIRQHandler
  .text.DMA15_DriverIRQHandler
-                0x00002744       0xc8 ./drivers/SDK/fsl_edma.o
-                0x00002744                DMA15_DriverIRQHandler
+                0x000026c0       0xc8 ./drivers/SDK/fsl_edma.o
+                0x000026c0                DMA15_DriverIRQHandler
  .text.PDB_Init
-                0x0000280c       0x78 ./drivers/SDK/fsl_pdb.o
-                0x0000280c                PDB_Init
+                0x00002788       0x78 ./drivers/SDK/fsl_pdb.o
+                0x00002788                PDB_Init
  .text.PDB_GetDefaultConfig
-                0x00002884       0x24 ./drivers/SDK/fsl_pdb.o
-                0x00002884                PDB_GetDefaultConfig
+                0x00002800       0x24 ./drivers/SDK/fsl_pdb.o
+                0x00002800                PDB_GetDefaultConfig
  .text.PDB_SetDACTriggerConfig
-                0x000028a8       0x3c ./drivers/SDK/fsl_pdb.o
-                0x000028a8                PDB_SetDACTriggerConfig
+                0x00002824       0x3c ./drivers/SDK/fsl_pdb.o
+                0x00002824                PDB_SetDACTriggerConfig
  .text.SysTick_Init
-                0x000028e4       0x38 ./drivers/MCAL/SysTick.o
-                0x000028e4                SysTick_Init
+                0x00002860       0x38 ./drivers/MCAL/SysTick.o
+                0x00002860                SysTick_Init
  .text.SysTick_AddCallback
-                0x0000291c       0x48 ./drivers/MCAL/SysTick.o
-                0x0000291c                SysTick_AddCallback
+                0x00002898       0x48 ./drivers/MCAL/SysTick.o
+                0x00002898                SysTick_AddCallback
  .text.Systick_ClrCallback
-                0x00002964       0xa4 ./drivers/MCAL/SysTick.o
-                0x00002964                Systick_ClrCallback
+                0x000028e0       0xa4 ./drivers/MCAL/SysTick.o
+                0x000028e0                Systick_ClrCallback
  .text.Systick_PauseCallback
-                0x00002a08       0x4c ./drivers/MCAL/SysTick.o
-                0x00002a08                Systick_PauseCallback
+                0x00002984       0x4c ./drivers/MCAL/SysTick.o
+                0x00002984                Systick_PauseCallback
  .text.Systick_ResumeCallback
-                0x00002a54       0x4c ./drivers/MCAL/SysTick.o
-                0x00002a54                Systick_ResumeCallback
+                0x000029d0       0x4c ./drivers/MCAL/SysTick.o
+                0x000029d0                Systick_ResumeCallback
  .text.Systick_ChangeCallbackPeriod
-                0x00002aa0       0x58 ./drivers/MCAL/SysTick.o
-                0x00002aa0                Systick_ChangeCallbackPeriod
+                0x00002a1c       0x58 ./drivers/MCAL/SysTick.o
+                0x00002a1c                Systick_ChangeCallbackPeriod
  .text.Systick_GetStatus
-                0x00002af8       0x4c ./drivers/MCAL/SysTick.o
-                0x00002af8                Systick_GetStatus
+                0x00002a74       0x4c ./drivers/MCAL/SysTick.o
+                0x00002a74                Systick_GetStatus
  .text.SysTick_Handler
-                0x00002b44       0x50 ./drivers/MCAL/SysTick.o
-                0x00002b44                SysTick_Handler
+                0x00002ac0       0x50 ./drivers/MCAL/SysTick.o
+                0x00002ac0                SysTick_Handler
  .text.__NVIC_EnableIRQ
-                0x00002b94       0x3c ./drivers/MCAL/ftm.o
+                0x00002b10       0x3c ./drivers/MCAL/ftm.o
  .text.PWM_Init
-                0x00002bd0      0x168 ./drivers/MCAL/ftm.o
-                0x00002bd0                PWM_Init
+                0x00002b4c      0x168 ./drivers/MCAL/ftm.o
+                0x00002b4c                PWM_Init
  .text.FTM_SetPrescaler
-                0x00002d38       0x40 ./drivers/MCAL/ftm.o
-                0x00002d38                FTM_SetPrescaler
+                0x00002cb4       0x40 ./drivers/MCAL/ftm.o
+                0x00002cb4                FTM_SetPrescaler
  .text.FTM_SetModulus
-                0x00002d78       0x3c ./drivers/MCAL/ftm.o
-                0x00002d78                FTM_SetModulus
+                0x00002cf4       0x3c ./drivers/MCAL/ftm.o
+                0x00002cf4                FTM_SetModulus
  .text.FTM_StartClock
-                0x00002db4       0x30 ./drivers/MCAL/ftm.o
-                0x00002db4                FTM_StartClock
+                0x00002d30       0x30 ./drivers/MCAL/ftm.o
+                0x00002d30                FTM_StartClock
  .text.FTM_StopClock
-                0x00002de4       0x30 ./drivers/MCAL/ftm.o
-                0x00002de4                FTM_StopClock
+                0x00002d60       0x30 ./drivers/MCAL/ftm.o
+                0x00002d60                FTM_StopClock
  .text.FTM_SetWorkingMode
-                0x00002e14       0x60 ./drivers/MCAL/ftm.o
-                0x00002e14                FTM_SetWorkingMode
+                0x00002d90       0x60 ./drivers/MCAL/ftm.o
+                0x00002d90                FTM_SetWorkingMode
  .text.FTM_SetPulseWidthModulationLogic
-                0x00002e74       0x60 ./drivers/MCAL/ftm.o
-                0x00002e74                FTM_SetPulseWidthModulationLogic
+                0x00002df0       0x60 ./drivers/MCAL/ftm.o
+                0x00002df0                FTM_SetPulseWidthModulationLogic
  .text.FTM_SetCounter
-                0x00002ed4       0x3c ./drivers/MCAL/ftm.o
-                0x00002ed4                FTM_SetCounter
+                0x00002e50       0x3c ./drivers/MCAL/ftm.o
+                0x00002e50                FTM_SetCounter
  .text.FTM_SetInterruptMode
-                0x00002f10       0x54 ./drivers/MCAL/ftm.o
-                0x00002f10                FTM_SetInterruptMode
+                0x00002e8c       0x54 ./drivers/MCAL/ftm.o
+                0x00002e8c                FTM_SetInterruptMode
  .text.FTM_IsInterruptPending
-                0x00002f64       0x44 ./drivers/MCAL/ftm.o
-                0x00002f64                FTM_IsInterruptPending
+                0x00002ee0       0x44 ./drivers/MCAL/ftm.o
+                0x00002ee0                FTM_IsInterruptPending
  .text.FTM_DmaMode
-                0x00002fa8       0x4c ./drivers/MCAL/ftm.o
-                0x00002fa8                FTM_DmaMode
+                0x00002f24       0x4c ./drivers/MCAL/ftm.o
+                0x00002f24                FTM_DmaMode
  .text.FTM_onOM
-                0x00002ff4       0x54 ./drivers/MCAL/ftm.o
-                0x00002ff4                FTM_onOM
+                0x00002f70       0x54 ./drivers/MCAL/ftm.o
+                0x00002f70                FTM_onOM
  .text.FTM_offOM
-                0x00003048       0x44 ./drivers/MCAL/ftm.o
-                0x00003048                FTM_offOM
+                0x00002fc4       0x44 ./drivers/MCAL/ftm.o
+                0x00002fc4                FTM_offOM
  .text.FTM_GetCnVAddress
-                0x0000308c       0x38 ./drivers/MCAL/ftm.o
-                0x0000308c                FTM_GetCnVAddress
+                0x00003008       0x38 ./drivers/MCAL/ftm.o
+                0x00003008                FTM_GetCnVAddress
  .text.PORTA_IRQHandler
-                0x000030c4       0x54 ./drivers/MCAL/gpio.o
-                0x000030c4                PORTA_IRQHandler
+                0x00003040       0x54 ./drivers/MCAL/gpio.o
+                0x00003040                PORTA_IRQHandler
  .text.PORTB_IRQHandler
-                0x00003118       0x54 ./drivers/MCAL/gpio.o
-                0x00003118                PORTB_IRQHandler
+                0x00003094       0x54 ./drivers/MCAL/gpio.o
+                0x00003094                PORTB_IRQHandler
  .text.PORTC_IRQHandler
-                0x0000316c       0x54 ./drivers/MCAL/gpio.o
-                0x0000316c                PORTC_IRQHandler
+                0x000030e8       0x54 ./drivers/MCAL/gpio.o
+                0x000030e8                PORTC_IRQHandler
  .text.PORTD_IRQHandler
-                0x000031c0       0x54 ./drivers/MCAL/gpio.o
-                0x000031c0                PORTD_IRQHandler
+                0x0000313c       0x54 ./drivers/MCAL/gpio.o
+                0x0000313c                PORTD_IRQHandler
  .text.PORTE_IRQHandler
-                0x00003214       0x54 ./drivers/MCAL/gpio.o
-                0x00003214                PORTE_IRQHandler
+                0x00003190       0x54 ./drivers/MCAL/gpio.o
+                0x00003190                PORTE_IRQHandler
  .text.Edma_Callback
-                0x00003268       0xa0 ./drivers/HAL/AudioPlayer.o
+                0x000031e4       0xa0 ./drivers/HAL/AudioPlayer.o
  .text.AudioPlayer_Init
-                0x00003308       0xe8 ./drivers/HAL/AudioPlayer.o
-                0x00003308                AudioPlayer_Init
+                0x00003284       0xe8 ./drivers/HAL/AudioPlayer.o
+                0x00003284                AudioPlayer_Init
  .text.AudioPlayer_UpdateSampleRate
-                0x000033f0      0x16c ./drivers/HAL/AudioPlayer.o
-                0x000033f0                AudioPlayer_UpdateSampleRate
+                0x0000336c      0x16c ./drivers/HAL/AudioPlayer.o
+                0x0000336c                AudioPlayer_UpdateSampleRate
  .text.AudioPlayer_LoadSongInfo
-                0x0000355c       0x38 ./drivers/HAL/AudioPlayer.o
-                0x0000355c                AudioPlayer_LoadSongInfo
+                0x000034d8       0x38 ./drivers/HAL/AudioPlayer.o
+                0x000034d8                AudioPlayer_LoadSongInfo
  .text.AudioPlayer_UpdateBackBuffer
-                0x00003594       0x28 ./drivers/HAL/AudioPlayer.o
-                0x00003594                AudioPlayer_UpdateBackBuffer
+                0x00003510       0x28 ./drivers/HAL/AudioPlayer.o
+                0x00003510                AudioPlayer_UpdateBackBuffer
  .text.AudioPlayer_IsBackBufferFree
-                0x000035bc        0xc ./drivers/HAL/AudioPlayer.o
-                0x000035bc                AudioPlayer_IsBackBufferFree
+                0x00003538        0xc ./drivers/HAL/AudioPlayer.o
+                0x00003538                AudioPlayer_IsBackBufferFree
  .text.AudioPlayer_Play
-                0x000035c8       0xa0 ./drivers/HAL/AudioPlayer.o
-                0x000035c8                AudioPlayer_Play
+                0x00003544       0xa0 ./drivers/HAL/AudioPlayer.o
+                0x00003544                AudioPlayer_Play
  .text.initRoutineSPICallback
-                0x00003668       0x1c ./drivers/HAL/LCD_GDM1602A.o
+                0x000035e4       0x1c ./drivers/HAL/LCD_GDM1602A.o
  .text.initRoutineTimerCallback
-                0x00003684       0xe8 ./drivers/HAL/LCD_GDM1602A.o
+                0x00003600       0xe8 ./drivers/HAL/LCD_GDM1602A.o
  .text.shifttingCallback
-                0x0000376c      0x2dc ./drivers/HAL/LCD_GDM1602A.o
+                0x000036e8      0x2dc ./drivers/HAL/LCD_GDM1602A.o
  .text.LCD_Init
-                0x00003a48       0x94 ./drivers/HAL/LCD_GDM1602A.o
-                0x00003a48                LCD_Init
+                0x000039c4       0x94 ./drivers/HAL/LCD_GDM1602A.o
+                0x000039c4                LCD_Init
  .text.LCD_isInit
-                0x00003adc       0x14 ./drivers/HAL/LCD_GDM1602A.o
-                0x00003adc                LCD_isInit
+                0x00003a58       0x14 ./drivers/HAL/LCD_GDM1602A.o
+                0x00003a58                LCD_isInit
  .text.SPI_Init
-                0x00003af0      0x1d8 ./drivers/HAL/SPI_wrapper.o
-                0x00003af0                SPI_Init
+                0x00003a6c      0x1d8 ./drivers/HAL/SPI_wrapper.o
+                0x00003a6c                SPI_Init
  .text.SPI_Send
-                0x00003cc8      0x188 ./drivers/HAL/SPI_wrapper.o
-                0x00003cc8                SPI_Send
+                0x00003c44      0x188 ./drivers/HAL/SPI_wrapper.o
+                0x00003c44                SPI_Send
  .text.SPI0_IRQHandler
-                0x00003e50       0x98 ./drivers/HAL/SPI_wrapper.o
-                0x00003e50                SPI0_IRQHandler
+                0x00003dcc       0x98 ./drivers/HAL/SPI_wrapper.o
+                0x00003dcc                SPI0_IRQHandler
  .text.md_dmaCallback
-                0x00003ee8       0x44 ./drivers/HAL/matrix_display.o
+                0x00003e64       0x44 ./drivers/HAL/matrix_display.o
  .text.md_timerCallback
-                0x00003f2c       0x9c ./drivers/HAL/matrix_display.o
- .text.md_Init  0x00003fc8      0x184 ./drivers/HAL/matrix_display.o
-                0x00003fc8                md_Init
+                0x00003ea8       0x9c ./drivers/HAL/matrix_display.o
+ .text.md_Init  0x00003f44      0x184 ./drivers/HAL/matrix_display.o
+                0x00003f44                md_Init
  .text.SystemInitHook
-                0x0000414c        0x4 ./device/system_MK64F12.o
-                0x0000414c                SystemInitHook
+                0x000040c8        0x4 ./device/system_MK64F12.o
+                0x000040c8                SystemInitHook
  .text.SystemInit
-                0x00004150       0x34 ./device/system_MK64F12.o
-                0x00004150                SystemInit
+                0x000040cc       0x34 ./device/system_MK64F12.o
+                0x000040cc                SystemInit
  .text.arm_q31_to_float
-                0x00004184       0xb0 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_q31_to_float.o)
-                0x00004184                arm_q31_to_float
+                0x00004100       0xb0 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_q31_to_float.o)
+                0x00004100                arm_q31_to_float
  .text.arm_float_to_q31
-                0x00004234      0x204 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_float_to_q31.o)
-                0x00004234                arm_float_to_q31
+                0x000041b0      0x204 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_float_to_q31.o)
+                0x000041b0                arm_float_to_q31
  .text.arm_rfft_32_fast_init_f32
-                0x00004438       0x34 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
-                0x00004438                arm_rfft_32_fast_init_f32
+                0x000043b4       0x34 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
+                0x000043b4                arm_rfft_32_fast_init_f32
  .text.arm_rfft_64_fast_init_f32
-                0x0000446c       0x34 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
-                0x0000446c                arm_rfft_64_fast_init_f32
+                0x000043e8       0x34 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
+                0x000043e8                arm_rfft_64_fast_init_f32
  .text.arm_rfft_256_fast_init_f32
-                0x000044a0       0x38 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
-                0x000044a0                arm_rfft_256_fast_init_f32
+                0x0000441c       0x38 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
+                0x0000441c                arm_rfft_256_fast_init_f32
  .text.arm_rfft_512_fast_init_f32
-                0x000044d8       0x3c C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
-                0x000044d8                arm_rfft_512_fast_init_f32
+                0x00004454       0x3c C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
+                0x00004454                arm_rfft_512_fast_init_f32
  .text.arm_rfft_1024_fast_init_f32
-                0x00004514       0x3c C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
-                0x00004514                arm_rfft_1024_fast_init_f32
+                0x00004490       0x3c C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
+                0x00004490                arm_rfft_1024_fast_init_f32
  .text.arm_rfft_2048_fast_init_f32
-                0x00004550       0x3c C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
-                0x00004550                arm_rfft_2048_fast_init_f32
+                0x000044cc       0x3c C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
+                0x000044cc                arm_rfft_2048_fast_init_f32
  .text.arm_rfft_4096_fast_init_f32
-                0x0000458c       0x3c C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
-                0x0000458c                arm_rfft_4096_fast_init_f32
+                0x00004508       0x3c C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
+                0x00004508                arm_rfft_4096_fast_init_f32
  .text.arm_rfft_fast_init_f32
-                0x000045c8       0x68 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
-                0x000045c8                arm_rfft_fast_init_f32
+                0x00004544       0x68 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
+                0x00004544                arm_rfft_fast_init_f32
  .text.arm_biquad_cascade_df1_init_q31
-                0x00004630       0x1c C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_init_q31.o)
-                0x00004630                arm_biquad_cascade_df1_init_q31
+                0x000045ac       0x1c C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_init_q31.o)
+                0x000045ac                arm_biquad_cascade_df1_init_q31
  .text.arm_biquad_cascade_df1_fast_q31
-                0x0000464c      0x474 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_fast_q31.o)
-                0x0000464c                arm_biquad_cascade_df1_fast_q31
+                0x000045c8      0x474 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_fast_q31.o)
+                0x000045c8                arm_biquad_cascade_df1_fast_q31
  .text.arm_biquad_cas_df1_32x64_q31
-                0x00004ac0      0x7c4 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_q31.o)
-                0x00004ac0                arm_biquad_cas_df1_32x64_q31
+                0x00004a3c      0x7c4 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_q31.o)
+                0x00004a3c                arm_biquad_cas_df1_32x64_q31
  .text.arm_biquad_cas_df1_32x64_init_q31
-                0x00005284       0x1c C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_init_q31.o)
-                0x00005284                arm_biquad_cas_df1_32x64_init_q31
+                0x00005200       0x1c C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_init_q31.o)
+                0x00005200                arm_biquad_cas_df1_32x64_init_q31
  .text.arm_sin_f32
-                0x000052a0       0x8c C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_sin_f32.o)
-                0x000052a0                arm_sin_f32
+                0x0000521c       0x8c C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_sin_f32.o)
+                0x0000521c                arm_sin_f32
  .text.arm_scale_q31
-                0x0000532c      0x1f4 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_q31.o)
-                0x0000532c                arm_scale_q31
+                0x000052a8      0x1f4 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_q31.o)
+                0x000052a8                arm_scale_q31
  .text.arm_scale_f32
-                0x00005520       0x88 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_f32.o)
-                0x00005520                arm_scale_f32
+                0x0000549c       0x88 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_f32.o)
+                0x0000549c                arm_scale_f32
  .text.__assertion_failed
-                0x000055a8       0x4c c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_semihost_nf.a(_cr_assert.o)
-                0x000055a8                __assertion_failed
+                0x00005524       0x4c c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_semihost_nf.a(_cr_assert.o)
+                0x00005524                __assertion_failed
  .text.__sys_appexit
-                0x000055f4        0xc c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_semihost_nf.a(__sys_appexit.o)
-                0x000055f4                __sys_appexit
-                0x000055f4                __exit
+                0x00005570        0xc c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_semihost_nf.a(__sys_appexit.o)
+                0x00005570                __sys_appexit
+                0x00005570                __exit
  .text._Cwritebuf
-                0x00005600       0x6c c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(_writebuf.o)
-                0x00005600                _Cwritebuf
- .text.malloc   0x0000566c       0xc8 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(alloc.o)
-                0x0000566c                malloc
+                0x0000557c       0x6c c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(_writebuf.o)
+                0x0000557c                _Cwritebuf
+ .text.malloc   0x000055e8       0xc8 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(alloc.o)
+                0x000055e8                malloc
  .text._Csys_alloc
-                0x00005734       0x20 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(alloc.o)
-                0x00005734                _Csys_alloc
- .text.fseek    0x00005754      0x100 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(fseek.o)
-                0x00005754                fseek
- .text.ftell    0x00005854       0x44 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(ftell.o)
-                0x00005854                ftell
- .text._initio  0x00005898       0x78 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(initio.o)
-                0x00005898                _initio
- .text._sbrk    0x00005910       0x3c c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(_cr_sbrk.o)
-                0x00005910                _sbrk
- .text.fflush   0x0000594c       0x44 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(fflush.o)
-                0x0000594c                fflush
+                0x000056b0       0x20 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(alloc.o)
+                0x000056b0                _Csys_alloc
+ .text.fseek    0x000056d0      0x100 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(fseek.o)
+                0x000056d0                fseek
+ .text.ftell    0x000057d0       0x44 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(ftell.o)
+                0x000057d0                ftell
+ .text._initio  0x00005814       0x78 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(initio.o)
+                0x00005814                _initio
+ .text._sbrk    0x0000588c       0x3c c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(_cr_sbrk.o)
+                0x0000588c                _sbrk
+ .text.fflush   0x000058c8       0x44 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(fflush.o)
+                0x000058c8                fflush
  .text.__check_heap_overflow
-                0x00005990       0x18 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(_cr_check_heap.o)
-                0x00005990                __check_heap_overflow
+                0x0000590c       0x18 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(_cr_check_heap.o)
+                0x0000590c                __check_heap_overflow
  .text.__aeabi_dmul
-                0x000059a8      0x114 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+fp/hard\libcr_eabihelpers.a(double.o)
-                0x000059a8                __aeabi_dmul
+                0x00005924      0x114 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+fp/hard\libcr_eabihelpers.a(double.o)
+                0x00005924                __aeabi_dmul
  .text.__aeabi_dsub
-                0x00005abc      0x1b0 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+fp/hard\libcr_eabihelpers.a(double.o)
-                0x00005abc                __aeabi_dsub
+                0x00005a38      0x1b0 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+fp/hard\libcr_eabihelpers.a(double.o)
+                0x00005a38                __aeabi_dsub
  .text.__aeabi_dadd
-                0x00005c6c      0x114 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+fp/hard\libcr_eabihelpers.a(double.o)
-                0x00005c6c                __aeabi_dadd
+                0x00005be8      0x114 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+fp/hard\libcr_eabihelpers.a(double.o)
+                0x00005be8                __aeabi_dadd
  .text.__aeabi_d2f
-                0x00005d80       0x58 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+fp/hard\libcr_eabihelpers.a(double.o)
-                0x00005d80                __aeabi_d2f
+                0x00005cfc       0x58 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+fp/hard\libcr_eabihelpers.a(double.o)
+                0x00005cfc                __aeabi_d2f
  .text.__aeabi_f2d
-                0x00005dd8       0x38 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+fp/hard\libcr_eabihelpers.a(float.o)
-                0x00005dd8                __aeabi_f2d
- .text.__main   0x00005e10        0xe c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_semihost_nf.a(_cr__main.o)
-                0x00005e10                __CR_SEMIHOST
-                0x00005e10                __main
- .text.memcpy   0x00005e1e        0x4 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(memcpy.o)
-                0x00005e1e                memcpy
- .text.memset   0x00005e22        0x4 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(memset.o)
-                0x00005e22                memset
+                0x00005d54       0x38 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+fp/hard\libcr_eabihelpers.a(float.o)
+                0x00005d54                __aeabi_f2d
+ .text.__main   0x00005d8c        0xe c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_semihost_nf.a(_cr__main.o)
+                0x00005d8c                __CR_SEMIHOST
+                0x00005d8c                __main
+ .text.memcpy   0x00005d9a        0x4 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(memcpy.o)
+                0x00005d9a                memcpy
+ .text.memset   0x00005d9e        0x4 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(memset.o)
+                0x00005d9e                memset
  .text._deferredlazyseek
-                0x00005e26       0x40 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(_deferredlazyseek.o)
-                0x00005e26                _deferredlazyseek
+                0x00005da2       0x40 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(_deferredlazyseek.o)
+                0x00005da2                _deferredlazyseek
  .text.__flsbuf
-                0x00005e66      0x140 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(_deferredlazyseek.o)
-                0x00005e66                __flsbuf
- .text._fflush  0x00005fa6       0x52 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(_fflush.o)
-                0x00005fa6                _fflush
- .text.free     0x00005ff8       0x30 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(alloc.o)
-                0x00005ff8                free
- .text.fputs    0x00006028       0x2c c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(fputs.o)
-                0x00006028                fputs
- .text.setvbuf  0x00006054       0x3e c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(setvbuf.o)
-                0x00006054                setvbuf
- .text.strlen   0x00006092       0x4c c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(strlen.o)
-                0x00006092                strlen
- .text._fdopen  0x000060de       0x68 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(_fdopen.o)
-                0x000060de                _fdopen
- .text.fclose   0x00006146       0x58 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(fclose.o)
-                0x00006146                fclose
- .text.remove   0x0000619e       0x14 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(remove.o)
-                0x0000619e                remove
+                0x00005de2      0x140 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(_deferredlazyseek.o)
+                0x00005de2                __flsbuf
+ .text._fflush  0x00005f22       0x52 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(_fflush.o)
+                0x00005f22                _fflush
+ .text.free     0x00005f74       0x30 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(alloc.o)
+                0x00005f74                free
+ .text.fputs    0x00005fa4       0x2c c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(fputs.o)
+                0x00005fa4                fputs
+ .text.setvbuf  0x00005fd0       0x3e c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(setvbuf.o)
+                0x00005fd0                setvbuf
+ .text.strlen   0x0000600e       0x4c c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(strlen.o)
+                0x0000600e                strlen
+ .text._fdopen  0x0000605a       0x68 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(_fdopen.o)
+                0x0000605a                _fdopen
+ .text.fclose   0x000060c2       0x58 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(fclose.o)
+                0x000060c2                fclose
+ .text.remove   0x0000611a       0x14 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(remove.o)
+                0x0000611a                remove
  .text._do_fflush
-                0x000061b2       0x40 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(_do_fflush.o)
-                0x000061b2                _do_fflush
+                0x0000612e       0x40 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(_do_fflush.o)
+                0x0000612e                _do_fflush
  .text.__aeabi_f2lz
-                0x000061f2       0x5c c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+fp/hard\libcr_eabihelpers.a(float.o)
-                0x000061f2                __aeabi_f2lz
+                0x0000616e       0x5c c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+fp/hard\libcr_eabihelpers.a(float.o)
+                0x0000616e                __aeabi_f2lz
  .text.__aeabi_memcpy
-                0x0000624e       0x34 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+fp/hard\libcr_eabihelpers.a(memcpy.o)
-                0x0000624e                __aeabi_memcpy
-                0x00006258                __aeabi_memcpy8
-                0x00006258                __aeabi_memcpy4
+                0x000061ca       0x34 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+fp/hard\libcr_eabihelpers.a(memcpy.o)
+                0x000061ca                __aeabi_memcpy
+                0x000061d4                __aeabi_memcpy8
+                0x000061d4                __aeabi_memcpy4
  .text.__aeabi_memset_lowlevel
-                0x00006282       0x32 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+fp/hard\libcr_eabihelpers.a(memcpy.o)
-                0x00006282                __aeabi_lowlevel_memset
+                0x000061fe       0x32 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+fp/hard\libcr_eabihelpers.a(memcpy.o)
+                0x000061fe                __aeabi_lowlevel_memset
  .text.__sys_close
-                0x000062b4        0xc c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_semihost_nf.a(__sys_close.o)
-                0x000062b4                __sys_close
+                0x00006230        0xc c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_semihost_nf.a(__sys_close.o)
+                0x00006230                __sys_close
  .text.__sys_flen
-                0x000062c0        0xc c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_semihost_nf.a(__sys_flen.o)
-                0x000062c0                __sys_flen
+                0x0000623c        0xc c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_semihost_nf.a(__sys_flen.o)
+                0x0000623c                __sys_flen
  .text.__sys_istty
-                0x000062cc        0xc c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_semihost_nf.a(__sys_istty.o)
-                0x000062cc                __sys_istty
+                0x00006248        0xc c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_semihost_nf.a(__sys_istty.o)
+                0x00006248                __sys_istty
  .text.__sys_remove
-                0x000062d8        0xc c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_semihost_nf.a(__sys_remove.o)
-                0x000062d8                __sys_remove
+                0x00006254        0xc c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_semihost_nf.a(__sys_remove.o)
+                0x00006254                __sys_remove
  .text.__sys_seek
-                0x000062e4        0xc c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_semihost_nf.a(__sys_seek.o)
-                0x000062e4                __sys_seek
+                0x00006260        0xc c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_semihost_nf.a(__sys_seek.o)
+                0x00006260                __sys_seek
  .text.__sys_tmpnam
-                0x000062f0        0xc c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_semihost_nf.a(__sys_tmpnam.o)
-                0x000062f0                __sys_tmpnam
+                0x0000626c        0xc c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_semihost_nf.a(__sys_tmpnam.o)
+                0x0000626c                __sys_tmpnam
  .text.__sys_write
-                0x000062fc        0xc c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_semihost_nf.a(__sys_write.o)
-                0x000062fc                __sys_write
+                0x00006278        0xc c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_semihost_nf.a(__sys_write.o)
+                0x00006278                __sys_write
  *(SORT_BY_ALIGNMENT(.rodata) SORT_BY_ALIGNMENT(.rodata.*) SORT_BY_ALIGNMENT(.constdata) SORT_BY_ALIGNMENT(.constdata.*))
- .rodata.floatCoeffTable
-                0x00006308     0x1a40 ./source/equalizer/equalizer.o
+ .rodata.coeffTable
+                0x00006284     0x1a40 ./source/equalizer/equalizer.o
  .rodata.SDHC_DriverIRQHandler.str1.4
-                0x00007d48       0x2b ./drivers/SDK/SD/fsl_sdhc.o
- *fill*         0x00007d73        0x1 ff
+                0x00007cc4       0x2b ./drivers/SDK/SD/fsl_sdhc.o
+ *fill*         0x00007cef        0x1 ff
  .rodata.DAC_Init.str1.4
-                0x00007d74       0x52 ./drivers/SDK/fsl_dac.o
- *fill*         0x00007dc6        0x2 ff
+                0x00007cf0       0x52 ./drivers/SDK/fsl_dac.o
+ *fill*         0x00007d42        0x2 ff
  .rodata.DAC_GetDefaultConfig.str1.4
-                0x00007dc8       0x20 ./drivers/SDK/fsl_dac.o
+                0x00007d44       0x20 ./drivers/SDK/fsl_dac.o
  .rodata.DAC_SetBufferConfig.str1.4
-                0x00007de8       0x20 ./drivers/SDK/fsl_dac.o
+                0x00007d64       0x20 ./drivers/SDK/fsl_dac.o
  .rodata.DAC_GetDefaultBufferConfig.str1.4
-                0x00007e08       0x20 ./drivers/SDK/fsl_dac.o
+                0x00007d84       0x20 ./drivers/SDK/fsl_dac.o
  .rodata.DAC_SetBufferReadPointer.str1.4
-                0x00007e28       0x28 ./drivers/SDK/fsl_dac.o
+                0x00007da4       0x28 ./drivers/SDK/fsl_dac.o
  .rodata.DMAMUX_Init.str1.4
-                0x00007e50       0x38 ./drivers/SDK/fsl_dmamux.o
+                0x00007dcc       0x38 ./drivers/SDK/fsl_dmamux.o
  .rodata.DSPI_MasterTransferHandleIRQ.str1.4
-                0x00007e88       0x59 ./drivers/SDK/fsl_dspi.o
- *fill*         0x00007ee1        0x3 ff
+                0x00007e04       0x59 ./drivers/SDK/fsl_dspi.o
+ *fill*         0x00007e5d        0x3 ff
  .rodata.DSPI_MasterGetDefaultConfig.str1.4
-                0x00007ee4       0x27 ./drivers/SDK/fsl_dspi.o
- *fill*         0x00007f0b        0x1 ff
+                0x00007e60       0x27 ./drivers/SDK/fsl_dspi.o
+ *fill*         0x00007e87        0x1 ff
  .rodata.DSPI_MasterSetDelayScaler.str1.4
-                0x00007f0c       0x18 ./drivers/SDK/fsl_dspi.o
+                0x00007e88       0x18 ./drivers/SDK/fsl_dspi.o
  .rodata.DSPI_MasterInit.str1.4
-                0x00007f24       0x40 ./drivers/SDK/fsl_dspi.o
+                0x00007ea0       0x40 ./drivers/SDK/fsl_dspi.o
  .rodata.SPI1_DriverIRQHandler.str1.4
-                0x00007f64       0x2b ./drivers/SDK/fsl_dspi.o
- *fill*         0x00007f8f        0x1 ff
+                0x00007ee0       0x2b ./drivers/SDK/fsl_dspi.o
+ *fill*         0x00007f0b        0x1 ff
  .rodata.SPI2_DriverIRQHandler.str1.4
-                0x00007f90       0x2b ./drivers/SDK/fsl_dspi.o
- *fill*         0x00007fbb        0x1 ff
+                0x00007f0c       0x2b ./drivers/SDK/fsl_dspi.o
+ *fill*         0x00007f37        0x1 ff
  .rodata.s_baudratePrescaler
-                0x00007fbc       0x10 ./drivers/SDK/fsl_dspi.o
+                0x00007f38       0x10 ./drivers/SDK/fsl_dspi.o
  .rodata.s_baudrateScaler
-                0x00007fcc       0x40 ./drivers/SDK/fsl_dspi.o
+                0x00007f48       0x40 ./drivers/SDK/fsl_dspi.o
  .rodata.s_delayPrescaler
-                0x0000800c       0x10 ./drivers/SDK/fsl_dspi.o
+                0x00007f88       0x10 ./drivers/SDK/fsl_dspi.o
  .rodata.s_delayScaler
-                0x0000801c       0x40 ./drivers/SDK/fsl_dspi.o
+                0x00007f98       0x40 ./drivers/SDK/fsl_dspi.o
  .rodata.EDMA_InstallTCD.str1.4
-                0x0000805c       0x97 ./drivers/SDK/fsl_edma.o
- *fill*         0x000080f3        0x1 ff
+                0x00007fd8       0x97 ./drivers/SDK/fsl_edma.o
+ *fill*         0x0000806f        0x1 ff
  .rodata.EDMA_Init.str1.4
-                0x000080f4       0x58 ./drivers/SDK/fsl_edma.o
+                0x00008070       0x58 ./drivers/SDK/fsl_edma.o
  .rodata.EDMA_GetDefaultConfig.str1.4
-                0x0000814c       0x21 ./drivers/SDK/fsl_edma.o
- *fill*         0x0000816d        0x3 ff
+                0x000080c8       0x21 ./drivers/SDK/fsl_edma.o
+ *fill*         0x000080e9        0x3 ff
  .rodata.EDMA_ResetChannel.str1.4
-                0x00008170       0x78 ./drivers/SDK/fsl_edma.o
+                0x000080ec       0x78 ./drivers/SDK/fsl_edma.o
  .rodata.EDMA_SetTransferConfig.str1.4
-                0x000081e8      0x181 ./drivers/SDK/fsl_edma.o
- *fill*         0x00008369        0x3 ff
+                0x00008164      0x181 ./drivers/SDK/fsl_edma.o
+ *fill*         0x000082e5        0x3 ff
  .rodata.EDMA_EnableChannelInterrupts.str1.4
-                0x0000836c       0x46 ./drivers/SDK/fsl_edma.o
- *fill*         0x000083b2        0x2 ff
+                0x000082e8       0x46 ./drivers/SDK/fsl_edma.o
+ *fill*         0x0000832e        0x2 ff
  .rodata.EDMA_TcdReset.str1.4
-                0x000083b4       0x1e ./drivers/SDK/fsl_edma.o
- *fill*         0x000083d2        0x2 ff
+                0x00008330       0x1e ./drivers/SDK/fsl_edma.o
+ *fill*         0x0000834e        0x2 ff
  .rodata.EDMA_TcdSetTransferConfig.str1.4
-                0x000083d4       0x78 ./drivers/SDK/fsl_edma.o
+                0x00008350       0x78 ./drivers/SDK/fsl_edma.o
  .rodata.EDMA_ClearChannelStatusFlags.str1.4
-                0x0000844c       0x46 ./drivers/SDK/fsl_edma.o
- *fill*         0x00008492        0x2 ff
+                0x000083c8       0x46 ./drivers/SDK/fsl_edma.o
+ *fill*         0x0000840e        0x2 ff
  .rodata.EDMA_CreateHandle.str1.4
-                0x00008494       0x6a ./drivers/SDK/fsl_edma.o
- *fill*         0x000084fe        0x2 ff
+                0x00008410       0x6a ./drivers/SDK/fsl_edma.o
+ *fill*         0x0000847a        0x2 ff
  .rodata.EDMA_SetCallback.str1.4
-                0x00008500       0x21 ./drivers/SDK/fsl_edma.o
- *fill*         0x00008521        0x3 ff
+                0x0000847c       0x21 ./drivers/SDK/fsl_edma.o
+ *fill*         0x0000849d        0x3 ff
  .rodata.EDMA_PrepareTransferConfig.str1.4
-                0x00008524      0x214 ./drivers/SDK/fsl_edma.o
+                0x000084a0      0x214 ./drivers/SDK/fsl_edma.o
  .rodata.EDMA_PrepareTransfer.str1.4
-                0x00008738       0x3d ./drivers/SDK/fsl_edma.o
- *fill*         0x00008775        0x3 ff
+                0x000086b4       0x3d ./drivers/SDK/fsl_edma.o
+ *fill*         0x000086f1        0x3 ff
  .rodata.EDMA_SubmitTransfer.str1.4
-                0x00008778       0x46 ./drivers/SDK/fsl_edma.o
- *fill*         0x000087be        0x2 ff
+                0x000086f4       0x46 ./drivers/SDK/fsl_edma.o
+ *fill*         0x0000873a        0x2 ff
  .rodata.EDMA_StartTransfer.str1.4
-                0x000087c0       0x22 ./drivers/SDK/fsl_edma.o
- *fill*         0x000087e2        0x2 ff
+                0x0000873c       0x22 ./drivers/SDK/fsl_edma.o
+ *fill*         0x0000875e        0x2 ff
  .rodata.EDMA_HandleIRQ.str1.4
-                0x000087e4       0x22 ./drivers/SDK/fsl_edma.o
- *fill*         0x00008806        0x2 ff
+                0x00008760       0x22 ./drivers/SDK/fsl_edma.o
+ *fill*         0x00008782        0x2 ff
  .rodata.s_edmaIRQNumber
-                0x00008808       0x10 ./drivers/SDK/fsl_edma.o
+                0x00008784       0x10 ./drivers/SDK/fsl_edma.o
  .rodata.PDB_Init.str1.4
-                0x00008818       0x52 ./drivers/SDK/fsl_pdb.o
- *fill*         0x0000886a        0x2 ff
+                0x00008794       0x52 ./drivers/SDK/fsl_pdb.o
+ *fill*         0x000087e6        0x2 ff
  .rodata.PDB_GetDefaultConfig.str1.4
-                0x0000886c       0x20 ./drivers/SDK/fsl_pdb.o
+                0x000087e8       0x20 ./drivers/SDK/fsl_pdb.o
  .rodata.PDB_SetDACTriggerConfig.str1.4
-                0x0000888c       0x78 ./drivers/SDK/fsl_pdb.o
+                0x00008808       0x78 ./drivers/SDK/fsl_pdb.o
  .rodata.init_delays
-                0x00008904        0xa ./drivers/HAL/LCD_GDM1602A.o
- *fill*         0x0000890e        0x2 ff
+                0x00008880        0xa ./drivers/HAL/LCD_GDM1602A.o
+ *fill*         0x0000888a        0x2 ff
  .rodata.init_instructions
-                0x00008910        0xa ./drivers/HAL/LCD_GDM1602A.o
- *fill*         0x0000891a        0x2 ff
- .rodata.p_spi  0x0000891c        0xc ./drivers/HAL/SPI_wrapper.o
+                0x0000888c        0xa ./drivers/HAL/LCD_GDM1602A.o
+ *fill*         0x00008896        0x2 ff
+ .rodata.p_spi  0x00008898        0xc ./drivers/HAL/SPI_wrapper.o
  .rodata.armBitRevIndexTable1024
-                0x00008928      0xe10 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x00008928                armBitRevIndexTable1024
+                0x000088a4      0xe10 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x000088a4                armBitRevIndexTable1024
  .rodata.armBitRevIndexTable128
-                0x00009738      0x1a0 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x00009738                armBitRevIndexTable128
+                0x000096b4      0x1a0 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x000096b4                armBitRevIndexTable128
  .rodata.armBitRevIndexTable16
-                0x000098d8       0x28 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x000098d8                armBitRevIndexTable16
+                0x00009854       0x28 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x00009854                armBitRevIndexTable16
  .rodata.armBitRevIndexTable2048
-                0x00009900     0x1dc0 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x00009900                armBitRevIndexTable2048
+                0x0000987c     0x1dc0 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x0000987c                armBitRevIndexTable2048
  .rodata.armBitRevIndexTable256
-                0x0000b6c0      0x370 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x0000b6c0                armBitRevIndexTable256
+                0x0000b63c      0x370 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x0000b63c                armBitRevIndexTable256
  .rodata.armBitRevIndexTable32
-                0x0000ba30       0x60 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x0000ba30                armBitRevIndexTable32
+                0x0000b9ac       0x60 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x0000b9ac                armBitRevIndexTable32
  .rodata.armBitRevIndexTable512
-                0x0000ba90      0x380 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x0000ba90                armBitRevIndexTable512
+                0x0000ba0c      0x380 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x0000ba0c                armBitRevIndexTable512
  .rodata.sinTable_f32
-                0x0000be10      0x804 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x0000be10                sinTable_f32
+                0x0000bd8c      0x804 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x0000bd8c                sinTable_f32
  .rodata.twiddleCoef_1024
-                0x0000c614     0x2000 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x0000c614                twiddleCoef_1024
+                0x0000c590     0x2000 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x0000c590                twiddleCoef_1024
  .rodata.twiddleCoef_128
-                0x0000e614      0x400 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x0000e614                twiddleCoef_128
+                0x0000e590      0x400 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x0000e590                twiddleCoef_128
  .rodata.twiddleCoef_16
-                0x0000ea14       0x80 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x0000ea14                twiddleCoef_16
+                0x0000e990       0x80 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x0000e990                twiddleCoef_16
  .rodata.twiddleCoef_2048
-                0x0000ea94     0x4000 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x0000ea94                twiddleCoef_2048
+                0x0000ea10     0x4000 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x0000ea10                twiddleCoef_2048
  .rodata.twiddleCoef_256
-                0x00012a94      0x800 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x00012a94                twiddleCoef_256
+                0x00012a10      0x800 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x00012a10                twiddleCoef_256
  .rodata.twiddleCoef_32
-                0x00013294      0x100 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x00013294                twiddleCoef_32
+                0x00013210      0x100 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x00013210                twiddleCoef_32
  .rodata.twiddleCoef_512
-                0x00013394     0x1000 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x00013394                twiddleCoef_512
+                0x00013310     0x1000 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x00013310                twiddleCoef_512
  .rodata.twiddleCoef_rfft_1024
-                0x00014394     0x1000 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x00014394                twiddleCoef_rfft_1024
+                0x00014310     0x1000 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x00014310                twiddleCoef_rfft_1024
  .rodata.twiddleCoef_rfft_2048
-                0x00015394     0x2000 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x00015394                twiddleCoef_rfft_2048
+                0x00015310     0x2000 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x00015310                twiddleCoef_rfft_2048
  .rodata.twiddleCoef_rfft_256
-                0x00017394      0x400 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x00017394                twiddleCoef_rfft_256
+                0x00017310      0x400 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x00017310                twiddleCoef_rfft_256
  .rodata.twiddleCoef_rfft_32
-                0x00017794       0x80 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x00017794                twiddleCoef_rfft_32
+                0x00017710       0x80 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x00017710                twiddleCoef_rfft_32
  .rodata.twiddleCoef_rfft_4096
-                0x00017814     0x4000 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x00017814                twiddleCoef_rfft_4096
+                0x00017790     0x4000 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x00017790                twiddleCoef_rfft_4096
  .rodata.twiddleCoef_rfft_512
-                0x0001b814      0x800 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x0001b814                twiddleCoef_rfft_512
+                0x0001b790      0x800 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x0001b790                twiddleCoef_rfft_512
  .rodata.twiddleCoef_rfft_64
-                0x0001c014      0x100 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x0001c014                twiddleCoef_rfft_64
+                0x0001bf90      0x100 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x0001bf90                twiddleCoef_rfft_64
  .rodata.__num_Ciob_streams
-                0x0001c114        0x4 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_semihost_nf.a(__ciob.o)
-                0x0001c114                __num_Ciob_streams
+                0x0001c090        0x4 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_semihost_nf.a(__ciob.o)
+                0x0001c090                __num_Ciob_streams
  .rodata.__assertion_failed.str1.1
-                0x0001c118       0x15 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_semihost_nf.a(_cr_assert.o)
+                0x0001c094       0x15 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_semihost_nf.a(_cr_assert.o)
  .rodata._Csys_alloc.str1.1
-                0x0001c12d       0x18 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(alloc.o)
+                0x0001c0a9       0x18 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(alloc.o)
  .rodata._initio.str1.1
-                0x0001c145        0x4 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(initio.o)
-                0x0001c150                . = ALIGN (0x8)
- *fill*         0x0001c149        0x7 ff
+                0x0001c0c1        0x4 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(initio.o)
+                0x0001c0c8                . = ALIGN (0x8)
+ *fill*         0x0001c0c5        0x3 ff
 
-.glue_7         0x0001c150        0x0
- .glue_7        0x0001c150        0x0 linker stubs
+.glue_7         0x0001c0c8        0x0
+ .glue_7        0x0001c0c8        0x0 linker stubs
 
-.glue_7t        0x0001c150        0x0
- .glue_7t       0x0001c150        0x0 linker stubs
+.glue_7t        0x0001c0c8        0x0
+ .glue_7t       0x0001c0c8        0x0 linker stubs
 
-.vfp11_veneer   0x0001c150        0x0
- .vfp11_veneer  0x0001c150        0x0 linker stubs
+.vfp11_veneer   0x0001c0c8        0x0
+ .vfp11_veneer  0x0001c0c8        0x0 linker stubs
 
-.v4_bx          0x0001c150        0x0
- .v4_bx         0x0001c150        0x0 linker stubs
+.v4_bx          0x0001c0c8        0x0
+ .v4_bx         0x0001c0c8        0x0 linker stubs
 
-.iplt           0x0001c150        0x0
- .iplt          0x0001c150        0x0 ./startup/hardware.o
+.iplt           0x0001c0c8        0x0
+ .iplt          0x0001c0c8        0x0 ./startup/hardware.o
 
-.rel.dyn        0x0001c150        0x0
- .rel.iplt      0x0001c150        0x0 ./startup/hardware.o
+.rel.dyn        0x0001c0c8        0x0
+ .rel.iplt      0x0001c0c8        0x0 ./startup/hardware.o
 
 .ARM.extab
  *(SORT_BY_ALIGNMENT(.ARM.extab*) SORT_BY_ALIGNMENT(.gnu.linkonce.armextab.*))
 
-.ARM.exidx      0x0001c150        0x0
-                0x0001c150                __exidx_start = .
+.ARM.exidx      0x0001c0c8        0x0
+                0x0001c0c8                __exidx_start = .
  *(SORT_BY_ALIGNMENT(.ARM.exidx*) SORT_BY_ALIGNMENT(.gnu.linkonce.armexidx.*))
-                0x0001c150                __exidx_end = .
-                0x0001c150                _etext = .
+                0x0001c0c8                __exidx_end = .
+                0x0001c0c8                _etext = .
 
 .m_usb_data
  *(SORT_BY_ALIGNMENT(m_usb_bdt))
 
-.data_RAM2      0x1fff0000        0x0 load address 0x0001c150
+.data_RAM2      0x1fff0000        0x0 load address 0x0001c0c8
  FILL mask 0xff
                 [!provide]                PROVIDE (__start_data_RAM2 = .)
                 [!provide]                PROVIDE (__start_data_SRAM_LOWER = .)
@@ -5934,7 +5933,7 @@ END GROUP
                 [!provide]                PROVIDE (__end_data_RAM2 = .)
                 [!provide]                PROVIDE (__end_data_SRAM_LOWER = .)
 
-.data_RAM3      0x14000000        0x0 load address 0x0001c150
+.data_RAM3      0x14000000        0x0 load address 0x0001c0c8
  FILL mask 0xff
                 [!provide]                PROVIDE (__start_data_RAM3 = .)
                 [!provide]                PROVIDE (__start_data_FLEX_RAM = .)
@@ -5955,7 +5954,7 @@ END GROUP
                 0x20000000                . = ALIGN (0x8)
                 0x20000000                _end_uninit_RESERVED = .
 
-.data           0x20000000       0x50 load address 0x0001c150
+.data           0x20000000       0x50 load address 0x0001c0c8
  FILL mask 0xff
                 0x20000000                _data = .
                 [!provide]                PROVIDE (__start_data_RAM = .)
@@ -5983,7 +5982,7 @@ END GROUP
                 [!provide]                PROVIDE (__end_data_RAM = .)
                 [!provide]                PROVIDE (__end_data_SRAM_UPPER = .)
 
-.igot.plt       0x20000050        0x0 load address 0x0001c1a0
+.igot.plt       0x20000050        0x0 load address 0x0001c118
  .igot.plt      0x20000050        0x0 ./startup/hardware.o
 
 .bss_RAM2       0x1fff0000        0x0
@@ -6008,7 +6007,7 @@ END GROUP
                 [!provide]                PROVIDE (__end_bss_RAM3 = .)
                 [!provide]                PROVIDE (__end_bss_FLEX_RAM = .)
 
-.bss            0x20000050     0x9998
+.bss            0x20000050     0x7f58
                 0x20000050                _bss = .
                 [!provide]                PROVIDE (__start_bss_RAM = .)
                 [!provide]                PROVIDE (__start_bss_SRAM_UPPER = .)
@@ -6029,94 +6028,91 @@ END GROUP
  .bss.S8        0x2000015c       0x10 ./source/equalizer/equalizer.o
  .bss.biquadStateBandQ31
                 0x2000016c       0xc0 ./source/equalizer/equalizer.o
- .bss.coeffTable
-                0x2000022c     0x1a40 ./source/equalizer/equalizer.o
-                0x2000022c                coeffTable
  .bss.decoder_buffer
-                0x20001c6c     0x1200 ./source/App.o
-                0x20001c6c                decoder_buffer
+                0x2000022c     0x1200 ./source/App.o
+                0x2000022c                decoder_buffer
  .bss.effects_in
-                0x20002e6c     0x1200 ./source/App.o
+                0x2000142c     0x1200 ./source/App.o
  .bss.effects_out
-                0x2000406c     0x1200 ./source/App.o
+                0x2000262c     0x1200 ./source/App.o
  .bss.g_bufferRead
-                0x2000526c      0x900 ./source/App.o
- .bss.veces     0x20005b6c        0x4 ./source/App.o
-                0x20005b6c                veces
+                0x2000382c      0x900 ./source/App.o
+ .bss.veces     0x2000412c        0x4 ./source/App.o
+                0x2000412c                veces
  .bss.s_sdhcHandle
-                0x20005b70        0x4 ./drivers/SDK/SD/fsl_sdhc.o
+                0x20004130        0x4 ./drivers/SDK/SD/fsl_sdhc.o
  .bss.s_sdhcIsr
-                0x20005b74        0x4 ./drivers/SDK/SD/fsl_sdhc.o
+                0x20004134        0x4 ./drivers/SDK/SD/fsl_sdhc.o
  .bss.g_dspiDummyData
-                0x20005b78        0x3 ./drivers/SDK/fsl_dspi.o
-                0x20005b78                g_dspiDummyData
- *fill*         0x20005b7b        0x1 
+                0x20004138        0x3 ./drivers/SDK/fsl_dspi.o
+                0x20004138                g_dspiDummyData
+ *fill*         0x2000413b        0x1 
  .bss.g_dspiHandle
-                0x20005b7c        0xc ./drivers/SDK/fsl_dspi.o
+                0x2000413c        0xc ./drivers/SDK/fsl_dspi.o
  .bss.s_dspiMasterIsr
-                0x20005b88        0x4 ./drivers/SDK/fsl_dspi.o
+                0x20004148        0x4 ./drivers/SDK/fsl_dspi.o
  .bss.s_dspiSlaveIsr
-                0x20005b8c        0x4 ./drivers/SDK/fsl_dspi.o
+                0x2000414c        0x4 ./drivers/SDK/fsl_dspi.o
  .bss.s_EDMAHandle
-                0x20005b90       0x40 ./drivers/SDK/fsl_edma.o
+                0x20004150       0x40 ./drivers/SDK/fsl_edma.o
  .bss.idCounter
-                0x20005bd0        0x4 ./drivers/MCAL/SysTick.o
+                0x20004190        0x4 ./drivers/MCAL/SysTick.o
  .bss.sysTickElements
-                0x20005bd4      0x190 ./drivers/MCAL/SysTick.o
+                0x20004194      0x190 ./drivers/MCAL/SysTick.o
  .bss.callbacks
-                0x20005d64      0x280 ./drivers/MCAL/gpio.o
- .bss.buffers   0x20005fe4     0x1200 ./drivers/HAL/AudioPlayer.o
+                0x20004324      0x280 ./drivers/MCAL/gpio.o
+ .bss.buffers   0x200045a4     0x1200 ./drivers/HAL/AudioPlayer.o
  .bss.g_EDMA_Handle
-                0x200071e4       0x18 ./drivers/HAL/AudioPlayer.o
- .bss.g_index   0x200071fc        0x4 ./drivers/HAL/AudioPlayer.o
+                0x200057a4       0x18 ./drivers/HAL/AudioPlayer.o
+ .bss.g_index   0x200057bc        0x4 ./drivers/HAL/AudioPlayer.o
  .bss.g_transferConfig
-                0x20007200       0x18 ./drivers/HAL/AudioPlayer.o
- .bss.lcdLines  0x20007218       0x8e ./drivers/HAL/LCD_GDM1602A.o
- *fill*         0x200072a6        0x2 
+                0x200057c0       0x18 ./drivers/HAL/AudioPlayer.o
+ .bss.lcdLines  0x200057d8       0x8e ./drivers/HAL/LCD_GDM1602A.o
+ *fill*         0x20005866        0x2 
  .bss.buffer_out
-                0x200072a8      0xe10 ./drivers/HAL/SPI_wrapper.o
+                0x20005868      0xe10 ./drivers/HAL/SPI_wrapper.o
  .bss.masterCommand
-                0x200080b8        0x4 ./drivers/HAL/SPI_wrapper.o
- .bss.buffers   0x200080bc     0x1828 ./drivers/HAL/matrix_display.o
+                0x20006678        0x4 ./drivers/HAL/SPI_wrapper.o
+ .bss.buffers   0x2000667c     0x1828 ./drivers/HAL/matrix_display.o
  .bss.currBuffer
-                0x200098e4        0x4 ./drivers/HAL/matrix_display.o
+                0x20007ea4        0x4 ./drivers/HAL/matrix_display.o
  .bss.g_EDMA_Handle
-                0x200098e8       0x18 ./drivers/HAL/matrix_display.o
+                0x20007ea8       0x18 ./drivers/HAL/matrix_display.o
  .bss.g_transferConfig
-                0x20009900       0x18 ./drivers/HAL/matrix_display.o
- .bss.__Ciob    0x20009918       0xb4 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_semihost_nf.a(__ciob.o)
-                0x20009918                __Ciob
+                0x20007ec0       0x18 ./drivers/HAL/matrix_display.o
+ .bss.__Ciob    0x20007ed8       0xb4 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_semihost_nf.a(__ciob.o)
+                0x20007ed8                __Ciob
  .bss.__end_of_heap
-                0x200099cc        0x4 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(__init_alloc.o)
-                0x200099cc                __end_of_heap
- .bss.__heaps   0x200099d0        0x4 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(__init_alloc.o)
-                0x200099d0                __heaps
- .bss.errno     0x200099d4        0x4 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(errno.o)
-                0x200099d4                errno
- .bss.msg_size  0x200099d8        0x2 ./drivers/HAL/SPI_wrapper.o
+                0x20007f8c        0x4 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(__init_alloc.o)
+                0x20007f8c                __end_of_heap
+ .bss.__heaps   0x20007f90        0x4 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(__init_alloc.o)
+                0x20007f90                __heaps
+ .bss.errno     0x20007f94        0x4 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(errno.o)
+                0x20007f94                errno
+ .bss.msg_size  0x20007f98        0x2 ./drivers/HAL/SPI_wrapper.o
  .bss.p_out_rear
-                0x200099da        0x2 ./drivers/HAL/SPI_wrapper.o
- .bss.start     0x200099dc        0x1 ./source/App.o
+                0x20007f9a        0x2 ./drivers/HAL/SPI_wrapper.o
+ .bss.start     0x20007f9c        0x1 ./source/App.o
  .bss.alreadyInit
-                0x200099dd        0x1 ./drivers/MCAL/SysTick.o
+                0x20007f9d        0x1 ./drivers/MCAL/SysTick.o
  .bss.backBufferFree
-                0x200099de        0x1 ./drivers/HAL/AudioPlayer.o
- .bss.pause     0x200099df        0x1 ./drivers/HAL/AudioPlayer.o
+                0x20007f9e        0x1 ./drivers/HAL/AudioPlayer.o
+ .bss.pause     0x20007f9f        0x1 ./drivers/HAL/AudioPlayer.o
  .bss.init_fase
-                0x200099e0        0x1 ./drivers/HAL/LCD_GDM1602A.o
+                0x20007fa0        0x1 ./drivers/HAL/LCD_GDM1602A.o
  .bss.init_status
-                0x200099e1        0x1 ./drivers/HAL/LCD_GDM1602A.o
- .bss.timer_id  0x200099e2        0x1 ./drivers/HAL/LCD_GDM1602A.o
+                0x20007fa1        0x1 ./drivers/HAL/LCD_GDM1602A.o
+ .bss.timer_id  0x20007fa2        0x1 ./drivers/HAL/LCD_GDM1602A.o
  .bss.change_buffer
-                0x200099e3        0x1 ./drivers/HAL/matrix_display.o
- .bss.is_init   0x200099e4        0x1 ./drivers/HAL/matrix_display.o
- .bss.timer_id  0x200099e5        0x1 ./drivers/HAL/matrix_display.o
+                0x20007fa3        0x1 ./drivers/HAL/matrix_display.o
+ .bss.is_init   0x20007fa4        0x1 ./drivers/HAL/matrix_display.o
+ .bss.timer_id  0x20007fa5        0x1 ./drivers/HAL/matrix_display.o
  .bss.transfer_done
-                0x200099e6        0x1 ./drivers/HAL/matrix_display.o
+                0x20007fa6        0x1 ./drivers/HAL/matrix_display.o
  *(SORT_BY_ALIGNMENT(COMMON))
-                0x200099e8                . = ALIGN (0x8)
- *fill*         0x200099e7        0x1 
-                0x200099e8                _ebss = .
+                0x20007fa8                . = ALIGN (0x8)
+ *fill*         0x20007fa7        0x1 
+                0x20007fa8                _ebss = .
                 [!provide]                PROVIDE (__end_bss_RAM = .)
                 [!provide]                PROVIDE (__end_bss_SRAM_UPPER = .)
                 [!provide]                PROVIDE (end = .)
@@ -6143,107 +6139,107 @@ END GROUP
                 [!provide]                PROVIDE (__end_noinit_RAM3 = .)
                 [!provide]                PROVIDE (__end_noinit_FLEX_RAM = .)
 
-.noinit         0x200099e8        0x0
-                0x200099e8                _noinit = .
+.noinit         0x20007fa8        0x0
+                0x20007fa8                _noinit = .
                 [!provide]                PROVIDE (__start_noinit_RAM = .)
                 [!provide]                PROVIDE (__start_noinit_SRAM_UPPER = .)
  *(SORT_BY_ALIGNMENT(.noinit*))
-                0x200099e8                . = ALIGN (0x8)
-                0x200099e8                _end_noinit = .
+                0x20007fa8                . = ALIGN (0x8)
+                0x20007fa8                _end_noinit = .
                 [!provide]                PROVIDE (__end_noinit_RAM = .)
                 [!provide]                PROVIDE (__end_noinit_SRAM_UPPER = .)
                 0x00001000                _HeapSize = 0x1000
 
-.heap           0x200099e8     0x1000
-                0x200099e8                _pvHeapStart = .
-                0x2000a9e8                . = (. + _HeapSize)
- *fill*         0x200099e8     0x1000 
-                0x2000a9e8                . = ALIGN (0x8)
-                0x2000a9e8                _pvHeapLimit = .
+.heap           0x20007fa8     0x1000
+                0x20007fa8                _pvHeapStart = .
+                0x20008fa8                . = (. + _HeapSize)
+ *fill*         0x20007fa8     0x1000 
+                0x20008fa8                . = ALIGN (0x8)
+                0x20008fa8                _pvHeapLimit = .
                 0x00001000                _StackSize = 0x1000
 
 .heap2stackfill
-                0x2000a9e8     0x1000
-                0x2000b9e8                . = (. + _StackSize)
- *fill*         0x2000a9e8     0x1000 
+                0x20008fa8     0x1000
+                0x20009fa8                . = (. + _StackSize)
+ *fill*         0x20008fa8     0x1000 
 
 .stack          0x2002f000        0x0
                 0x2002f000                _vStackBase = .
                 0x2002f000                . = ALIGN (0x8)
                 0x20030000                _vStackTop = (. + _StackSize)
                 0x00000000                _image_start = LOADADDR (.text)
-                0x0001c1a0                _image_end = (LOADADDR (.data) + SIZEOF (.data))
-                0x0001c1a0                _image_size = (_image_end - _image_start)
+                0x0001c118                _image_end = (LOADADDR (.data) + SIZEOF (.data))
+                0x0001c118                _image_size = (_image_end - _image_start)
 OUTPUT(SDProject.axf elf32-littlearm)
 LOAD linker stubs
 
-.debug_info     0x00000000    0x24f2f
+.debug_info     0x00000000    0x24ed1
  .debug_info    0x00000000      0x71e ./startup/hardware.o
  .debug_info    0x0000071e      0x162 ./startup/main.o
  .debug_info    0x00000880       0x3c ./startup/semihost_hardfault.o
  .debug_info    0x000008bc      0xcbd ./startup/startup_mk64f12.o
  .debug_info    0x00001579      0x7fd ./source/fft/vumeterRefresh.o
- .debug_info    0x00001d76      0x854 ./source/equalizer/equalizer.o
- .debug_info    0x000025ca      0xbf4 ./source/App.o
- .debug_info    0x000031be     0x32e9 ./drivers/SDK/SD/fsl_sdhc.o
- .debug_info    0x000064a7      0xcaf ./drivers/SDK/fsl_dac.o
- .debug_info    0x00007156      0x552 ./drivers/SDK/fsl_dmamux.o
- .debug_info    0x000076a8     0x4e52 ./drivers/SDK/fsl_dspi.o
- .debug_info    0x0000c4fa     0x4019 ./drivers/SDK/fsl_edma.o
- .debug_info    0x00010513      0xa57 ./drivers/SDK/fsl_pdb.o
- .debug_info    0x00010f6a      0x804 ./drivers/MCAL/SysTick.o
- .debug_info    0x0001176e     0x12f7 ./drivers/MCAL/ftm.o
- .debug_info    0x00012a65      0xcfa ./drivers/MCAL/gpio.o
- .debug_info    0x0001375f     0x21e9 ./drivers/HAL/AudioPlayer.o
- .debug_info    0x00015948     0x174a ./drivers/HAL/LCD_GDM1602A.o
- .debug_info    0x00017092     0x1957 ./drivers/HAL/SPI_wrapper.o
- .debug_info    0x000189e9     0x139f ./drivers/HAL/matrix_display.o
- .debug_info    0x00019d88      0x6b8 ./device/system_MK64F12.o
- .debug_info    0x0001a440      0xb19 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_q31_to_float.o)
- .debug_info    0x0001af59      0xc27 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_float_to_q31.o)
- .debug_info    0x0001bb80     0x192a C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
- .debug_info    0x0001d4aa      0xbba C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_init_q31.o)
- .debug_info    0x0001e064      0xcf6 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_fast_q31.o)
- .debug_info    0x0001ed5a      0xede C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_q31.o)
- .debug_info    0x0001fc38      0xbc7 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_init_q31.o)
- .debug_info    0x000207ff     0x1612 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_sin_f32.o)
- .debug_info    0x00021e11      0xba6 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_q31.o)
- .debug_info    0x000229b7      0xaf4 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_f32.o)
- .debug_info    0x000234ab     0x1a84 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
+ .debug_info    0x00001d76      0x80a ./source/equalizer/equalizer.o
+ .debug_info    0x00002580      0xbe0 ./source/App.o
+ .debug_info    0x00003160     0x32e9 ./drivers/SDK/SD/fsl_sdhc.o
+ .debug_info    0x00006449      0xcaf ./drivers/SDK/fsl_dac.o
+ .debug_info    0x000070f8      0x552 ./drivers/SDK/fsl_dmamux.o
+ .debug_info    0x0000764a     0x4e52 ./drivers/SDK/fsl_dspi.o
+ .debug_info    0x0000c49c     0x4019 ./drivers/SDK/fsl_edma.o
+ .debug_info    0x000104b5      0xa57 ./drivers/SDK/fsl_pdb.o
+ .debug_info    0x00010f0c      0x804 ./drivers/MCAL/SysTick.o
+ .debug_info    0x00011710     0x12f7 ./drivers/MCAL/ftm.o
+ .debug_info    0x00012a07      0xcfa ./drivers/MCAL/gpio.o
+ .debug_info    0x00013701     0x21e9 ./drivers/HAL/AudioPlayer.o
+ .debug_info    0x000158ea     0x174a ./drivers/HAL/LCD_GDM1602A.o
+ .debug_info    0x00017034     0x1957 ./drivers/HAL/SPI_wrapper.o
+ .debug_info    0x0001898b     0x139f ./drivers/HAL/matrix_display.o
+ .debug_info    0x00019d2a      0x6b8 ./device/system_MK64F12.o
+ .debug_info    0x0001a3e2      0xb19 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_q31_to_float.o)
+ .debug_info    0x0001aefb      0xc27 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_float_to_q31.o)
+ .debug_info    0x0001bb22     0x192a C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
+ .debug_info    0x0001d44c      0xbba C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_init_q31.o)
+ .debug_info    0x0001e006      0xcf6 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_fast_q31.o)
+ .debug_info    0x0001ecfc      0xede C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_q31.o)
+ .debug_info    0x0001fbda      0xbc7 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_init_q31.o)
+ .debug_info    0x000207a1     0x1612 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_sin_f32.o)
+ .debug_info    0x00021db3      0xba6 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_q31.o)
+ .debug_info    0x00022959      0xaf4 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_f32.o)
+ .debug_info    0x0002344d     0x1a84 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
 
-.debug_abbrev   0x00000000     0x5389
+.debug_abbrev   0x00000000     0x5370
  .debug_abbrev  0x00000000      0x16e ./startup/hardware.o
  .debug_abbrev  0x0000016e       0xc3 ./startup/main.o
  .debug_abbrev  0x00000231       0x31 ./startup/semihost_hardfault.o
  .debug_abbrev  0x00000262      0x16c ./startup/startup_mk64f12.o
  .debug_abbrev  0x000003ce      0x327 ./source/fft/vumeterRefresh.o
- .debug_abbrev  0x000006f5      0x1ac ./source/equalizer/equalizer.o
- .debug_abbrev  0x000008a1      0x282 ./source/App.o
- .debug_abbrev  0x00000b23      0x48a ./drivers/SDK/SD/fsl_sdhc.o
- .debug_abbrev  0x00000fad      0x319 ./drivers/SDK/fsl_dac.o
- .debug_abbrev  0x000012c6      0x209 ./drivers/SDK/fsl_dmamux.o
- .debug_abbrev  0x000014cf      0x56d ./drivers/SDK/fsl_dspi.o
- .debug_abbrev  0x00001a3c      0x592 ./drivers/SDK/fsl_edma.o
- .debug_abbrev  0x00001fce      0x2e4 ./drivers/SDK/fsl_pdb.o
- .debug_abbrev  0x000022b2      0x2a3 ./drivers/MCAL/SysTick.o
- .debug_abbrev  0x00002555      0x221 ./drivers/MCAL/ftm.o
- .debug_abbrev  0x00002776      0x2da ./drivers/MCAL/gpio.o
- .debug_abbrev  0x00002a50      0x4ac ./drivers/HAL/AudioPlayer.o
- .debug_abbrev  0x00002efc      0x3cc ./drivers/HAL/LCD_GDM1602A.o
- .debug_abbrev  0x000032c8      0x38d ./drivers/HAL/SPI_wrapper.o
- .debug_abbrev  0x00003655      0x395 ./drivers/HAL/matrix_display.o
- .debug_abbrev  0x000039ea      0x17e ./device/system_MK64F12.o
- .debug_abbrev  0x00003b68      0x1ff C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_q31_to_float.o)
- .debug_abbrev  0x00003d67      0x271 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_float_to_q31.o)
- .debug_abbrev  0x00003fd8      0x2a0 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
- .debug_abbrev  0x00004278      0x227 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_init_q31.o)
- .debug_abbrev  0x0000449f      0x226 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_fast_q31.o)
- .debug_abbrev  0x000046c5      0x299 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_q31.o)
- .debug_abbrev  0x0000495e      0x227 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_init_q31.o)
- .debug_abbrev  0x00004b85      0x22c C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_sin_f32.o)
- .debug_abbrev  0x00004db1      0x210 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_q31.o)
- .debug_abbrev  0x00004fc1      0x1eb C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_f32.o)
- .debug_abbrev  0x000051ac      0x1dd C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
+ .debug_abbrev  0x000006f5      0x17d ./source/equalizer/equalizer.o
+ .debug_abbrev  0x00000872      0x298 ./source/App.o
+ .debug_abbrev  0x00000b0a      0x48a ./drivers/SDK/SD/fsl_sdhc.o
+ .debug_abbrev  0x00000f94      0x319 ./drivers/SDK/fsl_dac.o
+ .debug_abbrev  0x000012ad      0x209 ./drivers/SDK/fsl_dmamux.o
+ .debug_abbrev  0x000014b6      0x56d ./drivers/SDK/fsl_dspi.o
+ .debug_abbrev  0x00001a23      0x592 ./drivers/SDK/fsl_edma.o
+ .debug_abbrev  0x00001fb5      0x2e4 ./drivers/SDK/fsl_pdb.o
+ .debug_abbrev  0x00002299      0x2a3 ./drivers/MCAL/SysTick.o
+ .debug_abbrev  0x0000253c      0x221 ./drivers/MCAL/ftm.o
+ .debug_abbrev  0x0000275d      0x2da ./drivers/MCAL/gpio.o
+ .debug_abbrev  0x00002a37      0x4ac ./drivers/HAL/AudioPlayer.o
+ .debug_abbrev  0x00002ee3      0x3cc ./drivers/HAL/LCD_GDM1602A.o
+ .debug_abbrev  0x000032af      0x38d ./drivers/HAL/SPI_wrapper.o
+ .debug_abbrev  0x0000363c      0x395 ./drivers/HAL/matrix_display.o
+ .debug_abbrev  0x000039d1      0x17e ./device/system_MK64F12.o
+ .debug_abbrev  0x00003b4f      0x1ff C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_q31_to_float.o)
+ .debug_abbrev  0x00003d4e      0x271 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_float_to_q31.o)
+ .debug_abbrev  0x00003fbf      0x2a0 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
+ .debug_abbrev  0x0000425f      0x227 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_init_q31.o)
+ .debug_abbrev  0x00004486      0x226 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_fast_q31.o)
+ .debug_abbrev  0x000046ac      0x299 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_q31.o)
+ .debug_abbrev  0x00004945      0x227 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_init_q31.o)
+ .debug_abbrev  0x00004b6c      0x22c C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_sin_f32.o)
+ .debug_abbrev  0x00004d98      0x210 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_q31.o)
+ .debug_abbrev  0x00004fa8      0x1eb C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_f32.o)
+ .debug_abbrev  0x00005193      0x1dd C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
 
 .debug_aranges  0x00000000      0xd30
  .debug_aranges
@@ -6406,41 +6402,41 @@ LOAD linker stubs
  .debug_macro   0x00014fe3       0x64 ./drivers/HAL/matrix_display.o
  .debug_macro   0x00015047       0x98 ./device/system_MK64F12.o
 
-.debug_line     0x00000000    0x13dd3
+.debug_line     0x00000000    0x13d93
  .debug_line    0x00000000      0x431 ./startup/hardware.o
  .debug_line    0x00000431      0x2ad ./startup/main.o
  .debug_line    0x000006de       0x5a ./startup/semihost_hardfault.o
  .debug_line    0x00000738      0xa9c ./startup/startup_mk64f12.o
  .debug_line    0x000011d4      0xba2 ./source/fft/vumeterRefresh.o
- .debug_line    0x00001d76      0x341 ./source/equalizer/equalizer.o
- .debug_line    0x000020b7      0xa8b ./source/App.o
- .debug_line    0x00002b42     0x1a23 ./drivers/SDK/SD/fsl_sdhc.o
- .debug_line    0x00004565      0x64f ./drivers/SDK/fsl_dac.o
- .debug_line    0x00004bb4      0x380 ./drivers/SDK/fsl_dmamux.o
- .debug_line    0x00004f34     0x34f0 ./drivers/SDK/fsl_dspi.o
- .debug_line    0x00008424     0x340e ./drivers/SDK/fsl_edma.o
- .debug_line    0x0000b832      0x4d6 ./drivers/SDK/fsl_pdb.o
- .debug_line    0x0000bd08      0x87e ./drivers/MCAL/SysTick.o
- .debug_line    0x0000c586      0x72d ./drivers/MCAL/ftm.o
- .debug_line    0x0000ccb3      0x802 ./drivers/MCAL/gpio.o
- .debug_line    0x0000d4b5      0xd53 ./drivers/HAL/AudioPlayer.o
- .debug_line    0x0000e208     0x1318 ./drivers/HAL/LCD_GDM1602A.o
- .debug_line    0x0000f520      0xab7 ./drivers/HAL/SPI_wrapper.o
- .debug_line    0x0000ffd7      0x85f ./drivers/HAL/matrix_display.o
- .debug_line    0x00010836      0x472 ./device/system_MK64F12.o
- .debug_line    0x00010ca8      0x2fe C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_q31_to_float.o)
- .debug_line    0x00010fa6      0x447 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_float_to_q31.o)
- .debug_line    0x000113ed      0x610 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
- .debug_line    0x000119fd      0x28c C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_init_q31.o)
- .debug_line    0x00011c89      0x590 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_fast_q31.o)
- .debug_line    0x00012219      0xc4a C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_q31.o)
- .debug_line    0x00012e63      0x292 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_init_q31.o)
- .debug_line    0x000130f5      0x2d0 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_sin_f32.o)
- .debug_line    0x000133c5      0x4ee C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_q31.o)
- .debug_line    0x000138b3      0x2dd C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_f32.o)
- .debug_line    0x00013b90      0x243 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
+ .debug_line    0x00001d76      0x332 ./source/equalizer/equalizer.o
+ .debug_line    0x000020a8      0xa5a ./source/App.o
+ .debug_line    0x00002b02     0x1a23 ./drivers/SDK/SD/fsl_sdhc.o
+ .debug_line    0x00004525      0x64f ./drivers/SDK/fsl_dac.o
+ .debug_line    0x00004b74      0x380 ./drivers/SDK/fsl_dmamux.o
+ .debug_line    0x00004ef4     0x34f0 ./drivers/SDK/fsl_dspi.o
+ .debug_line    0x000083e4     0x340e ./drivers/SDK/fsl_edma.o
+ .debug_line    0x0000b7f2      0x4d6 ./drivers/SDK/fsl_pdb.o
+ .debug_line    0x0000bcc8      0x87e ./drivers/MCAL/SysTick.o
+ .debug_line    0x0000c546      0x72d ./drivers/MCAL/ftm.o
+ .debug_line    0x0000cc73      0x802 ./drivers/MCAL/gpio.o
+ .debug_line    0x0000d475      0xd53 ./drivers/HAL/AudioPlayer.o
+ .debug_line    0x0000e1c8     0x1318 ./drivers/HAL/LCD_GDM1602A.o
+ .debug_line    0x0000f4e0      0xab7 ./drivers/HAL/SPI_wrapper.o
+ .debug_line    0x0000ff97      0x85f ./drivers/HAL/matrix_display.o
+ .debug_line    0x000107f6      0x472 ./device/system_MK64F12.o
+ .debug_line    0x00010c68      0x2fe C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_q31_to_float.o)
+ .debug_line    0x00010f66      0x447 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_float_to_q31.o)
+ .debug_line    0x000113ad      0x610 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
+ .debug_line    0x000119bd      0x28c C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_init_q31.o)
+ .debug_line    0x00011c49      0x590 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_fast_q31.o)
+ .debug_line    0x000121d9      0xc4a C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_q31.o)
+ .debug_line    0x00012e23      0x292 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_init_q31.o)
+ .debug_line    0x000130b5      0x2d0 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_sin_f32.o)
+ .debug_line    0x00013385      0x4ee C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_q31.o)
+ .debug_line    0x00013873      0x2dd C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_f32.o)
+ .debug_line    0x00013b50      0x243 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
 
-.debug_str      0x00000000    0x83ec4
+.debug_str      0x00000000    0x83eba
  .debug_str     0x00000000    0x78374 ./startup/hardware.o
                               0x7841c (size before relaxing)
  .debug_str     0x00078374       0x23 ./startup/main.o
@@ -6451,59 +6447,59 @@ LOAD linker stubs
                                0x36f3 (size before relaxing)
  .debug_str     0x00078bf8     0x1394 ./source/fft/vumeterRefresh.o
                               0x795c5 (size before relaxing)
- .debug_str     0x00079f8c      0x2e2 ./source/equalizer/equalizer.o
-                               0x5e24 (size before relaxing)
- .debug_str     0x0007a26e     0x239a ./source/App.o
-                              0x7b75e (size before relaxing)
- .debug_str     0x0007c608     0x20fc ./drivers/SDK/SD/fsl_sdhc.o
+ .debug_str     0x00079f8c      0x2d2 ./source/equalizer/equalizer.o
+                               0x5e14 (size before relaxing)
+ .debug_str     0x0007a25e     0x23a0 ./source/App.o
+                              0x7b74c (size before relaxing)
+ .debug_str     0x0007c5fe     0x20fc ./drivers/SDK/SD/fsl_sdhc.o
                               0x7bc00 (size before relaxing)
- .debug_str     0x0007e704      0x44e ./drivers/SDK/fsl_dac.o
+ .debug_str     0x0007e6fa      0x44e ./drivers/SDK/fsl_dac.o
                               0x7a141 (size before relaxing)
- .debug_str     0x0007eb52       0xe8 ./drivers/SDK/fsl_dmamux.o
+ .debug_str     0x0007eb48       0xe8 ./drivers/SDK/fsl_dmamux.o
                               0x7958c (size before relaxing)
- .debug_str     0x0007ec3a     0x13f2 ./drivers/SDK/fsl_dspi.o
+ .debug_str     0x0007ec30     0x13f2 ./drivers/SDK/fsl_dspi.o
                               0x7b799 (size before relaxing)
- .debug_str     0x0008002c     0x10f1 ./drivers/SDK/fsl_edma.o
+ .debug_str     0x00080022     0x10f1 ./drivers/SDK/fsl_edma.o
                               0x7ac51 (size before relaxing)
- .debug_str     0x0008111d      0x617 ./drivers/SDK/fsl_pdb.o
+ .debug_str     0x00081113      0x617 ./drivers/SDK/fsl_pdb.o
                               0x79b0c (size before relaxing)
- .debug_str     0x00081734      0x23c ./drivers/MCAL/SysTick.o
+ .debug_str     0x0008172a      0x23c ./drivers/MCAL/SysTick.o
                               0x788a8 (size before relaxing)
- .debug_str     0x00081970      0x5ef ./drivers/MCAL/ftm.o
+ .debug_str     0x00081966      0x5ef ./drivers/MCAL/ftm.o
                               0x71f22 (size before relaxing)
- .debug_str     0x00081f5f      0x117 ./drivers/MCAL/gpio.o
+ .debug_str     0x00081f55      0x117 ./drivers/MCAL/gpio.o
                               0x78a6a (size before relaxing)
- .debug_str     0x00082076      0x51e ./drivers/HAL/AudioPlayer.o
+ .debug_str     0x0008206c      0x51e ./drivers/HAL/AudioPlayer.o
                               0x7af27 (size before relaxing)
- .debug_str     0x00082594      0x478 ./drivers/HAL/LCD_GDM1602A.o
+ .debug_str     0x0008258a      0x478 ./drivers/HAL/LCD_GDM1602A.o
                               0x787a5 (size before relaxing)
- .debug_str     0x00082a0c      0x2c7 ./drivers/HAL/SPI_wrapper.o
+ .debug_str     0x00082a02      0x2c7 ./drivers/HAL/SPI_wrapper.o
                               0x7afc0 (size before relaxing)
- .debug_str     0x00082cd3      0x1a5 ./drivers/HAL/matrix_display.o
+ .debug_str     0x00082cc9      0x1a5 ./drivers/HAL/matrix_display.o
                               0x7a7aa (size before relaxing)
- .debug_str     0x00082e78       0x52 ./device/system_MK64F12.o
+ .debug_str     0x00082e6e       0x52 ./device/system_MK64F12.o
                               0x78332 (size before relaxing)
- .debug_str     0x00082eca      0x57a C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_q31_to_float.o)
+ .debug_str     0x00082ec0      0x57a C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_q31_to_float.o)
                                 0x68a (size before relaxing)
- .debug_str     0x00083444       0x4b C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_float_to_q31.o)
+ .debug_str     0x0008343a       0x4b C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_float_to_q31.o)
                                 0x6b2 (size before relaxing)
- .debug_str     0x0008348f      0x7e4 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
+ .debug_str     0x00083485      0x7e4 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
                                 0xf3b (size before relaxing)
- .debug_str     0x00083c73       0x66 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_init_q31.o)
+ .debug_str     0x00083c69       0x66 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_init_q31.o)
                                 0x6ff (size before relaxing)
- .debug_str     0x00083cd9       0x55 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_fast_q31.o)
+ .debug_str     0x00083ccf       0x55 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_fast_q31.o)
                                 0x71b (size before relaxing)
- .debug_str     0x00083d2e       0x67 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_q31.o)
+ .debug_str     0x00083d24       0x67 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_q31.o)
                                 0x741 (size before relaxing)
- .debug_str     0x00083d95       0x48 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_init_q31.o)
+ .debug_str     0x00083d8b       0x48 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_init_q31.o)
                                 0x713 (size before relaxing)
- .debug_str     0x00083ddd       0x41 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_sin_f32.o)
+ .debug_str     0x00083dd3       0x41 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_sin_f32.o)
                                 0xd42 (size before relaxing)
- .debug_str     0x00083e1e       0x42 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_q31.o)
+ .debug_str     0x00083e14       0x42 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_q31.o)
                                 0x6c1 (size before relaxing)
- .debug_str     0x00083e60       0x36 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_f32.o)
+ .debug_str     0x00083e56       0x36 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_f32.o)
                                 0x674 (size before relaxing)
- .debug_str     0x00083e96       0x2e C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
+ .debug_str     0x00083e8c       0x2e C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
                                 0xd1d (size before relaxing)
 
 .comment        0x00000000       0xc1
@@ -6705,67 +6701,67 @@ LOAD linker stubs
  .ARM.attributes
                 0x00000cd7       0x20 c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_semihost_nf.a(__sys_write.o)
 
-.debug_frame    0x00000000     0x27d8
+.debug_frame    0x00000000     0x27cc
  .debug_frame   0x00000000       0x50 ./startup/hardware.o
  .debug_frame   0x00000050       0x28 ./startup/main.o
  .debug_frame   0x00000078       0x20 ./startup/semihost_hardfault.o
  .debug_frame   0x00000098      0x8dc ./startup/startup_mk64f12.o
  .debug_frame   0x00000974       0xcc ./source/fft/vumeterRefresh.o
  .debug_frame   0x00000a40       0x88 ./source/equalizer/equalizer.o
- .debug_frame   0x00000ac8       0xa0 ./source/App.o
- .debug_frame   0x00000b68      0x21c ./drivers/SDK/SD/fsl_sdhc.o
- .debug_frame   0x00000d84       0xf8 ./drivers/SDK/fsl_dac.o
- .debug_frame   0x00000e7c       0x40 ./drivers/SDK/fsl_dmamux.o
- .debug_frame   0x00000ebc      0x3fc ./drivers/SDK/fsl_dspi.o
- .debug_frame   0x000012b8      0x5bc ./drivers/SDK/fsl_edma.o
- .debug_frame   0x00001874       0x78 ./drivers/SDK/fsl_pdb.o
- .debug_frame   0x000018ec      0x144 ./drivers/MCAL/SysTick.o
- .debug_frame   0x00001a30      0x470 ./drivers/MCAL/ftm.o
- .debug_frame   0x00001ea0      0x168 ./drivers/MCAL/gpio.o
- .debug_frame   0x00002008      0x130 ./drivers/HAL/AudioPlayer.o
- .debug_frame   0x00002138      0x1f8 ./drivers/HAL/LCD_GDM1602A.o
- .debug_frame   0x00002330       0x8c ./drivers/HAL/SPI_wrapper.o
- .debug_frame   0x000023bc       0xcc ./drivers/HAL/matrix_display.o
- .debug_frame   0x00002488       0x5c ./device/system_MK64F12.o
- .debug_frame   0x000024e4       0x30 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_q31_to_float.o)
- .debug_frame   0x00002514       0x58 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_float_to_q31.o)
- .debug_frame   0x0000256c      0x100 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
- .debug_frame   0x0000266c       0x28 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_init_q31.o)
- .debug_frame   0x00002694       0x44 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_fast_q31.o)
- .debug_frame   0x000026d8       0x44 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_q31.o)
- .debug_frame   0x0000271c       0x28 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_init_q31.o)
- .debug_frame   0x00002744       0x20 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_sin_f32.o)
- .debug_frame   0x00002764       0x44 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_q31.o)
- .debug_frame   0x000027a8       0x30 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_f32.o)
+ .debug_frame   0x00000ac8       0x94 ./source/App.o
+ .debug_frame   0x00000b5c      0x21c ./drivers/SDK/SD/fsl_sdhc.o
+ .debug_frame   0x00000d78       0xf8 ./drivers/SDK/fsl_dac.o
+ .debug_frame   0x00000e70       0x40 ./drivers/SDK/fsl_dmamux.o
+ .debug_frame   0x00000eb0      0x3fc ./drivers/SDK/fsl_dspi.o
+ .debug_frame   0x000012ac      0x5bc ./drivers/SDK/fsl_edma.o
+ .debug_frame   0x00001868       0x78 ./drivers/SDK/fsl_pdb.o
+ .debug_frame   0x000018e0      0x144 ./drivers/MCAL/SysTick.o
+ .debug_frame   0x00001a24      0x470 ./drivers/MCAL/ftm.o
+ .debug_frame   0x00001e94      0x168 ./drivers/MCAL/gpio.o
+ .debug_frame   0x00001ffc      0x130 ./drivers/HAL/AudioPlayer.o
+ .debug_frame   0x0000212c      0x1f8 ./drivers/HAL/LCD_GDM1602A.o
+ .debug_frame   0x00002324       0x8c ./drivers/HAL/SPI_wrapper.o
+ .debug_frame   0x000023b0       0xcc ./drivers/HAL/matrix_display.o
+ .debug_frame   0x0000247c       0x5c ./device/system_MK64F12.o
+ .debug_frame   0x000024d8       0x30 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_q31_to_float.o)
+ .debug_frame   0x00002508       0x58 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_float_to_q31.o)
+ .debug_frame   0x00002560      0x100 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
+ .debug_frame   0x00002660       0x28 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_init_q31.o)
+ .debug_frame   0x00002688       0x44 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_fast_q31.o)
+ .debug_frame   0x000026cc       0x44 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_q31.o)
+ .debug_frame   0x00002710       0x28 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_init_q31.o)
+ .debug_frame   0x00002738       0x20 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_sin_f32.o)
+ .debug_frame   0x00002758       0x44 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_q31.o)
+ .debug_frame   0x0000279c       0x30 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_f32.o)
 
-.debug_loc      0x00000000    0x14b58
+.debug_loc      0x00000000    0x14b0c
  .debug_loc     0x00000000      0x252 ./startup/startup_mk64f12.o
  .debug_loc     0x00000252      0x7da ./source/fft/vumeterRefresh.o
  .debug_loc     0x00000a2c      0x10e ./source/equalizer/equalizer.o
- .debug_loc     0x00000b3a       0xa1 ./source/App.o
- .debug_loc     0x00000bdb     0x2d4a ./drivers/SDK/SD/fsl_sdhc.o
- .debug_loc     0x00003925      0x4ba ./drivers/SDK/fsl_dac.o
- .debug_loc     0x00003ddf      0x194 ./drivers/SDK/fsl_dmamux.o
- .debug_loc     0x00003f73     0x4e0b ./drivers/SDK/fsl_dspi.o
- .debug_loc     0x00008d7e     0x53d8 ./drivers/SDK/fsl_edma.o
- .debug_loc     0x0000e156      0x3bd ./drivers/SDK/fsl_pdb.o
- .debug_loc     0x0000e513      0x728 ./drivers/MCAL/SysTick.o
- .debug_loc     0x0000ec3b      0x5cf ./drivers/MCAL/gpio.o
- .debug_loc     0x0000f20a      0x98f ./drivers/HAL/AudioPlayer.o
- .debug_loc     0x0000fb99     0x12fb ./drivers/HAL/LCD_GDM1602A.o
- .debug_loc     0x00010e94      0x869 ./drivers/HAL/SPI_wrapper.o
- .debug_loc     0x000116fd      0x308 ./drivers/HAL/matrix_display.o
- .debug_loc     0x00011a05      0x149 ./device/system_MK64F12.o
- .debug_loc     0x00011b4e      0x1eb C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_q31_to_float.o)
- .debug_loc     0x00011d39      0x469 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_float_to_q31.o)
- .debug_loc     0x000121a2      0x67f C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
- .debug_loc     0x00012821       0xbf C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_init_q31.o)
- .debug_loc     0x000128e0      0x8ff C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_fast_q31.o)
- .debug_loc     0x000131df      0xe54 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_q31.o)
- .debug_loc     0x00014033       0xcd C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_init_q31.o)
- .debug_loc     0x00014100       0xfa C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_sin_f32.o)
- .debug_loc     0x000141fa      0x770 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_q31.o)
- .debug_loc     0x0001496a      0x1ee C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_f32.o)
+ .debug_loc     0x00000b3a       0x55 ./source/App.o
+ .debug_loc     0x00000b8f     0x2d4a ./drivers/SDK/SD/fsl_sdhc.o
+ .debug_loc     0x000038d9      0x4ba ./drivers/SDK/fsl_dac.o
+ .debug_loc     0x00003d93      0x194 ./drivers/SDK/fsl_dmamux.o
+ .debug_loc     0x00003f27     0x4e0b ./drivers/SDK/fsl_dspi.o
+ .debug_loc     0x00008d32     0x53d8 ./drivers/SDK/fsl_edma.o
+ .debug_loc     0x0000e10a      0x3bd ./drivers/SDK/fsl_pdb.o
+ .debug_loc     0x0000e4c7      0x728 ./drivers/MCAL/SysTick.o
+ .debug_loc     0x0000ebef      0x5cf ./drivers/MCAL/gpio.o
+ .debug_loc     0x0000f1be      0x98f ./drivers/HAL/AudioPlayer.o
+ .debug_loc     0x0000fb4d     0x12fb ./drivers/HAL/LCD_GDM1602A.o
+ .debug_loc     0x00010e48      0x869 ./drivers/HAL/SPI_wrapper.o
+ .debug_loc     0x000116b1      0x308 ./drivers/HAL/matrix_display.o
+ .debug_loc     0x000119b9      0x149 ./device/system_MK64F12.o
+ .debug_loc     0x00011b02      0x1eb C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_q31_to_float.o)
+ .debug_loc     0x00011ced      0x469 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_float_to_q31.o)
+ .debug_loc     0x00012156      0x67f C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
+ .debug_loc     0x000127d5       0xbf C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_init_q31.o)
+ .debug_loc     0x00012894      0x8ff C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_fast_q31.o)
+ .debug_loc     0x00013193      0xe54 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_q31.o)
+ .debug_loc     0x00013fe7       0xcd C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_biquad_cascade_df1_32x64_init_q31.o)
+ .debug_loc     0x000140b4       0xfa C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_sin_f32.o)
+ .debug_loc     0x000141ae      0x770 C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_q31.o)
+ .debug_loc     0x0001491e      0x1ee C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_scale_f32.o)
 
 Cross Reference Table
 
@@ -7827,7 +7823,6 @@ buttonConfiguration                               ./drivers/HAL/button.o
 buttonsInit                                       ./drivers/HAL/button.o
 calloc                                            c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(alloc.o)
 clearerr                                          c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(stdio.o)
-coeffTable                                        ./source/equalizer/equalizer.o
 cos_factorsQ15_128                                C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
 cos_factorsQ15_2048                               C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
 cos_factorsQ15_512                                C:\Users\malem\Desktop\TPF2\TPFinal\SDProject\libs\libarm_cortexM4lf_math.a(arm_common_tables.o)
@@ -7865,7 +7860,6 @@ equalizer_equalize                                ./source/equalizer/equalizer.o
 equalizer_init                                    ./source/equalizer/equalizer.o
                                                   ./source/App.o
 equalizer_set_band_gain                           ./source/equalizer/equalizer.o
-                                                  ./source/App.o
 errno                                             c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(errno.o)
                                                   c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(log.o)
                                                   c:/nxp/mcuxpressoide_11.3.0_5222/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.3.0.202008311133/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(ldexp.o)

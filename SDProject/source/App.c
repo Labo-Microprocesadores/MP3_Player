@@ -95,6 +95,12 @@ void App_Init(void)
 */
 	equalizer_init();
 
+	  int hello[8] = {-5, -3, -3, -5, 0, 3, 5, 1};
+	  for(int j = 1; j<=8; j++)
+	  {
+		 // equalizer_set_band_gain(j,0);//hello[j-1]);
+	  }
+
 }
 
 /* Función que se llama constantemente en un ciclo infinito */
@@ -180,7 +186,7 @@ void fillBuffer(void)
 		  effects_in[i%1152] += 0.125*arm_sin_f32(2*3.1415926f*160*i/44100);
 		  effects_in[i%1152] += 0.125*arm_sin_f32(2*3.1415926f*320*i/44100);
 		  effects_in[i%1152] += 0.125*arm_sin_f32(2*3.1415926f*640*i/44100);
-		  effects_in[i%1152] += 0.125*arm_sin_f32(2*3.1415926f*1280*i/44100);
+		  effects_in[i%1152] += 0.0625*arm_sin_f32(2*3.1415926f*1280*i/44100);
 		  effects_in[i%1152] += 0.125*arm_sin_f32(2*3.1415926f*2500*i/44100);
 		  effects_in[i%1152] += 0.125*arm_sin_f32(2*3.1415926f*5000*i/44100);
 		  effects_in[i%1152] += 0.125*arm_sin_f32(2*3.1415926f*10000*i/44100);
@@ -188,10 +194,7 @@ void fillBuffer(void)
 	  }
 	  veces++;
 
-	  for(int j = 1; j<=8; j++)
-	  {
-		  equalizer_set_band_gain(j,-j);
-	  }
+
 	/*for (uint32_t index = 0; index < fin; index++)
 	{
 		effects_in[index] = decoder_buffer[channelCount * index]*coef;
@@ -200,7 +203,7 @@ void fillBuffer(void)
 
 	for (uint32_t index = 0; index < 1152; index++)
 	{
-		g_bufferRead[index] = (effects_in[index]+1)*2048;
+		g_bufferRead[index] = (effects_out[index]+1)*2048;
 	}
 /*
 	if (check == DECODER_END_OF_FILE)
