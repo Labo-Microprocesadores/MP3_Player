@@ -107,9 +107,10 @@ STATE * currentState;
 /* Función que se llama 1 vez, al comienzo del programa */
 void App_Init(void)
 {
+	PowerMode_Init();
+
 	SysTick_Init();
 	Timer_Init();
-	PowerMode_Init();
 	Mm_Init();//aux); //Memory manager
 	LCD_Init();   //LCD Driver
 

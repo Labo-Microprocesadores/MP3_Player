@@ -117,6 +117,11 @@ void LCD_Init(void)
 	}
 }
 
+void LCD_UpdateClock(void)
+{
+	SPI_Config(SPI_0_ID, SPI_SLAVE_0, 350000U);
+}
+
 bool LCD_isInit(void)
 {
 	return (init_status == 2);

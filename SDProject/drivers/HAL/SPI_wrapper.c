@@ -72,16 +72,7 @@ void SPI_Init(spi_id_t id, spi_slave_t slave, uint32_t baudrate)
 	else
 		PORT_SetPinMux(PORTD, slave, kPORT_MuxAlt2);
 
-	/* SPI Config */
-
-	dspi_master_config_t masterConfig;
-
-	DSPI_MasterGetDefaultConfig(&masterConfig);
-	masterConfig.whichPcs = 1 << slave;
-	masterConfig.ctarConfig.baudRate = baudrate;
-
-	uint32_t srcClock_Hz = __CORE_CLOCK__ / 2; // Bus Clock
-	DSPI_MasterInit(p_spi[id], &masterConfig, srcClock_Hz);
+	SPI_Config(id, slave, baudrate);
 
 	/* Enable the NVIC for DSPI peripheral. */
 	EnableIRQ(SPI0_IRQn + (id != 2 ? id : 39));
@@ -103,6 +94,20 @@ void SPI_Init(spi_id_t id, spi_slave_t slave, uint32_t baudrate)
 	DSPI_StopTransfer(p_spi[id]);
 	DSPI_FlushFifo(p_spi[id], true, true);
 	DSPI_ClearStatusFlags(p_spi[id], (uint32_t)kDSPI_AllStatusFlag);
+}
+
+void SPI_Config(spi_id_t id, spi_slave_t slave, uint32_t baudrate)
+{
+	/* SPI Config */
+
+	dspi_master_config_t masterConfig;
+
+	DSPI_MasterGetDefaultConfig(&masterConfig);
+	masterConfig.whichPcs = 1 << slave;
+	masterConfig.ctarConfig.baudRate = baudrate;
+
+	uint32_t srcClock_Hz = CLOCK_GetFreq(kCLOCK_BusClk);//__CORE_CLOCK__ / 2; // Bus Clock
+	DSPI_MasterInit(p_spi[id], &masterConfig, srcClock_Hz);
 }
 
 void SPI_Send(spi_id_t id, spi_slave_t slave, const char *msg, uint16_t len, void (*end_callback)(void))

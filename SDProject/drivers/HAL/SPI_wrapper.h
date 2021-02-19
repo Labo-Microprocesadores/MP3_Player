@@ -31,4 +31,6 @@ void SPI_Init(spi_id_t id, spi_slave_t slave, uint32_t baudrate);
 
 void SPI_Send(spi_id_t id, spi_slave_t slave, const char *msg, uint16_t len, void (*end_callback)(void));
 
+void SPI_Config(spi_id_t id, spi_slave_t slave, uint32_t baudrate); // Update the clock
+
 #endif /* SPI_WRAPPER_H_ */
