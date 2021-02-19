@@ -81,7 +81,7 @@ STATE file_selection[] =
 	{PRESS_EV,				file_selection, 		NULL},
 	{LKP_EV, 				file_selection, 		NULL},
 
-	{ENCODER_PRESS_EV,		file_selection, 		FileSelection_SelectFile},
+	{PP_EV,					file_selection, 		FileSelection_SelectFile},
 	{ENCODER_RIGHT_EV,		file_selection, 		FileSelection_NextFile},
 	{ENCODER_LEFT_EV,		file_selection,			FileSelection_PreviousFile},
 
@@ -99,6 +99,11 @@ STATE player[] =
 {
 	{PRESS_EV,				player, 				NULL},
 	{LKP_EV, 				player, 				NULL},
+
+	{PP_EV, 				player, 				NULL}, //play pausa
+	{STOP_EV, 				player, 				Player_Stop},
+	{NEXT_EV, 				player, 				Player_PlayNextSong},
+	{PREV_EV, 				player, 				Player_PlayPreviousSong},
 
 	{ENCODER_PRESS_EV,		file_selection, 		FileSelection_SelectFile},
 	{ENCODER_RIGHT_EV,		player, 				Player_IncVolume},

@@ -23,9 +23,17 @@ typedef enum
   NONE_EV,
   LKP_EV,
   PRESS_EV,
+
+  /* BUTTONS NAMES */
+  PP_EV, //play pausa
+  STOP_EV,
+  NEXT_EV,
+  PREV_EV,
+
   ENCODER_RIGHT_EV,
   ENCODER_LEFT_EV,
   ENCODER_PRESS_EV,
+
   TIMEOUT_EV,
 
   START_EV,

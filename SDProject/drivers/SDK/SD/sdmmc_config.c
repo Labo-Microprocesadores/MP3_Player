@@ -100,7 +100,7 @@ void BOARD_SD_Config(void *card, sd_cd_t cd, uint32_t hostIRQPriority, void *use
     s_host.dmaDesBufferWordsNum                              = BOARD_SDMMC_HOST_DMA_DESCRIPTOR_BUFFER_SIZE;
     ((sd_card_t *)card)->host                                = &s_host;
     ((sd_card_t *)card)->host->hostController.base           = BOARD_SDMMC_SD_HOST_BASEADDR;
-    ((sd_card_t *)card)->host->hostController.sourceClock_Hz = __CORE_CLOCK__;
+    ((sd_card_t *)card)->host->hostController.sourceClock_Hz = CLOCK_GetFreq(kCLOCK_CoreSysClk);
 
     ((sd_card_t *)card)->host->hostEvent = &s_event;
     ((sd_card_t *)card)->usrParam.cd     = &s_cd;

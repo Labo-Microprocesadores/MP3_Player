@@ -27,6 +27,7 @@ drivers/SDK/SD \
 drivers/SDK \
 source \
 source/audio_manager \
+source/equalizer \
 source/fft \
 source/file_manager \
 source/fsm/States \

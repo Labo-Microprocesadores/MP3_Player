@@ -59,7 +59,7 @@ static void updateDisplayTime();
 void Idle_InitState(void)
 {
   setEnergyConsumptionMode(LOW_CONSUMPTION);
-  showTime();
+  //showTime();
 }
 
 void Idle_OnUserInteraction(void)
@@ -82,6 +82,7 @@ static void showTime(void)
 
 static void updateDisplayTime()
 {
+	return;
   TimeServiceDate_t date = TimeService_GetCurrentDateTime();
 
   char dateString[15];
