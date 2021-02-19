@@ -118,6 +118,7 @@ void AudioPlayer_UpdateSampleRate(uint16_t sampleRate) //PDB_Configuration
     pdb_dac_trigger_config_t pdbDacTriggerConfigStruct;
     PDB_GetDefaultConfig(&pdbConfigStruct);
 
+    /*//Para 50MHz
 	if(sampleRate == 8000)
 	{
 		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor10;
@@ -181,12 +182,79 @@ void AudioPlayer_UpdateSampleRate(uint16_t sampleRate) //PDB_Configuration
 		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 521);
 		PDB_SetDACTriggerIntervalValue(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, 521);
 	}
+	*/
+
+	if(sampleRate == 8000)
+	{
+		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor1;
+		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
+		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 7500);
+		PDB_SetDACTriggerIntervalValue(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, 7500);
+	}
+	else if(sampleRate == 11025)
+	{
+		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor1;
+		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
+		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 5442);
+		PDB_SetDACTriggerIntervalValue(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, 5442);
+	}
+	else if(sampleRate == 12000)
+	{
+		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor1;
+		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
+		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 5000);
+		PDB_SetDACTriggerIntervalValue(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, 5000);
+	}
+	else if(sampleRate == 16000)
+	{
+		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor1;
+		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
+		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 3750);
+		PDB_SetDACTriggerIntervalValue(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, 3750);
+	}
+	else if(sampleRate == 22050)
+	{
+		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor1;
+		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
+		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 2721);
+		PDB_SetDACTriggerIntervalValue(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, 2721);
+	}
+	else if(sampleRate == 24000)
+	{
+		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor1;
+		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
+		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 2500);
+		PDB_SetDACTriggerIntervalValue(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, 2500);
+	}
+	else if(sampleRate == 32000)
+	{
+		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor1;
+		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
+		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 1875);
+		PDB_SetDACTriggerIntervalValue(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, 1875);
+	}
+	else if(sampleRate == 44100)
+	{
+		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor1;
+		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
+		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 1361);
+		PDB_SetDACTriggerIntervalValue(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, 1361);
+	}
+	else if(sampleRate == 48000)
+	{
+		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor1;
+		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
+		PDB_SetModulusValue(DEMO_PDB_BASEADDR, 1250);
+		PDB_SetDACTriggerIntervalValue(DEMO_PDB_BASEADDR, DEMO_PDB_DAC_CHANNEL, 1250);
+	}
+
 	else //For testing with DEMO
 	{
 		pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor40;
 		pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
 		PDB_SetModulusValue(DEMO_PDB_BASEADDR, DEMO_PDB_MODULUS_VALUE);
 	}
+
 	// Pongo estas configuraciones de PDB aca porque necesitan info del sample rate
 	//pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor40;
 	//pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
