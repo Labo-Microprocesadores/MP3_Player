@@ -9,6 +9,8 @@
 void vumeterRefresh_init();
 int vumeterRefresh_fft(float32_t * inputSignal, float32_t sampleRate, int lowerFreqBand, int higherFreqBand);
 void vumeterRefresh_write_to_matrix(int * vumeterMatrix);
+void vumeterRefresh_draw_display();
+
 
 #endif
 /**

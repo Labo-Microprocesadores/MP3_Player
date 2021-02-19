@@ -17,8 +17,9 @@ static arm_rfft_fast_instance_f32 rfft_fast_instance;
 static float32_t output[SAMPLE_LENGTH];
 static float32_t outputFft[SAMPLE_LENGTH / 2];
 static int vumeterMatrix[NUMBER_OF_BANDS];
+static colors_t auxMatrix[VUMETER_HEIGHT * NUMBER_OF_BANDS];
 
-float32_t fpowf(float32_t base, uint16_t n); //Fast exponenciation
+static float32_t fpowf(float32_t base, uint16_t n); //Fast exponenciation
 
 void vumeterRefresh_init()
 {
@@ -98,7 +99,7 @@ void vumeterRefresh_write_to_matrix(int * vumeterMatrix)
     pixel_t greenPixel = {.R = 0, .G = 1, .B = 0};
     pixel_t blackPixel = {.R = 0, .G = 0, .B = 0};
     */
-	colors_t auxMatrix[VUMETER_HEIGHT * NUMBER_OF_BANDS];
+	
     uint16_t size_m = VUMETER_HEIGHT * NUMBER_OF_BANDS;
 
     for(int i = VUMETER_HEIGHT-1 ; i >= 0 ; i--)
@@ -118,9 +119,13 @@ void vumeterRefresh_write_to_matrix(int * vumeterMatrix)
                 auxMatrix[size_m - VUMETER_HEIGHT * i - j] = CLEAN;
         }
     }
-    md_writeBuffer(auxMatrix);
+    
 }
 
+void vumeterRefresh_draw_display()
+{
+    md_writeBuffer(auxMatrix);
+}
 
 float32_t fpowf(float32_t base, uint16_t n)
 {
