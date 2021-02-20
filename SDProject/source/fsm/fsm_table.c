@@ -55,6 +55,7 @@ STATE init[]=
 	{PRESS_EV,				idle, 					Idle_OnUserInteraction},
 	{LKP_EV,				idle, 					Idle_OnUserInteraction},
 	{PP_EV,					idle, 					Idle_OnUserInteraction},
+	{START_EV,				file_selection, 		FileSelection_InitState},
 	{SD_IN_EV, 				file_selection, 		FileSelection_InitState},
   	{FIN_TABLA, 			idle, 					do_nothing}
 };

@@ -152,7 +152,7 @@ static void userInteractionStopsTitle(void)
 
 static void setCurrentOption(void)
 {
-    LCD_clearDisplay(0);
+    LCD_clearDisplay();
     switch (currentOptionIndex)
     {
     case ROCK:
