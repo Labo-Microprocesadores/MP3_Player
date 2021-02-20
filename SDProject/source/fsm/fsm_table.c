@@ -54,6 +54,7 @@ STATE init[]=
 {
 	{PRESS_EV,				idle, 					Idle_OnUserInteraction},
 	{LKP_EV,				idle, 					Idle_OnUserInteraction},
+	{PP_EV,					idle, 					Idle_OnUserInteraction},
 	{SD_IN_EV, 				file_selection, 		FileSelection_InitState},
   	{FIN_TABLA, 			idle, 					do_nothing}
 };
@@ -64,7 +65,9 @@ STATE effects[] =
 {
 	{PRESS_EV,				effects, 				NULL},
 	{LKP_EV, 				effects, 				NULL},
-
+	{ENCODER_RIGHT_EV,		effects, 				Effects_NextOption},
+	{ENCODER_LEFT_EV,		effects,				Effects_PreviousOption},
+	{PP_EV,					file_selection, 		Effects_SelectOption},
 	{TIMEOUT_EV, 			idle, 					Idle_InitState},
 	{CHANGE_MODE_EV,		player,					Player_InitState},
 	{SD_OUT_EV, 			idle, 					Idle_InitState},

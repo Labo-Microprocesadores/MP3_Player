@@ -19,4 +19,18 @@
  */
 void Effects_InitState(void);
 
+/**
+ * @brief Shows the next option.
+ */
+void Effects_NextOption(void);
+/**
+ * @brief Shows the previous option.
+ */
+void Effects_PreviousOption(void);
+
+/**
+ * @brief Selects the current option. Adds an event to the event queue of the FSM.
+ */
+void Effects_SelectOption(void);
+
 #endif /* EFFECTS_STATE_H */
