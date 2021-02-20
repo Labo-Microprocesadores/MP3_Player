@@ -10,7 +10,7 @@
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
  ******************************************************************************/
 
-#define BUTTON_NUM 4
+#define BUTTON_NUM 5
 #define TIME_BASE 3
 
 /*******************************************************************************

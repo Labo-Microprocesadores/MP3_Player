@@ -40,8 +40,8 @@ void Encoder_Init(void)
 	if(init==false)
 	{
 		init = true;
-		gpioMode(ENCODER_A,INPUT);
-		gpioMode(ENCODER_B,INPUT);
+		gpioMode(ENCODER_A,INPUT_PULLUP);
+		gpioMode(ENCODER_B,INPUT_PULLUP);
 		SysTick_AddCallback(&lookForMoves, 5);
 		statusA = gpioRead(ENCODER_A);
 		statusB = gpioRead(ENCODER_B);

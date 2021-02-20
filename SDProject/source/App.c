@@ -128,7 +128,7 @@ void App_Init(void)
 	buttonConfiguration(PIN_SW_A, LKP, 20); //20*50=1seg
 	buttonConfiguration(PIN_SW_B, LKP, 20);
 	buttonConfiguration(PIN_SW_C, LKP, 20);
-	//buttonConfiguration(PIN_SW_D, LKP, 20);
+	buttonConfiguration(PIN_SW_D, LKP, 20);
 	buttonConfiguration(ENCODER_SW, LKP, 20);
 
 	initQueue();
