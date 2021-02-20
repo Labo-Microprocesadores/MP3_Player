@@ -10,7 +10,7 @@
 #include "States/effects_state.h"
 #include "LCD_GDM1602A.h"
 #include "queue.h"
-
+#include "Timer.h"
 
 /*******************************************************************************
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
@@ -19,7 +19,7 @@
 #define OPTIONS_ARRAY_SIZE 6
 
 
-int optionValues[8][5] =
+int optionValues[5][8] =
 	{{0, 0, 0, 0, 0, 0, 0, 0}, 		//default
 	{0, 0, 1, 3, -10, -2, -1, 3}, 	//rock
 	{0, 0, 2 , 5, -6, -2, -1, 2},	//jazz
