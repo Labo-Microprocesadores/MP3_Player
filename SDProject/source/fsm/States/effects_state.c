@@ -17,17 +17,26 @@
  ******************************************************************************/
 #define TITLE_TIME 2000
 #define OPTIONS_ARRAY_SIZE 6
+
+
+int optionValues[8][5] =
+	{{0, 0, 0, 0, 0, 0, 0, 0}, 		//default
+	{0, 0, 1, 3, -10, -2, -1, 3}, 	//rock
+	{0, 0, 2 , 5, -6, -2, -1, 2},	//jazz
+	{0, 0, 0, 0, 2, 2, 3, -3},		//pop
+	{0, 0, -1, -6, 0, 1, 1, 3}		//classic
+};
 /*******************************************************************************
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
  ******************************************************************************/
 typedef enum
 {
-    OPEN,
-    CONFIG_PIN,
-    LOG_OUT,
-    CONFIG_DEVICE,
-    ADD_USER,
-    DEL_USER
+	DEFAULT,
+	ROCK,
+	JAZZ,
+	POP,
+	CLASSIC,
+	CUSTOM
 } options_t;
 
 
@@ -73,7 +82,7 @@ void Effects_NextOption(void)
         userInteractionStopsTitle();
     else
     {
-        uint8_t max = admin ? ADMIN_OPTIONS_ARRAY_SIZE: USER_OPTIONS_ARRAY_SIZE;
+        uint8_t max = OPTIONS_ARRAY_SIZE;
         if (currentOptionIndex == max - 1)
             currentOptionIndex = 0;
         else
@@ -104,28 +113,13 @@ void Effects_SelectOption(void)
         userInteractionStopsTitle();
     else
     {
-        SevenSegDisplay_EraseScreen();
-        SevenSegDisplay_SetPos(0);
-        switch (currentOptionIndex)
+    	LCD_clearDisplay();
+        if (currentOptionIndex == OPTIONS_ARRAY_SIZE-1)
         {
-            case OPEN:
-                emitEvent(OPEN_SELECTED_EV);
-                break;
-            case CONFIG_DEVICE:
-                emitEvent(CONFIG_DEVICE_SELECTED_EV);
-                break;
-            case ADD_USER:
-                emitEvent(ADD_USER_SELECTED_EV);
-                break;
-            case DEL_USER:
-                emitEvent(DELETE_USER_SELECTED_EV);
-                break;
-            case CONFIG_PIN:
-                emitEvent(CONFIG_PIN_SELECTED_EV);
-                break;
-            case LOG_OUT:
-                emitEvent(TIMEOUT_EV);
-                break;
+        	//custom
+        }else
+        {
+        	//access values: optionValues[currentOptionIndex]
         }
     }
 }
@@ -158,28 +152,21 @@ static void userInteractionStopsTitle(void)
 
 static void setCurrentOption(void)
 {
-    SevenSegDisplay_EraseScreen();
-    SevenSegDisplay_SetPos(0);
+    LCD_clearDisplay(0);
     switch (currentOptionIndex)
     {
-    case OPEN:
-        SevenSegDisplay_WriteBuffer("OPEN", 4, 0);
+    case ROCK:
+    	LCD_writeStrInPos("ROCK                ", 16, 0, 0);
         break;
-    case CONFIG_DEVICE:
-        SevenSegDisplay_WriteBufferAndMove("BRIGHT", 6, 0, BOUNCE);
+    case JAZZ:
+    	LCD_writeStrInPos("JAZZ                ", 16, 0, 0);
         break;
-    case ADD_USER:
-        SevenSegDisplay_WriteBufferAndMove("ADD USER", 8, 0, BOUNCE);
+    case POP:
+    	LCD_writeStrInPos("POP                 ", 16, 0, 0);
         break;
-    case DEL_USER:
-        SevenSegDisplay_WriteBufferAndMove("DELETE USER", 11, 0, BOUNCE);
-        break;
-    case CONFIG_PIN:
-        SevenSegDisplay_WriteBufferAndMove("CHANGE PIN", 10, 0, BOUNCE);
-        break;
-    case LOG_OUT:
-        SevenSegDisplay_WriteBufferAndMove("LOG OUT", 7, 0, BOUNCE);
-        break;
+    case CUSTOM:
+    	LCD_writeStrInPos("CUSTOM              ", 16, 0, 0);
+		break;
     }
 }
 
