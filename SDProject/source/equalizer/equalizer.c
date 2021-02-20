@@ -4,7 +4,6 @@
  *  Created on: Mar 8, 2019
  *      Author: Grupo 2
  */
-#include "arm_math.h"
 #include "math_helper.h"
 #include "equalizer.h"
 

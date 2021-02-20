@@ -11,15 +11,17 @@
 #include "LCD_GDM1602A.h"
 #include "queue.h"
 #include "Timer.h"
+#include "equalizer.h"
 
 /*******************************************************************************
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
  ******************************************************************************/
 #define TITLE_TIME 2000
-#define OPTIONS_ARRAY_SIZE 6
+#define OPTIONS_COUNT 6
+#define OPTION_VALUES_ARRAY_SIZE	NUMBER_OF_BANDS
 
 
-int optionValues[5][8] =
+int optionValues[5][OPTION_VALUES_ARRAY_SIZE] =
 	{{0, 0, 0, 0, 0, 0, 0, 0}, 		//default
 	{0, 0, 1, 3, -10, -2, -1, 3}, 	//rock
 	{0, 0, 2 , 5, -6, -2, -1, 2},	//jazz
@@ -82,7 +84,7 @@ void Effects_NextOption(void)
         userInteractionStopsTitle();
     else
     {
-        uint8_t max = OPTIONS_ARRAY_SIZE;
+        uint8_t max = OPTIONS_COUNT;
         if (currentOptionIndex == max - 1)
             currentOptionIndex = 0;
         else
@@ -98,7 +100,7 @@ void Effects_PreviousOption(void)
         userInteractionStopsTitle();
     else
     {
-        uint8_t max = OPTIONS_ARRAY_SIZE;
+        uint8_t max = OPTIONS_COUNT;
         if (currentOptionIndex == 0)
             currentOptionIndex = max - 1;
         else
@@ -114,12 +116,15 @@ void Effects_SelectOption(void)
     else
     {
     	LCD_clearDisplay();
-        if (currentOptionIndex == OPTIONS_ARRAY_SIZE-1)
+        if (currentOptionIndex == OPTIONS_COUNT-1)
         {
         	//custom
         }else
         {
-        	//access values: optionValues[currentOptionIndex]
+        	for (int i = 0; i < OPTION_VALUES_ARRAY_SIZE; i++)
+        	{
+        		equalizer_set_band_gain(i+1, optionValues[currentOptionIndex][i]);
+        	}
         }
     }
 }
@@ -155,6 +160,9 @@ static void setCurrentOption(void)
     LCD_clearDisplay();
     switch (currentOptionIndex)
     {
+    case DEFAULT:
+		LCD_writeStrInPos("DEFAULT             ", 16, 0, 0);
+		break;
     case ROCK:
     	LCD_writeStrInPos("ROCK                ", 16, 0, 0);
         break;
@@ -164,10 +172,12 @@ static void setCurrentOption(void)
     case POP:
     	LCD_writeStrInPos("POP                 ", 16, 0, 0);
         break;
+    case CLASSIC:
+		LCD_writeStrInPos("CLASSIC             ", 16, 0, 0);
+		break;
     case CUSTOM:
     	LCD_writeStrInPos("CUSTOM              ", 16, 0, 0);
 		break;
     }
 }
-
 
