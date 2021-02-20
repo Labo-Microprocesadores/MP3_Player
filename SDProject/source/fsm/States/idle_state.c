@@ -13,6 +13,7 @@
 #include "LCD_GDM1602A.h"
 #include "time_service.h"
 #include "Timer.h"
+#include "memory_manager.h"
 
 /*********************************************************
  * 		LOCAL STRUCTS AND ENUMS
@@ -64,9 +65,11 @@ void Idle_InitState(void)
 
 void Idle_OnUserInteraction(void)
 {
-  setEnergyConsumptionMode(HIGH_CONSUMPTION);
-  stopShowingTime();
-  emitEvent(START_EV);
+	if (!Mm_IsSDPresent())
+		return;
+	setEnergyConsumptionMode(HIGH_CONSUMPTION);
+	stopShowingTime();
+	emitEvent(START_EV);
 }
 
 /*******************************************************************************
