@@ -123,6 +123,7 @@ void App_Init(void)
 
 
 	//TimeService_Init();
+
 	Encoder_Init();
 	buttonsInit();
 	buttonConfiguration(PIN_SW_A, LKP, 20); //20*50=1seg

@@ -70,7 +70,7 @@ static void printFileInfo(void);
 
 void FileSelection_InitState(void)
 {
-	PowerMode_SetRunMode();
+	//PowerMode_SetRunMode();
 	showTitle(); //Shows the state's title.
 	Audio_init();
 }
@@ -97,8 +97,7 @@ void FileSelection_SelectFile(void)
 
 void FileSelection_PlayNextSong(void)
 {
-	Audio_nextFile();
-	Audio_selectFile();
+	Audio_playNextFile();
 	Audio_play();
 }
 

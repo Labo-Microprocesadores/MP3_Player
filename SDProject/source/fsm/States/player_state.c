@@ -20,14 +20,23 @@
 #include "AudioPlayer.h"
 #include "ff.h"
 #include "file_system_manager.h"
-
+#include "Timer.h"
 //incluir el mp3 decoder
 
+#define VOLUME_TIME		(5000U)
 /*******************************************************************************
  * GLOBAL VARIABLES WITH FILE LEVEL SCOPE
  ******************************************************************************/
+static bool showingVolume = false;
+static int volumeTimerID = -1;
+
+/*******************************************************************************
+ * 	LOCAL FUNCTION DEFINITIONS
+ *******************************************************************************/
 
 static void printFileInfo(void);
+static void showVolume(void);
+static void stopShowingVolume(void);
 /*******************************************************************************
  *******************************************************************************
                         GLOBAL FUNCTION DEFINITIONS
@@ -38,18 +47,11 @@ void Player_InitState(void)
 	printFileInfo();
 }
 
-void Player_Pause(void)
+void Player_ToggleMusic(void)
 {
-	Audio_pause();
+	Audio_toggle();
 }
 
-void Player_Play(void)
-{
-/*	AudioPlayer_LoadSongInfo(currentSongFrame, sampleRate);
-	AudioPlayer_Play();
-	// Preparo el siguiente frame
-	fillBuffer();*/
-}
 
 void Player_Stop(void)
 {
@@ -76,12 +78,14 @@ void Player_IncVolume(void)
 {
 	// algo de mostrar en el display por un tiempo
 	Audio_IncVolume();
+	showVolume();
 }
 
 void Player_DecVolume(void)
 {
 	// algo de mostrar en el display por un tiempo
 	Audio_DecVolume();
+	showVolume();
 }
 
 /*******************************************************************************
@@ -94,11 +98,11 @@ static void printFileInfo(void)
 	char path[50], data[400];
 	memset(data, 0x20, 400);
 	memset(path, 0x20, 50);
-	char * name = Audio_getCurrentName();
+	char * name = Audio_getName();
 	char * artist = Audio_getArtist();
 	char * album = Audio_getAlbum();
 	char * year = Audio_getYear();
-	char * gather[] = {"Artista: ", artist, " Album: ", album, " Año: ", year};
+	char * gather[] = {"Artista: ", artist, " Album: ", album, " Year: ", year};
 
 	uint16_t len = strlen(name);
 	len += (DISPLAY_COLUMNS-(len%DISPLAY_COLUMNS));
@@ -118,3 +122,30 @@ static void printFileInfo(void)
 
 }
 
+static void showVolume(void)
+{
+	if(!showingVolume)
+	{
+		LCD_clearDisplay();
+		volumeTimerID = Timer_AddCallback(stopShowingVolume, VOLUME_TIME, true);
+	}
+	else
+	{
+		Timer_Reset(volumeTimerID);
+	}
+
+	char str2wrt[11] = "Volumen: --";
+	//snprintf(dateString, sizeof(dateString), "%02hd-%02hd-%04hd", date.day, date.month, date.year);
+	char vol = Audio_getVolume();
+	str2wrt[9] = vol/10 != 0? 0x30 + vol/10 : ' ';
+	str2wrt[10] = 0x30 + (char)vol%10;
+
+	LCD_writeStrInPos(str2wrt, sizeof(str2wrt)/sizeof(str2wrt[0]), 0, 0);
+	showingVolume = true;
+}
+
+static void stopShowingVolume(void)
+{
+	showingVolume = false;
+	printFileInfo();
+}

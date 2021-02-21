@@ -12,9 +12,10 @@
  ******************************************************************************/
 
 void Player_InitState(void);
-void Player_Pause(void);
-void Player_Play(void);
+
+void Player_ToggleMusic(void);
 void Player_Stop(void);
+
 void Player_PlayNextSong(void);
 void Player_PlayPreviousSong(void);
 

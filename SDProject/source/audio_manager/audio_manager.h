@@ -15,6 +15,8 @@ void Audio_prevFile(void);
 
 void Audio_selectFile(void);
 
+void Audio_playNextFile(void);
+
 char * Audio_getCurrentName(void);
 
 char * Audio_getArtist(void);
@@ -23,13 +25,16 @@ char * Audio_getAlbum(void);
 
 char * Audio_getYear(void);
 
+
 void Audio_updateBuffer(void);
+
 
 void Audio_play(void);
 
-void Audio_pause(void);
+void Audio_toggle(void);
 
 void Audio_stop(void);
+
 
 void Audio_IncVolume(void);
 

@@ -135,8 +135,9 @@ void Effects_SelectOption(void)
  ******************************************************************************/
 static void showTitle(void)
 {
-	LCD_clearDisplay();
-	LCD_writeStrInPos("Efectos", 7, 0, 0);
+	//LCD_clearDisplay();
+	LCD_clearRow(0);
+	LCD_writeStrInPos("Efectos         ", 16, 0, 0);
 	showingTitle = true;
 	titleTimerID = Timer_AddCallback(&stopShowingTitle, TITLE_TIME, true);
 }
@@ -144,7 +145,7 @@ static void showTitle(void)
 static void stopShowingTitle(void)
 {
 	showingTitle = false;
-	LCD_clearDisplay();
+	//LCD_clearDisplay();
 	setCurrentOption();
 }
 
@@ -157,7 +158,7 @@ static void userInteractionStopsTitle(void)
 
 static void setCurrentOption(void)
 {
-    LCD_clearDisplay();
+    //LCD_clearDisplay();
     switch (currentOptionIndex)
     {
     case DEFAULT:

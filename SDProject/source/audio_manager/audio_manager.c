@@ -25,10 +25,15 @@
 
 #define BUFFER_SIZE (AUDIO_PLAYER_BUFF_SIZE)
 #define MAX_VOLUME	(40U)
+
 /*******************************************************************************
  * LOCAL VARIABLES
  ******************************************************************************/
+static bool playing = false;
+static bool init = false;
+
 static Mp3File_t currFile;
+static Mp3File_t playingFile;
 
 static int maxFile = 0;
 
@@ -42,10 +47,19 @@ static uint8_t vol = 15;
  ******************************************************************************/
 void Audio_init(void)
 {
-	Mm_OnConnection(); //Init the SD;
-	FileSystem_ScanFiles(); // Build file system tree
-	currFile = FileSystem_GetFirstFile();
-	maxFile = FileSystem_GetFilesCount();
+	if(!init)
+	{
+		Mm_OnConnection(); //Init the SD;
+		FileSystem_ScanFiles(); // Build file system tree
+		currFile = FileSystem_GetFirstFile();
+		maxFile = FileSystem_GetFilesCount();
+		init = !init;
+	}
+}
+
+void Audio_deinit(void)
+{
+	init = false;
 }
 
 void Audio_nextFile(void)
@@ -58,11 +72,28 @@ void Audio_prevFile(void)
 	currFile = FileSystem_GetPreviousFile(currFile);
 }
 
+void Audio_playNextFile(void)
+{
+	playingFile = FileSystem_GetNextFile(playingFile);
+
+	decoder_MP3LoadFile(playingFile.path);
+	/* Primeros dos buffer constante, no hay sonido */
+	memset(g_bufferRead, 0x08, sizeof(g_bufferRead));
+
+	/* Podria buscar el sample rate y mandarlo */
+	AudioPlayer_LoadSongInfo(g_bufferRead, 44100);
+
+	Audio_updateBuffer();
+
+}
+
 void Audio_selectFile(void)
 {
-	decoder_MP3LoadFile(currFile.path);
+	playingFile = currFile;
+
+	decoder_MP3LoadFile(playingFile.path);
 	/* Primeros dos buffer constante, no hay sonido */
-	memset(g_bufferRead, 0, sizeof(g_bufferRead));
+	memset(g_bufferRead, 0x08, sizeof(g_bufferRead));
 
 	/* Podria buscar el sample rate y mandarlo */
 	AudioPlayer_LoadSongInfo(g_bufferRead, 44100);
@@ -73,10 +104,7 @@ void Audio_selectFile(void)
 char * Audio_getCurrentName(void)
 {
 	char * ret;
-	if(!decoder_getFileTitle(&ret))
-	{
-		ret = FileSystem_GetFileName(currFile);
-	}
+	ret = FileSystem_GetFileName(currFile);
 	return ret;
 }
 
@@ -119,19 +147,6 @@ void Audio_updateBuffer(void)
 			g_bufferRead[index] = 2048;
 		}
 
-
-		/* Agarro el siguiente archivo, ver si es mejor levantar un evento o hacerlo asi */
-		/*if (currFile.index == maxFile)
-		{
-			currFile = FileSystem_GetFirstFile();
-		}
-		else
-		{
-			currFile = FileSystem_GetNextFile(currFile);
-		}
-
-		decoder_MP3LoadFile(currFile.path);*/
-
 		emitEvent(NEXT_SONG_EV);
 
 	}
@@ -143,17 +158,34 @@ void Audio_updateBuffer(void)
 void Audio_play(void)
 {
 	AudioPlayer_Play();
+	playing = true;
 }
 
-void Audio_pause(void)
+void Audio_toggle(void)
 {
-	AudioPlayer_Pause();
+	if(playing)
+		AudioPlayer_Pause();
+	else
+		AudioPlayer_Play();
+
+	playing = !playing;
 }
 
 void Audio_stop(void)
 {
 	decoder_MP3LoadFile(currFile.path);
 	AudioPlayer_Pause();
+	playing = false;
+}
+
+char * Audio_getName(void)
+{
+	char * ret;
+	if(!decoder_getFileTitle(&ret))
+	{
+		ret = FileSystem_GetFileName(playingFile);
+	}
+	return ret;
 }
 
 char * Audio_getArtist(void)
@@ -188,12 +220,12 @@ char * Audio_getYear(void)
 
 void Audio_IncVolume(void)
 {
-	vol = (vol + 1)%MAX_VOLUME;
+	vol += (vol > MAX_VOLUME)? 0 : 1;
 }
 
 void Audio_DecVolume(void)
 {
-	vol = (vol != 0) ? (vol - 1) : 0;
+	vol -= (vol > 0) ? 1 : 0;
 }
 
 char Audio_getVolume(void)

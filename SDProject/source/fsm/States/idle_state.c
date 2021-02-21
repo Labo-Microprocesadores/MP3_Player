@@ -15,6 +15,9 @@
 #include "Timer.h"
 #include "memory_manager.h"
 
+#include "audio_manager.h"
+#include "LCD_GDM1602A.h"
+
 /*********************************************************
  * 		LOCAL STRUCTS AND ENUMS
  ********************************************************/
@@ -60,6 +63,8 @@ static void updateDisplayTime();
 void Idle_InitState(void)
 {
   setEnergyConsumptionMode(LOW_CONSUMPTION);
+  Audio_deinit();
+  //LCD_UpdateClock();
   //showTime();
 }
 
@@ -67,8 +72,11 @@ void Idle_OnUserInteraction(void)
 {
 	if (!Mm_IsSDPresent())
 		return;
+
 	setEnergyConsumptionMode(HIGH_CONSUMPTION);
+	//PowerMode_SetRunMode();
 	stopShowingTime();
+	//LCD_UpdateClock();
 	emitEvent(START_EV);
 }
 
@@ -103,7 +111,7 @@ static void updateDisplayTime()
 static void stopShowingTime(void)
 {
   Timer_Delete(timeCallbackId);
-  LCD_clearDisplay();
+  //LCD_clearDisplay();
 
 }
 

@@ -56,7 +56,7 @@ STATE init[]=
 	{LKP_EV,				idle, 					Idle_OnUserInteraction},
 	{PP_EV,					idle, 					Idle_OnUserInteraction},
 	{START_EV,				file_selection, 		FileSelection_InitState},
-	{SD_IN_EV, 				file_selection, 		FileSelection_InitState},
+	{SD_IN_EV, 				idle, 					Idle_OnUserInteraction},
   	{FIN_TABLA, 			idle, 					do_nothing}
 };
 
@@ -64,14 +64,22 @@ STATE init[]=
 
 STATE effects[] =
 {
-	{PRESS_EV,				effects, 				NULL},
-	{LKP_EV, 				effects, 				NULL},
+	{PP_EV,					file_selection, 		Effects_SelectOption},
+	//{STOP_EV, 				player, 				Player_Stop},
+	{NEXT_EV, 				effects, 				Effects_NextOption},
+	{PREV_EV, 				effects,				Effects_PreviousOption},
+
+	{ENCODER_PRESS_EV,		player,					Player_InitState}, // Change mode
 	{ENCODER_RIGHT_EV,		effects, 				Effects_NextOption},
 	{ENCODER_LEFT_EV,		effects,				Effects_PreviousOption},
-	{PP_EV,					file_selection, 		Effects_SelectOption},
+
 	{TIMEOUT_EV, 			idle, 					Idle_InitState},
-	{CHANGE_MODE_EV,		player,					Player_InitState},
 	{SD_OUT_EV, 			idle, 					Idle_InitState},
+	//{CHANGE_MODE_EV,		player,					Player_InitState},
+
+	{FILL_BUFFER_EV, 		effects,			    Audio_updateBuffer},
+	{NEXT_SONG_EV, 			effects,			    FileSelection_PlayNextSong},
+
 	{FIN_TABLA, 			effects, 				do_nothing}
 };
 
@@ -79,18 +87,20 @@ STATE effects[] =
 /*** File Selection State ***/
 STATE file_selection[] =
 {
-	{SD_OUT_EV, 			idle, 					Idle_InitState},
-	{TIMEOUT_EV,			idle,					Idle_InitState},
+	{PP_EV, 				file_selection, 		FileSelection_SelectFile},
+	//{STOP_EV, 				player, 				Player_Stop},
+	{NEXT_EV, 				file_selection, 		FileSelection_NextFile},
+	{PREV_EV, 				file_selection,			FileSelection_PreviousFile},
 
-	{PRESS_EV,				file_selection, 		NULL},
-	{LKP_EV, 				file_selection, 		NULL},
-
-	{PP_EV,					file_selection, 		FileSelection_SelectFile},
+	{ENCODER_PRESS_EV,		effects, 				Effects_InitState}, // Change mode
 	{ENCODER_RIGHT_EV,		file_selection, 		FileSelection_NextFile},
 	{ENCODER_LEFT_EV,		file_selection,			FileSelection_PreviousFile},
 
+	{SD_OUT_EV, 			idle, 					Idle_InitState},
+	{TIMEOUT_EV,			idle,					Idle_InitState},
+
 	{FILE_SELECTED_EV, 		player, 				Player_InitState},
-	{CHANGE_MODE_EV, 		effects, 				Effects_InitState},
+	//{CHANGE_MODE_EV, 		effects, 				Effects_InitState},
 
 	{FILL_BUFFER_EV, 		file_selection,			Audio_updateBuffer},
 	{NEXT_SONG_EV, 			file_selection,			FileSelection_PlayNextSong},
@@ -101,21 +111,18 @@ STATE file_selection[] =
 /*** Player State ***/
 STATE player[] =
 {
-	{PRESS_EV,				player, 				NULL},
-	{LKP_EV, 				player, 				NULL},
-
-	{PP_EV, 				player, 				NULL}, //play pausa
+	{PP_EV, 				player, 				Player_ToggleMusic}, //play pausa
 	{STOP_EV, 				player, 				Player_Stop},
 	{NEXT_EV, 				player, 				Player_PlayNextSong},
 	{PREV_EV, 				player, 				Player_PlayPreviousSong},
 
-	{ENCODER_PRESS_EV,		file_selection, 		FileSelection_SelectFile},
+	{ENCODER_PRESS_EV,		file_selection, 		FileSelection_InitState},
 	{ENCODER_RIGHT_EV,		player, 				Player_IncVolume},
 	{ENCODER_LEFT_EV,		player,					Player_DecVolume},
 
-	{CHANGE_MODE_EV, 		file_selection, 		FileSelection_InitState},
+	//{CHANGE_MODE_EV, 		file_selection, 		FileSelection_InitState},
 	{SD_OUT_EV, 			idle, 					Idle_InitState},
-	{TIMEOUT_EV,			idle,	 				Idle_InitState},
+	{TIMEOUT_EV,			idle,	 				Idle_InitState},//??
 
 	{FILL_BUFFER_EV, 		player,					Audio_updateBuffer},
 	{NEXT_SONG_EV, 			player,					Player_PlayNextSong},

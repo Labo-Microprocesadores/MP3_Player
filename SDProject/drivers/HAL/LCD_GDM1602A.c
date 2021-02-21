@@ -185,6 +185,8 @@ void LCD_clearDisplay(void)
 	// Not using the display build in function to have better timing control
 	// Slightly slower
 	uint8_t i;
+	memset(lcdLines[0].buffer, 0x20, SHIFTING_BUFFER_LEN);
+	memset(lcdLines[1].buffer, 0x20, SHIFTING_BUFFER_LEN);
 	LCD_setCursor(0, 0);
 	for(i = 0; i<DISPLAY_COLUMNS; i++)
 	{
@@ -197,7 +199,7 @@ void LCD_clearDisplay(void)
 		LCD_writeData(BLANCK_SPACE);
 	}
 	LCD_setCursor(0, 0); // back to the beginning of the display
-	lcdLines[0].state = NOTHING;
+	lcdLines[1].state = NOTHING;
 }
 
 void LCD_writeShiftingStr(char * str, uint8_t len, uint8_t row, lcd_shift_speed_t speed)
