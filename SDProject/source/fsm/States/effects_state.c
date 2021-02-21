@@ -75,7 +75,9 @@ static void userInteractionStopsTitle(void);
  * @brief Shows the current option in the display.
  */
 static void setCurrentOption(void);
-
+/**
+ * @brief Shows the current band and its gain in the display.
+ */
 static void showCustomBandSetting(void);
 /*******************************************************************************
  * FUNCTIONS WITH GLOBAL SCOPE
@@ -153,9 +155,9 @@ void Effects_SelectOption(void)
     	else
     	{
     		currentBand += 1;
+    		currentBandValue = equalizer_get_band_gain(currentBand);
     		showCustomBandSetting();
     	}
-    	currentBandValue = 0;
     }
     else
     {
@@ -163,6 +165,8 @@ void Effects_SelectOption(void)
         if (currentOptionIndex == OPTIONS_COUNT-1)
         {
         	settingCustom = true;
+        	currentBand = 0;
+        	currentBandValue = equalizer_get_band_gain(currentBand);
         	showCustomBandSetting();
         }else
         {
