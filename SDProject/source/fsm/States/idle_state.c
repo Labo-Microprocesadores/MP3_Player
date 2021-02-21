@@ -62,10 +62,21 @@ static void updateDisplayTime();
 
 void Idle_InitState(void)
 {
-  setEnergyConsumptionMode(LOW_CONSUMPTION);
-  Audio_deinit();
-  //LCD_UpdateClock();
-  //showTime();
+	Audio_deinit();
+
+	LCD_stopMove(0);
+	LCD_stopMove(1);
+
+	char dateString[16] = "   18-01-2019   ";
+	char timeString[16] =  "     12:04      ";
+	//LCD_clearDisplay();
+	LCD_writeStrInPos(timeString, 16, 0, 0);
+	LCD_writeStrInPos(dateString, 16, 1, 0);
+
+	setEnergyConsumptionMode(LOW_CONSUMPTION);
+	//LCD_UpdateClock();
+
+	//showTime();
 }
 
 void Idle_OnUserInteraction(void)
@@ -96,16 +107,16 @@ static void updateDisplayTime()
 	return;
   TimeServiceDate_t date = TimeService_GetCurrentDateTime();
 
-  char dateString[15];
-  char timeString[15];
-  snprintf(dateString, sizeof(dateString), "%02hd-%02hd-%04hd", date.day, date.month, date.year);
-  snprintf(timeString, sizeof(timeString), "%02hd:%02hd", date.hour,
+  char dateString[16];
+  char timeString[16];
+  snprintf(dateString, sizeof(dateString), "   %02hd-%02hd-%04hd   ", date.day, date.month, date.year);
+  snprintf(timeString, sizeof(timeString), "     %02hd:%02hd      ", date.hour,
 		   date.minute);
 
-  LCD_clearDisplay();
-  LCD_writeStrInPos(timeString, 10, 0, 0);
-  LCD_writeStrInPos(dateString, 5, 1, 0);
-  printf("%s\n%s\n", timeString, dateString);
+  //LCD_clearDisplay();
+  LCD_writeStrInPos(timeString, 16, 0, 0);
+  LCD_writeStrInPos(dateString, 16, 1, 0);
+  //printf("%s\n%s\n", timeString, dateString);
 }
 
 static void stopShowingTime(void)

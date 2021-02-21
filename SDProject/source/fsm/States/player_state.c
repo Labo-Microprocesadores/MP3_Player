@@ -21,7 +21,6 @@
 #include "ff.h"
 #include "file_system_manager.h"
 #include "Timer.h"
-//incluir el mp3 decoder
 
 #define VOLUME_TIME		(5000U)
 /*******************************************************************************
@@ -42,6 +41,7 @@ static void stopShowingVolume(void);
                         GLOBAL FUNCTION DEFINITIONS
  *******************************************************************************
  ******************************************************************************/
+
 void Player_InitState(void)
 {
 	printFileInfo();
@@ -135,7 +135,7 @@ static void showVolume(void)
 	}
 
 	char str2wrt[11] = "Volumen: --";
-	//snprintf(dateString, sizeof(dateString), "%02hd-%02hd-%04hd", date.day, date.month, date.year);
+
 	char vol = Audio_getVolume();
 	str2wrt[9] = vol/10 != 0? 0x30 + vol/10 : ' ';
 	str2wrt[10] = 0x30 + (char)vol%10;

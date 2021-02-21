@@ -180,6 +180,11 @@ void LCD_clearRow(uint8_t row)
 	}
 }
 
+void LCD_stopMove(uint8_t row)
+{
+	lcdLines[row].state = NOTHING;
+}
+
 void LCD_clearDisplay(void)
 {
 	// Not using the display build in function to have better timing control

@@ -120,7 +120,7 @@ void App_Init(void)
 
 	AudioPlayer_Init();	//Audio Player
 	vumeterRefresh_init(); // FFT
-
+	equalizer_init();
 
 	//TimeService_Init();
 

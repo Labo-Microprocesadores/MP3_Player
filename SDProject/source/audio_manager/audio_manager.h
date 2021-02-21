@@ -9,6 +9,8 @@
 
 void Audio_init(void);
 
+void Audio_deinit(void);
+
 void Audio_nextFile(void);
 
 void Audio_prevFile(void);
@@ -25,9 +27,11 @@ char * Audio_getAlbum(void);
 
 char * Audio_getYear(void);
 
+void Audio_updateAll(void);
 
 void Audio_updateBuffer(void);
 
+void Audio_showFFT(void);
 
 void Audio_play(void);
 

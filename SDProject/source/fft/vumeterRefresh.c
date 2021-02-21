@@ -10,7 +10,7 @@
 #define NUMBER_OF_BANDS     8  
 #define VUMETER_HEIGHT      8
 #define NOISE               5
-#define MAX_AMPLITUDE       600
+#define MAX_AMPLITUDE       50
 #define AVERAGE				2
 
 static arm_rfft_fast_instance_f32 rfft_fast_instance;
@@ -88,38 +88,40 @@ int vumeterRefresh_fft(float32_t * inputSignal, float32_t sampleRate, int lowerF
     }
     return 0;//???
 }
-    //TODO
-
 
 void vumeterRefresh_write_to_matrix(int * vumeterMatrix)
 {
-
-    /*pixel_t redPixel = {.R = 1, .G = 0, .B = 0};
-    pixel_t yellowPixel = {.R = 1, .G = 1, .B = 0};
-    pixel_t greenPixel = {.R = 0, .G = 1, .B = 0};
-    pixel_t blackPixel = {.R = 0, .G = 0, .B = 0};
-    */
-	
-    uint16_t size_m = VUMETER_HEIGHT * NUMBER_OF_BANDS;
-
-    for(int i = VUMETER_HEIGHT-1 ; i >= 0 ; i--)
+    for(int i = 0; i < NUMBER_OF_BANDS; i++)
     {
-        for(int j = 0 ; j < NUMBER_OF_BANDS ; j++)
-        {
-            if(vumeterMatrix[j] >= (VUMETER_HEIGHT - i))
-            {
-                if(i < (1 * VUMETER_HEIGHT / 8))
-                    auxMatrix[size_m - VUMETER_HEIGHT * i - j] = RED;
-                else if(i < (4 * VUMETER_HEIGHT / 8))
-                    auxMatrix[size_m - VUMETER_HEIGHT * i - j] = YELLOW;
-                else 
-                    auxMatrix[size_m - VUMETER_HEIGHT * i - j] = GREEN;
-            }
-            else
-                auxMatrix[size_m - VUMETER_HEIGHT * i - j] = CLEAN;
-        }
+    	for(int j = 0; j<VUMETER_HEIGHT; j++)
+    	{
+    		if(vumeterMatrix[i] > j)
+			{
+				if(j >= 7)
+					auxMatrix[ (NUMBER_OF_BANDS - i - 1) + j * 8] = RED;
+				else if(j >= 4)
+					auxMatrix[ (NUMBER_OF_BANDS - i - 1) + j * 8] = YELLOW;
+				else
+					auxMatrix[ (NUMBER_OF_BANDS - i - 1) + j * 8] = GREEN;
+			}
+			else
+				auxMatrix[(NUMBER_OF_BANDS - i - 1) + j * 8] = CLEAN;
+    	}
     }
     
+}
+
+void vumeterRefresh_clean_display()
+{
+    for(int i = 0; i < NUMBER_OF_BANDS; i++)
+    {
+    	for(int j = 0; j<VUMETER_HEIGHT; j++)
+    	{
+			auxMatrix[(NUMBER_OF_BANDS - i - 1) + j * 8] = CLEAN;
+    	}
+    	vumeterMatrix[i] = 0;
+    }
+    vumeterRefresh_draw_display();
 }
 
 void vumeterRefresh_draw_display()

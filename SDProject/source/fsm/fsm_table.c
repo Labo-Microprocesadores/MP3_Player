@@ -102,7 +102,7 @@ STATE file_selection[] =
 	{FILE_SELECTED_EV, 		player, 				Player_InitState},
 	//{CHANGE_MODE_EV, 		effects, 				Effects_InitState},
 
-	{FILL_BUFFER_EV, 		file_selection,			Audio_updateBuffer},
+	{FILL_BUFFER_EV, 		file_selection,			Audio_updateAll},
 	{NEXT_SONG_EV, 			file_selection,			FileSelection_PlayNextSong},
 
 	{FIN_TABLA, 			file_selection, 		do_nothing}
@@ -124,7 +124,7 @@ STATE player[] =
 	{SD_OUT_EV, 			idle, 					Idle_InitState},
 	{TIMEOUT_EV,			idle,	 				Idle_InitState},//??
 
-	{FILL_BUFFER_EV, 		player,					Audio_updateBuffer},
+	{FILL_BUFFER_EV, 		player,					Audio_updateAll},
 	{NEXT_SONG_EV, 			player,					Player_PlayNextSong},
 
 	{FIN_TABLA, 			player, 				do_nothing}
