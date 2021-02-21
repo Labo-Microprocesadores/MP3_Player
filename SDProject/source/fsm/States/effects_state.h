@@ -10,6 +10,7 @@
  * INCLUDE HEADER FILES
  ******************************************************************************/
 #include <stdint.h>
+#include <stdbool.h>
 
 /*******************************************************************************
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
@@ -32,5 +33,8 @@ void Effects_PreviousOption(void);
  * @brief Selects the current option. Adds an event to the event queue of the FSM.
  */
 void Effects_SelectOption(void);
+
+
+void Effects_Back(void);
 
 #endif /* EFFECTS_STATE_H */

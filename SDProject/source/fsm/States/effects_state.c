@@ -19,15 +19,10 @@
 #define TITLE_TIME 2000
 #define OPTIONS_COUNT 6
 #define OPTION_VALUES_ARRAY_SIZE	NUMBER_OF_BANDS
+#define MAX_BAND_GAIN	MAX_GAIN
+#define	MIN_BAND_GAIN	-MAX_GAIN
 
 
-int optionValues[5][OPTION_VALUES_ARRAY_SIZE] =
-	{{0, 0, 0, 0, 0, 0, 0, 0}, 		//default
-	{0, 0, 1, 3, -10, -2, -1, 3}, 	//rock
-	{0, 0, 2 , 5, -6, -2, -1, 2},	//jazz
-	{0, 0, 0, 0, 2, 2, 3, -3},		//pop
-	{0, 0, -1, -6, 0, 1, 1, 3}		//classic
-};
 /*******************************************************************************
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
  ******************************************************************************/
@@ -40,14 +35,25 @@ typedef enum
 	CLASSIC,
 	CUSTOM
 } options_t;
-
-
 /*******************************************************************************
  * GLOBAL VARIABLES WITH FILE LEVEL SCOPE
  ******************************************************************************/
 static bool showingTitle;
 static int titleTimerID = -1;
 static uint8_t currentOptionIndex = 0;
+static const char * frequencyBandsTitles [] = {"80Hz Band       ", "160Hz Band      ", "320Hz Band      ", "640Hz Band      ", "1.28kHz Band    ", "2.5kHz Band     ", "5kHz Band       ", "10kHz Band      "};
+static bool settingCustom = false;
+static int customBandsValues [OPTION_VALUES_ARRAY_SIZE];
+static int currentBand = 0;
+static int currentBandValue = 0;
+
+int optionValues[5][OPTION_VALUES_ARRAY_SIZE] =
+	{{0, 0, 0, 0, 0, 0, 0, 0}, 		//default
+	{0, 0, 1, 3, -10, -2, -1, 3}, 	//rock
+	{0, 0, 2 , 5, -6, -2, -1, 2},	//jazz
+	{0, 0, 0, 0, 2, 2, 3, -3},		//pop
+	{0, 0, -1, -6, 0, 1, 1, 3}		//classic
+};
 /*******************************************************************************
  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
  ******************************************************************************/
@@ -69,6 +75,8 @@ static void userInteractionStopsTitle(void);
  * @brief Shows the current option in the display.
  */
 static void setCurrentOption(void);
+
+static void showCustomBandSetting(void);
 /*******************************************************************************
  * FUNCTIONS WITH GLOBAL SCOPE
  ******************************************************************************/
@@ -82,6 +90,17 @@ void Effects_NextOption(void)
 {
     if (showingTitle)
         userInteractionStopsTitle();
+    else if (settingCustom)
+    {
+    	currentBandValue +=1;
+    	if (currentBandValue == MAX_BAND_GAIN +1)
+    	{
+    		currentBandValue = MIN_BAND_GAIN;
+    	}
+    	equalizer_set_band_gain(currentBand, currentBandValue);
+    	customBandsValues[currentBand] = currentBandValue;
+    	showCustomBandSetting();
+    }
     else
     {
         uint8_t max = OPTIONS_COUNT;
@@ -98,6 +117,17 @@ void Effects_PreviousOption(void)
 {
     if (showingTitle)
         userInteractionStopsTitle();
+    else if(settingCustom)
+    {
+    	currentBandValue -=1;
+		if (currentBandValue == MIN_BAND_GAIN -1)
+		{
+			currentBandValue = MAX_BAND_GAIN;
+		}
+		equalizer_set_band_gain(currentBand, currentBandValue);
+		customBandsValues[currentBand] = currentBandValue;
+		showCustomBandSetting();
+    }
     else
     {
         uint8_t max = OPTIONS_COUNT;
@@ -113,12 +143,27 @@ void Effects_SelectOption(void)
 {
     if (showingTitle)
         userInteractionStopsTitle();
+    else if(settingCustom)
+    {
+    	if (currentBand == OPTION_VALUES_ARRAY_SIZE - 1)
+    	{
+    		currentBand = 0;
+    		Effects_Back();
+    	}
+    	else
+    	{
+    		currentBand += 1;
+    		showCustomBandSetting();
+    	}
+    	currentBandValue = 0;
+    }
     else
     {
     	LCD_clearDisplay();
         if (currentOptionIndex == OPTIONS_COUNT-1)
         {
-        	//custom
+        	settingCustom = true;
+        	showCustomBandSetting();
         }else
         {
         	for (int i = 0; i < OPTION_VALUES_ARRAY_SIZE; i++)
@@ -127,6 +172,19 @@ void Effects_SelectOption(void)
         	}
         }
     }
+}
+
+
+void Effects_Back(void)
+{
+	if (settingCustom)
+	{
+		settingCustom = false;
+		LCD_clearDisplay();
+	}else
+	{
+		emitEvent(CHANGE_MODE_EV);
+	}
 }
 /*******************************************************************************
  *******************************************************************************
@@ -156,9 +214,20 @@ static void userInteractionStopsTitle(void)
 	stopShowingTitle();
 }
 
+static void showCustomBandSetting(void)
+{
+	LCD_clearDisplay();
+	LCD_writeStrInPos(frequencyBandsTitles[currentBand], 16, 0, 0);
+
+	char bandGainText[16] = "                ";
+	int writtenChars = sprintf(bandGainText, "%ddB", currentBandValue);
+	bandGainText[writtenChars] = ' ';
+	LCD_writeStrInPos(bandGainText, 16, 1, 0);
+}
+
 static void setCurrentOption(void)
 {
-    //LCD_clearDisplay();
+    LCD_clearDisplay();
     switch (currentOptionIndex)
     {
     case DEFAULT:

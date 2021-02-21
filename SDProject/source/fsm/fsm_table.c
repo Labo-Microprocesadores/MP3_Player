@@ -69,13 +69,13 @@ STATE effects[] =
 	{NEXT_EV, 				effects, 				Effects_NextOption},
 	{PREV_EV, 				effects,				Effects_PreviousOption},
 
-	{ENCODER_PRESS_EV,		player,					Player_InitState}, // Change mode
+	{ENCODER_PRESS_EV,		effects,				Effects_SelectOption}, // Change mode
 	{ENCODER_RIGHT_EV,		effects, 				Effects_NextOption},
 	{ENCODER_LEFT_EV,		effects,				Effects_PreviousOption},
-
+	{ENCODER_LKP_EV,			effects,				Effects_Back},
 	{TIMEOUT_EV, 			idle, 					Idle_InitState},
 	{SD_OUT_EV, 			idle, 					Idle_InitState},
-	//{CHANGE_MODE_EV,		player,					Player_InitState},
+	{CHANGE_MODE_EV,		player,					Player_InitState},
 
 	{FILL_BUFFER_EV, 		effects,			    Audio_updateBuffer},
 	{NEXT_SONG_EV, 			effects,			    FileSelection_PlayNextSong},

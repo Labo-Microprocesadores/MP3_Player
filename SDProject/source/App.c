@@ -92,6 +92,10 @@ void getEvents(void)
 	{
 		emitEvent(ENCODER_PRESS_EV);
 	}
+	if(wasLkp(ENCODER_SW))
+	{
+		emitEvent(ENCODER_LKP_EV);
+	}
 
 	int8_t move = Encoder_GetMove();
 	if(move != 0)
