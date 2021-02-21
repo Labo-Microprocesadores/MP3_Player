@@ -115,9 +115,9 @@ void vumeterRefresh_clean_display()
 {
     for(int i = 0; i < NUMBER_OF_BANDS; i++)
     {
-    	for(int j = 0; j<VUMETER_HEIGHT; j++)
+    	for(int j = 0; j < VUMETER_HEIGHT; j++)
     	{
-			auxMatrix[(NUMBER_OF_BANDS - i - 1) + j * 8] = CLEAN;
+			auxMatrix[j*8 + i] = CLEAN;
     	}
     	vumeterMatrix[i] = 0;
     }

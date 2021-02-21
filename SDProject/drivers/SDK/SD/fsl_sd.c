@@ -1913,10 +1913,6 @@ status_t SD_CardInit(sd_card_t *card)
     assert(card);
     assert(card->isHostReady == true);
 
-    if(card->initReady)
-    {
-    	return kStatus_Success;
-    }
     /* reset variables */
     card->flags = 0U;
     /* set DATA bus width */

@@ -161,7 +161,30 @@ void md_writeBuffer(colors_t *new_buffer)
 		default: break;
 		}
 	}
-	change_buffer = true;
+	//change_buffer = true;
+
+	//if(change_buffer)
+	//{
+		if(currBuffer == buffers[0])
+			currBuffer = buffers[1];
+		else
+			currBuffer = buffers[0];
+
+	//	change_buffer = false;
+	//}
+
+	EDMA_PrepareTransfer(&g_transferConfig, (void *)(currBuffer), sizeof(uint16_t),
+									(void *)FTM_GetCnVAddress(0, 0), sizeof(uint16_t),
+									sizeof(uint16_t), (MATRIX_LEN) * sizeof(uint16_t) ,
+									kEDMA_MemoryToPeripheral);
+
+	EDMA_SetTransferConfig(DMA0, DMA_CHANEL, &g_transferConfig, NULL);
+	EDMA_StartTransfer(&g_EDMA_Handle);
+
+	FTM_StartClock(0);
+	while(!FTM_IsInterruptPending (0,FTM_CH_0)){}; // Sync with CHF
+	FTM_offOM(0,0);
+
 
 }
 
@@ -195,7 +218,7 @@ static void md_dmaCallback(edma_handle_t *handle, void *userData, bool transferD
 	while(!FTM_IsInterruptPending (0,FTM_CH_0)){}; // Sync with CHF
 	FTM_StopClock(0);
 	FTM_onOM(0,0);
-	Systick_ResumeCallback(timer_id);
+	//Systick_ResumeCallback(timer_id);
 
 	transfer_done = true;
 }

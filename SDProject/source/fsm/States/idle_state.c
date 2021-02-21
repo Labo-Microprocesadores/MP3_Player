@@ -54,6 +54,16 @@ static void setEnergyConsumptionMode(EnergyConsumptionMode_t energyConsumptionMo
  */
 static void updateDisplayTime();
 
+/*
+ *@brief Callback after init idle to change to low power mode
+ */
+static void changePowerMode(void);
+
+/*
+ *@brief Callback after changing to high power mode
+ */
+static void emitStartEv(void);
+
 /*******************************************************************************
  *******************************************************************************
                         GLOBAL FUNCTION DEFINITIONS
@@ -73,10 +83,8 @@ void Idle_InitState(void)
 	LCD_writeStrInPos(timeString, 16, 0, 0);
 	LCD_writeStrInPos(dateString, 16, 1, 0);
 
-	setEnergyConsumptionMode(LOW_CONSUMPTION);
-	//LCD_UpdateClock();
+	timeCallbackId = Timer_AddCallback(changePowerMode, 1000, true); //Delay until related stuff is finished
 
-	//showTime();
 }
 
 void Idle_OnUserInteraction(void)
@@ -84,13 +92,16 @@ void Idle_OnUserInteraction(void)
 	if (!Mm_IsSDPresent())
 		return;
 
+	if(timeCallbackId != -1)
+	{
+		Timer_Delete(timeCallbackId);
+		timeCallbackId = -1;
+	}
 	setEnergyConsumptionMode(HIGH_CONSUMPTION);
-	//PowerMode_SetRunMode();
-	stopShowingTime();
-	//LCD_UpdateClock();
-	emitEvent(START_EV);
+	//Meter timer
+	timeCallbackId = Timer_AddCallback(emitStartEv, 2000, true); //Delay until clock stabilizes
+	//emitStartEv();
 }
-
 /*******************************************************************************
  *******************************************************************************
                         LOCAL FUNCTION DEFINITIONS
@@ -100,6 +111,24 @@ static void showTime(void)
 {
   updateDisplayTime();
   timeCallbackId = Timer_AddCallback(updateDisplayTime, 100, false);
+}
+
+static void changePowerMode(void)
+{
+	timeCallbackId = -1;
+	setEnergyConsumptionMode(LOW_CONSUMPTION);
+
+	LCD_UpdateClock();
+	//showTime();
+
+}
+
+static void emitStartEv(void)
+{
+	//stopShowingTime();
+	timeCallbackId = -1;
+	LCD_UpdateClock();
+	emitEvent(START_EV);
 }
 
 static void updateDisplayTime()
@@ -116,29 +145,21 @@ static void updateDisplayTime()
   //LCD_clearDisplay();
   LCD_writeStrInPos(timeString, 16, 0, 0);
   LCD_writeStrInPos(dateString, 16, 1, 0);
-  //printf("%s\n%s\n", timeString, dateString);
-}
-
-static void stopShowingTime(void)
-{
-  Timer_Delete(timeCallbackId);
-  //LCD_clearDisplay();
-
 }
 
 static void setEnergyConsumptionMode(EnergyConsumptionMode_t energyConsumptionMode)
 {
-  switch (energyConsumptionMode)
-  {
-  case LOW_CONSUMPTION:
-	  PowerMode_SetVLPRMode();
-    break;
+	  switch (energyConsumptionMode)
+	  {
+	  case LOW_CONSUMPTION:
+		  PowerMode_SetVLPRMode();
+		break;
 
-  case HIGH_CONSUMPTION:
-	  PowerMode_SetRunMode();
-    break;
+	  case HIGH_CONSUMPTION:
+		  PowerMode_SetRunMode();
+		break;
 
-  default:
-    break;
-  }
+	  default:
+		break;
+	  }
 }

@@ -52,9 +52,15 @@ STATE init[]=
 
  STATE idle[]=
 {
-	{PRESS_EV,				idle, 					Idle_OnUserInteraction},
-	{LKP_EV,				idle, 					Idle_OnUserInteraction},
 	{PP_EV,					idle, 					Idle_OnUserInteraction},
+	{NEXT_EV,				idle, 					Idle_OnUserInteraction},
+	{PREV_EV,				idle, 					Idle_OnUserInteraction},
+	{STOP_EV,				idle, 					Idle_OnUserInteraction},
+
+	{ENCODER_PRESS_EV,		idle, 					Idle_OnUserInteraction},
+	{ENCODER_RIGHT_EV,		idle, 					Idle_OnUserInteraction},
+	{ENCODER_LEFT_EV,		idle, 					Idle_OnUserInteraction},
+
 	{START_EV,				file_selection, 		FileSelection_InitState},
 	{SD_IN_EV, 				idle, 					Idle_OnUserInteraction},
   	{FIN_TABLA, 			idle, 					do_nothing}
