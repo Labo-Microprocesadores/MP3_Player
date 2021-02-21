@@ -55,6 +55,12 @@ void equalizer_init(void);
  */
 void equalizer_set_band_gain (int32_t band, int32_t gain);
 
+/**
+ * @brief returns equalizer filter gains.
+ * @return gain  number in dB 
+ * @param band selected band in which to change gain (between 1 and NUMBER_OF_BANDS)
+ */
+int32_t equalizer_get_band_gain (int32_t band);
 
 /**
  * @brief Applies the filter to the data in inputF32 and stores the result in outputF32

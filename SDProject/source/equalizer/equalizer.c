@@ -33,7 +33,7 @@ static arm_biquad_casd_df1_inst_q31 * lpFilter [6] = {&S3, &S4, &S5, &S6, &S7, &
 
 static q63_t biquadStateBandQ63 [2][4 * 2];
 static q31_t biquadStateBandQ31 [6][4 * 2];
-
+static int32_t bandGains[NUMBER_OF_BANDS]={DEFAULT_GAIN, DEFAULT_GAIN, DEFAULT_GAIN, DEFAULT_GAIN, DEFAULT_GAIN, DEFAULT_GAIN, DEFAULT_GAIN, DEFAULT_GAIN, };
 
 
 
@@ -479,8 +479,18 @@ void equalizer_set_band_gain (int32_t band, int32_t gain)
           (q31_t *) &coeffTable[COEF_PER_FILTER*GAIN_LEVELS*(band-1) + COEF_PER_FILTER*(gain + MAX_GAIN)],
           &biquadStateBandQ31[band - 3][0], 2);
     }
+	bandGains[band-1] = gain;
 }
 
+/**
+ * @brief returns equalizer filter gains.
+ * @return gain  number in dB 
+ * @param band selected band in which to change gain (between 1 and NUMBER_OF_BANDS)
+ */
+int32_t equalizer_get_band_gain (int32_t band)
+{
+	return bandGains[band-1];
+}
 
 /**
  * @brief Applies the filter to the data in inputF32 and stores the result in outputF32
