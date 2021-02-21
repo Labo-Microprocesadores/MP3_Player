@@ -43,9 +43,8 @@ static int titleTimerID = -1;
 static uint8_t currentOptionIndex = 0;
 static const char * frequencyBandsTitles [] = {"80Hz Band       ", "160Hz Band      ", "320Hz Band      ", "640Hz Band      ", "1.28kHz Band    ", "2.5kHz Band     ", "5kHz Band       ", "10kHz Band      "};
 static bool settingCustom = false;
-static int customBandsValues [OPTION_VALUES_ARRAY_SIZE];
-static int currentBand = 0;
-static int currentBandValue = 0;
+static uint8_t currentBand = 0;
+static int32_t currentBandValue = 0;
 
 int optionValues[5][OPTION_VALUES_ARRAY_SIZE] =
 	{{0, 0, 0, 0, 0, 0, 0, 0}, 		//default
@@ -100,7 +99,6 @@ void Effects_NextOption(void)
     		currentBandValue = MIN_BAND_GAIN;
     	}
     	equalizer_set_band_gain(currentBand, currentBandValue);
-    	customBandsValues[currentBand] = currentBandValue;
     	showCustomBandSetting();
     }
     else
@@ -127,7 +125,6 @@ void Effects_PreviousOption(void)
 			currentBandValue = MAX_BAND_GAIN;
 		}
 		equalizer_set_band_gain(currentBand, currentBandValue);
-		customBandsValues[currentBand] = currentBandValue;
 		showCustomBandSetting();
     }
     else
