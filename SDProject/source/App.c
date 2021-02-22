@@ -11,6 +11,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdint.h>
+
 #include "fsl_common.h"
 
 #include "queue.h"
@@ -34,7 +35,8 @@
 #include "encoder.h"
 #include "power_mode_switch.h"
 #include "time_service.h"
-#include "idle_state.h"
+#include "equalizer.h"
+#include "States/idle_state.h"
 
 /*******************************************************************************
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
@@ -112,9 +114,9 @@ void App_Init(void)
 
 	SysTick_Init();
 	Timer_Init();
-	Mm_Init();//aux); //Memory manager
-	LCD_Init();   //LCD Driver
 
+	Mm_Init();	  //Memory manager
+	LCD_Init();   //LCD Driver
 	md_Init();	  //NeoPixel matrix
 
 	decoder_MP3DecoderInit(); // Init decoder

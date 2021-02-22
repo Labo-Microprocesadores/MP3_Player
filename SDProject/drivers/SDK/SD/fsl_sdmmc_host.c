@@ -128,12 +128,12 @@ status_t SDMMCHOST_CardDetectInit(sdmmchost_t *host, void *cd)
 
     /* enable card detect through DATA3 */
     SDHC_CardDetectByData3(base, true);
-    /* enable card detect interrupt */
+    /* enable card detect interrupt
     SDHC_EnableInterruptStatus(base, kSDHC_CardInsertionFlag);
     SDHC_EnableInterruptStatus(base, kSDHC_CardRemovalFlag);
     SDHC_EnableInterruptSignal(base, kSDHC_CardInsertionFlag);
     SDHC_EnableInterruptSignal(base, kSDHC_CardRemovalFlag);
-
+*/
     if ((SDHC_GetInterruptStatusFlags(base) & (uint32_t)kSDHC_CardInsertionFlag) != 0U)
     {
         /* notify application about the card insertion status */

@@ -244,7 +244,7 @@ char * Audio_getYear(void)
 
 void Audio_IncVolume(void)
 {
-	vol += (vol > MAX_VOLUME)? 0 : 1;
+	vol += (vol >= MAX_VOLUME)? 0 : 1;
 }
 
 void Audio_DecVolume(void)
