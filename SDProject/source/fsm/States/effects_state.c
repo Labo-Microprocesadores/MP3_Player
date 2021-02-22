@@ -41,17 +41,24 @@ typedef enum
 static bool showingTitle;
 static int titleTimerID = -1;
 static uint8_t currentOptionIndex = 0;
-static const char * frequencyBandsTitles [] = {"80Hz Band       ", "160Hz Band      ", "320Hz Band      ", "640Hz Band      ", "1.28kHz Band    ", "2.5kHz Band     ", "5kHz Band       ", "10kHz Band      "};
+static char * frequencyBandsTitles [] = {"80Hz Band       ",
+										 "160Hz Band      ",
+										 "320Hz Band      ",
+										 "640Hz Band      ",
+										 "1.28kHz Band    ",
+										 "2.5kHz Band     ",
+										 "5kHz Band       ",
+										 "10kHz Band      "};
 static bool settingCustom = false;
 static uint8_t currentBand = 0;
 static int32_t currentBandValue = 0;
 
 int optionValues[5][OPTION_VALUES_ARRAY_SIZE] =
-	{{0, 0, 0, 0, 0, 0, 0, 0}, 		//default
-	{0, 0, 1, 3, -10, -2, -1, 3}, 	//rock
-	{0, 0, 2 , 5, -6, -2, -1, 2},	//jazz
-	{0, 0, 0, 0, 2, 2, 3, -3},		//pop
-	{0, 0, -1, -6, 0, 1, 1, 3}		//classic
+	{{0, 0, 0, 0,  0, 0, 0, 0}, 	//default
+	 {0, 0, 1, 3,-10,-2,-1, 3}, 	//rock
+	 {0, 0, 2, 5, -6,-2,-1, 2},		//jazz
+	 {0, 0, 0, 0,  2, 2, 3,-3},		//pop
+	 {0, 0,-1,-6,  0, 1, 1, 3}		//classic
 };
 /*******************************************************************************
  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
@@ -84,9 +91,12 @@ static void showCustomBandSetting(void);
 
 void Effects_InitState(void)
 {
+	LCD_clearDisplay();
+	LCD_stopMove(0);
 	showTitle();
 	currentOptionIndex = 0;
 }
+
 void Effects_NextOption(void)
 {
     if (showingTitle)
@@ -98,7 +108,7 @@ void Effects_NextOption(void)
     	{
     		currentBandValue = MIN_BAND_GAIN;
     	}
-    	equalizer_set_band_gain(currentBand, currentBandValue);
+    	equalizer_set_band_gain(currentBand+1, currentBandValue);
     	showCustomBandSetting();
     }
     else
@@ -124,7 +134,7 @@ void Effects_PreviousOption(void)
 		{
 			currentBandValue = MAX_BAND_GAIN;
 		}
-		equalizer_set_band_gain(currentBand, currentBandValue);
+		equalizer_set_band_gain(currentBand+1, currentBandValue);
 		showCustomBandSetting();
     }
     else
@@ -152,27 +162,30 @@ void Effects_SelectOption(void)
     	else
     	{
     		currentBand += 1;
-    		currentBandValue = equalizer_get_band_gain(currentBand);
+    		currentBandValue = equalizer_get_band_gain(currentBand+1);
     		showCustomBandSetting();
     	}
     }
     else
     {
-    	LCD_clearDisplay();
+    	//LCD_clearDisplay();
         if (currentOptionIndex == OPTIONS_COUNT-1)
         {
         	settingCustom = true;
         	currentBand = 0;
-        	currentBandValue = equalizer_get_band_gain(currentBand);
+        	currentBandValue = equalizer_get_band_gain(currentBand+1);
         	showCustomBandSetting();
-        }else
+        }
+        else
         {
         	for (int i = 0; i < OPTION_VALUES_ARRAY_SIZE; i++)
         	{
         		equalizer_set_band_gain(i+1, optionValues[currentOptionIndex][i]);
         	}
+        	emitEvent(CHANGE_MODE_EV);
         }
     }
+
 }
 
 
@@ -181,7 +194,8 @@ void Effects_Back(void)
 	if (settingCustom)
 	{
 		settingCustom = false;
-		LCD_clearDisplay();
+		LCD_clearRow(1);
+		setCurrentOption();
 	}else
 	{
 		emitEvent(CHANGE_MODE_EV);
@@ -194,8 +208,10 @@ void Effects_Back(void)
  ******************************************************************************/
 static void showTitle(void)
 {
+	LCD_stopMove(0);
+	LCD_stopMove(1);
 	//LCD_clearDisplay();
-	LCD_clearRow(0);
+	//LCD_clearRow(0);
 	LCD_writeStrInPos("Efectos         ", 16, 0, 0);
 	showingTitle = true;
 	titleTimerID = Timer_AddCallback(&stopShowingTitle, TITLE_TIME, true);
@@ -204,7 +220,7 @@ static void showTitle(void)
 static void stopShowingTitle(void)
 {
 	showingTitle = false;
-	//LCD_clearDisplay();
+	LCD_clearDisplay();
 	setCurrentOption();
 }
 
@@ -217,7 +233,7 @@ static void userInteractionStopsTitle(void)
 
 static void showCustomBandSetting(void)
 {
-	LCD_clearDisplay();
+	//LCD_clearDisplay();
 	LCD_writeStrInPos(frequencyBandsTitles[currentBand], 16, 0, 0);
 
 	char bandGainText[16] = "                ";
@@ -228,7 +244,8 @@ static void showCustomBandSetting(void)
 
 static void setCurrentOption(void)
 {
-    LCD_clearDisplay();
+    //LCD_clearDisplay();
+	LCD_stopMove(0);
     switch (currentOptionIndex)
     {
     case DEFAULT:
