@@ -24,4 +24,6 @@ void Idle_InitState(void);
  */
 void Idle_OnUserInteraction(void);
 
+void Idle_UpdateTime (void);
+
 #endif /* IDLE_STATE_H */

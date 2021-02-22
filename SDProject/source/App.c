@@ -34,6 +34,7 @@
 #include "encoder.h"
 #include "power_mode_switch.h"
 #include "time_service.h"
+#include "idle_state.h"
 
 /*******************************************************************************
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
@@ -122,7 +123,7 @@ void App_Init(void)
 	vumeterRefresh_init(); // FFT
 	equalizer_init();
 
-	//TimeService_Init();
+	TimeService_Init(Idle_UpdateTime);
 
 	Encoder_Init();
 	buttonsInit();

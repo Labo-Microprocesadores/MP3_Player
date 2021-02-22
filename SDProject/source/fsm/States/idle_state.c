@@ -31,6 +31,7 @@ typedef enum
  * PRIVATE VARIABLES WITH FILE LEVEL SCOPE
  ******************************************************************************/
 int timeCallbackId = -1;
+
 /*******************************************************************************
  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
  ******************************************************************************/

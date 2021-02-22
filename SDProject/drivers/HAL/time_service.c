@@ -32,7 +32,7 @@ static void EXAMPLE_WaitOSCReady(uint32_t delay_ms);
  * PRIVATE VARIABLES WITH FILE LEVEL SCOPE
  ******************************************************************************/
 rtc_datetime_t date;
-
+void (*callback)(void);
 /*******************************************************************************
  *******************************************************************************
                         GLOBAL FUNCTION DEFINITIONS
@@ -41,7 +41,7 @@ rtc_datetime_t date;
 /*!
  * @brief Main function
  */
-void TimeService_Init(void)
+void TimeService_Init(void (*callback)(void))
 {
 	/* Set a start date time */
 	date = (rtc_datetime_t) {.year = 2021U,
@@ -91,7 +91,7 @@ void TimeService_Init(void)
     RTC_SetDatetime(RTC, &date);
 
     /* Enable RTC alarm interrupt */
-    RTC_EnableInterrupts(RTC, kRTC_AlarmInterruptEnable);
+    RTC_EnableInterrupts(RTC, kRTC_SecondsInterruptEnable);
 
     /* Enable at the NVIC */
     EnableIRQ(RTC_IRQn);
@@ -99,6 +99,7 @@ void TimeService_Init(void)
     /* Start the RTC time counter */
     RTC_StartTimer(RTC);
 }
+
 
 TimeServiceDate_t TimeService_GetCurrentDateTime(void)
 {
@@ -119,11 +120,27 @@ TimeServiceDate_t TimeService_GetCurrentDateTime(void)
 	return &dateTime[0];*/
 }
 
+/*!
+ * @brief ISR for Alarm interrupt
+ *
+ * This function changes the state of busyWait.
+ */
+void RTC_Seconds_IRQHandler(void)
+{
+    if (callback != NULL)
+    	callback();
+
+    SDK_ISR_EXIT_BARRIER;
+}
+
+
 /*******************************************************************************
  *******************************************************************************
                         LOCAL FUNCTION DEFINITIONS
  *******************************************************************************
  ******************************************************************************/
+
+
 
 #if !(defined(FSL_FEATURE_RTC_HAS_NO_CR_OSCE) && FSL_FEATURE_RTC_HAS_NO_CR_OSCE)
 /*!

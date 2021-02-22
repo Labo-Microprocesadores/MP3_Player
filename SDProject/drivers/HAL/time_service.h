@@ -23,7 +23,7 @@ typedef struct TimeServiceDate_t
 /*******************************************************************************
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
-void TimeService_Init(void);
+void TimeService_Init(void (*callback)(void));
 TimeServiceDate_t TimeService_GetCurrentDateTime(void);
 
 #endif /* HAL_TIME_SERVICE_H_ */
