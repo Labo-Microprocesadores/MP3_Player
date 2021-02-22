@@ -109,6 +109,7 @@ void FileSelection_PlayNextSong(void)
  ******************************************************************************/
 static void showTitle(void)
 {
+	LCD_stopMove(0);
 	LCD_writeStrInPos("Elegir Archivo  ", 16, 0, 0);
 	LCD_clearRow(1);
 	showingTitle = true;

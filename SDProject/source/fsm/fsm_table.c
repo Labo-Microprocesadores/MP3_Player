@@ -70,8 +70,8 @@ STATE init[]=
 
 STATE effects[] =
 {
-	{PP_EV,					file_selection, 		Effects_SelectOption},
-	//{STOP_EV, 				player, 				Player_Stop},
+	{PP_EV,					effects, 				Effects_SelectOption},
+	{STOP_EV, 				effects,				Effects_Back},
 	{NEXT_EV, 				effects, 				Effects_NextOption},
 	{PREV_EV, 				effects,				Effects_PreviousOption},
 
@@ -79,9 +79,11 @@ STATE effects[] =
 	{ENCODER_RIGHT_EV,		effects, 				Effects_NextOption},
 	{ENCODER_LEFT_EV,		effects,				Effects_PreviousOption},
 
+	{ENCODER_LKP_EV,		idle, 					Idle_InitState}, // turn off
+
 	{TIMEOUT_EV, 			idle, 					Idle_InitState},
 	{SD_OUT_EV, 			idle, 					Idle_InitState},
-	//{CHANGE_MODE_EV,		player,					Player_InitState},
+	{CHANGE_MODE_EV,		player,					Player_InitState},
 
 	{FILL_BUFFER_EV, 		effects,			    Audio_updateBuffer},
 	{NEXT_SONG_EV, 			effects,			    FileSelection_PlayNextSong},
@@ -101,6 +103,8 @@ STATE file_selection[] =
 	{ENCODER_PRESS_EV,		effects, 				Effects_InitState}, // Change mode
 	{ENCODER_RIGHT_EV,		file_selection, 		FileSelection_NextFile},
 	{ENCODER_LEFT_EV,		file_selection,			FileSelection_PreviousFile},
+
+	{ENCODER_LKP_EV,		idle, 					Idle_InitState}, // turn off
 
 	{SD_OUT_EV, 			idle, 					Idle_InitState},
 	{TIMEOUT_EV,			idle,					Idle_InitState},
@@ -125,6 +129,8 @@ STATE player[] =
 	{ENCODER_PRESS_EV,		file_selection, 		FileSelection_InitState},
 	{ENCODER_RIGHT_EV,		player, 				Player_IncVolume},
 	{ENCODER_LEFT_EV,		player,					Player_DecVolume},
+
+	{ENCODER_LKP_EV,		idle, 					Idle_InitState}, // turn off
 
 	//{CHANGE_MODE_EV, 		file_selection, 		FileSelection_InitState},
 	{SD_OUT_EV, 			idle, 					Idle_InitState},
