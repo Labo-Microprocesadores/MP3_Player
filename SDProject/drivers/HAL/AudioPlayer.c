@@ -71,7 +71,7 @@ static int16_t buffers[2][AUDIO_PLAYER_BUFF_SIZE];
 static int16_t * activeBuffer = buffers[0];
 static int16_t * backBuffer= buffers[1];
 static bool backBufferFree = false;
-static bool pause = false;
+static bool pause = false, stop = false;
 static int16_t mute[DAC_DATL_COUNT] = {2048U};
 /*******************************************************************************
  * Code
@@ -295,7 +295,7 @@ bool AudioPlayer_IsBackBufferFree(void)
 void AudioPlayer_Play(void)
 {
 	g_index = 0U;
-
+	stop = false;
 	if(pause)
 	{
 		pause = false;
@@ -311,11 +311,8 @@ void AudioPlayer_Play(void)
 	 EDMA_SubmitTransfer(&g_EDMA_Handle, &g_transferConfig);
 	 /* Enable interrupt when transfer is done. */
 	 EDMA_EnableChannelInterrupts(DEMO_DMA_BASEADDR, DEMO_DMA_CHANNEL, kEDMA_MajorInterruptEnable);
-	#if defined(FSL_FEATURE_EDMA_ASYNCHRO_REQUEST_CHANNEL_COUNT) && FSL_FEATURE_EDMA_ASYNCHRO_REQUEST_CHANNEL_COUNT
-	 /* Enable async DMA request. */
-	 EDMA_EnableAsyncRequest(DEMO_DMA_BASEADDR, DEMO_DMA_CHANNEL, true);
-	#endif /* FSL_FEATURE_EDMA_ASYNCHRO_REQUEST_CHANNEL_COUNT */
-	/* Enable transfer. */
+
+	 /* Enable transfer. */
 	EDMA_StartTransfer(&g_EDMA_Handle);
 
 	// PDB:
@@ -324,9 +321,6 @@ void AudioPlayer_Play(void)
 	/* Enable DMA. */
 	DAC_EnableBufferInterrupts(DEMO_DAC_BASEADDR, kDAC_BufferReadPointerTopInterruptEnable);
 	DAC_EnableBufferDMA(DEMO_DAC_BASEADDR, true);
-
-
-
 
 	PDB_DoSoftwareTrigger(DEMO_PDB_BASEADDR);
 }
@@ -352,15 +346,21 @@ void AudioPlayer_Pause(void)
 void AudioPlayer_Stop(void)
 {
 
-	// DMAMUX:
-	DMAMUX_DisableChannel(DEMO_DMAMUX_BASEADDR, DEMO_DMA_CHANNEL);
+	/*
+	// EDMA
+	EDMA_StopTransfer(&g_EDMA_Handle);
 
 	// PDB:
 	PDB_DisableInterrupts(DEMO_PDB_BASEADDR, kPDB_DelayInterruptEnable);
 
-	g_index = 0U;
-	//currentSongFrame = firstSongFrame;
+	// DMAMUX:
+	DMAMUX_DisableChannel(DEMO_DMAMUX_BASEADDR, DEMO_DMA_CHANNEL);
 
+	// DAC:
+	DAC_SetBufferValue(DEMO_DAC_BASEADDR, 0, 2048);
+	DAC_DoSoftwareTriggerBuffer(DEMO_DAC_BASEADDR);
+	*/
+	stop = true;
 }
 
 static void EDMA_Configuration(void)
@@ -442,7 +442,7 @@ static void Edma_Callback(edma_handle_t *handle, void *userData, bool transferDo
     /* Setup transfer */
 
     void * srcAdd = NULL;
-    if(pause)
+    if(pause || stop)
 	{
 		srcAdd = mute;
 	}

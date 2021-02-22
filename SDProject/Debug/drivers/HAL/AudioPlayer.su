@@ -6,5 +6,5 @@ AudioPlayer.c:102:6:AudioPlayer_LoadSongInfo	8	static
 AudioPlayer.c:277:18:AudioPlayer_UpdateBackBuffer	8	static
 AudioPlayer.c:290:6:AudioPlayer_IsBackBufferFree	0	static
 AudioPlayer.c:295:6:AudioPlayer_Play	40	static
-AudioPlayer.c:334:6:AudioPlayer_Pause	0	static
-AudioPlayer.c:352:6:AudioPlayer_Stop	0	static
+AudioPlayer.c:328:6:AudioPlayer_Pause	0	static
+AudioPlayer.c:346:6:AudioPlayer_Stop	0	static

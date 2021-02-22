@@ -59,6 +59,18 @@ void Audio_init(void)
 
 void Audio_deinit(void)
 {
+	AudioPlayer_Stop();
+
+
+	decoder_shutDown();
+
+	Mm_OnDesconection();
+
+	FileSystem_ResetFiles();
+
+	vumeterRefresh_clean_display();
+
+	playing = false;
 	init = false;
 }
 
@@ -132,11 +144,13 @@ void Audio_updateBuffer(void)
 	}
 
 	/* aca van los efectos */
+	equalizer_equalize(effects_in, effects_out);
+
 	/* Scale to 12 bits, to fit in the DAC */
 	coef = (vol*1.0)/MAX_VOLUME;
 	for (uint32_t index = 0; index < BUFFER_SIZE; index++)
 	{
-		g_bufferRead[index] = (effects_in/*out*/[index]*coef+1)*2048;
+		g_bufferRead[index] = (effects_out[index]*coef+1)*2048;
 	}
 
 	if (check == DECODER_END_OF_FILE)
@@ -151,9 +165,19 @@ void Audio_updateBuffer(void)
 
 	}
 
-	vumeterRefresh_fft(effects_in/*out*/, 44100.0, 80, 10000);
+	vumeterRefresh_fft(effects_out, 44100.0, 80, 10000);
 }
 
+void Audio_showFFT(void)
+{
+	vumeterRefresh_draw_display();
+}
+
+void Audio_updateAll(void)
+{
+	Audio_updateBuffer();
+	Audio_showFFT();
+}
 
 void Audio_play(void)
 {
@@ -220,7 +244,7 @@ char * Audio_getYear(void)
 
 void Audio_IncVolume(void)
 {
-	vol += (vol > MAX_VOLUME)? 0 : 1;
+	vol += (vol >= MAX_VOLUME)? 0 : 1;
 }
 
 void Audio_DecVolume(void)

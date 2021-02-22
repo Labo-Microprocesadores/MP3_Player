@@ -130,11 +130,10 @@ static void userInteractionStopsTitle(void)
 	stopShowingTitle();
 }
 
-//TODO: Add file parameter
 static void printFileInfo(void)
 {
 	//LCD_clearDisplay();
-	//TODO: Show the file's name and data.
+
 	char * name = Audio_getCurrentName();
 	char path[50];
 
@@ -146,6 +145,4 @@ static void printFileInfo(void)
 	memcpy(path, name, strlen(name));
 	LCD_writeShiftingStr(path,  len, 0, MIDIUM);
 
-//	LCD_writeStrInPos("Archivo Prueba", 14, 0, 0);
-//	LCD_writeStrInPos("Artista Prueba", 14, 0, 0);
 }

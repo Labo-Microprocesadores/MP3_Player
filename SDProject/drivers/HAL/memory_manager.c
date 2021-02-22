@@ -118,7 +118,7 @@ void Mm_OnDesconection(void)
 	f_mount(NULL, driverNumberBuffer, 1U);
 	g_sd.initReady = false;
 	//firstFile = FileSystem_ResetFiles();
-	printf("fuera\r\n");
+	//printf("fuera\r\n");
 }
 
 void Mm_OnConnection(void)

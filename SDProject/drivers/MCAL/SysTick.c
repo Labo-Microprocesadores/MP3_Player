@@ -59,6 +59,7 @@ bool SysTick_Init(void)
 	return true;
 }
 
+
 int SysTick_AddCallback(void (*newCallback)(void), int period)
 {
 	int quotient = (int)(period * MS_TO_TICK_CONVERTION / SYSTICK_ISR_PERIOD); //Calculates how many SYSTICK_ISR_PERIODs are equivalent to the callback period.

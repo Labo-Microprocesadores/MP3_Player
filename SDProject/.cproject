@@ -283,8 +283,7 @@
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
 								</inputType>
 							</tool>
-							<tool id="com.crt.advproject.tool.debug.debug.763000785" name="MCU Debugger"/>
-							<tool id="com.crt.advproject.tool.debug.debug.1632675257" name="MCU Debugger"/>
+							<tool id="com.crt.advproject.tool.debug.debug.1632675257" name="MCU Debugger" superClass="com.crt.advproject.tool.debug.debug"/>
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
@@ -564,8 +563,7 @@
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
 								</inputType>
 							</tool>
-							<tool id="com.crt.advproject.tool.debug.release.196489522" name="MCU Debugger"/>
-							<tool id="com.crt.advproject.tool.debug.release.885079469" name="MCU Debugger"/>
+							<tool id="com.crt.advproject.tool.debug.release.885079469" name="MCU Debugger" superClass="com.crt.advproject.tool.debug.release"/>
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>

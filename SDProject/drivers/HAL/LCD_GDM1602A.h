@@ -25,6 +25,8 @@ void LCD_Init(void);
 
 bool LCD_isInit(void);
 
+void LCD_stopMove(uint8_t row);
+
 void LCD_UpdateClock(void);
 
 void LCD_writeData(uint8_t data);

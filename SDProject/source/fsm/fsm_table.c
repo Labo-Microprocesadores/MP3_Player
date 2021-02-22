@@ -52,9 +52,15 @@ STATE init[]=
 
  STATE idle[]=
 {
-	{PRESS_EV,				idle, 					Idle_OnUserInteraction},
-	{LKP_EV,				idle, 					Idle_OnUserInteraction},
 	{PP_EV,					idle, 					Idle_OnUserInteraction},
+	{NEXT_EV,				idle, 					Idle_OnUserInteraction},
+	{PREV_EV,				idle, 					Idle_OnUserInteraction},
+	{STOP_EV,				idle, 					Idle_OnUserInteraction},
+
+	{ENCODER_PRESS_EV,		idle, 					Idle_OnUserInteraction},
+	{ENCODER_RIGHT_EV,		idle, 					Idle_OnUserInteraction},
+	{ENCODER_LEFT_EV,		idle, 					Idle_OnUserInteraction},
+
 	{START_EV,				file_selection, 		FileSelection_InitState},
 	{SD_IN_EV, 				idle, 					Idle_OnUserInteraction},
   	{FIN_TABLA, 			idle, 					do_nothing}
@@ -102,7 +108,7 @@ STATE file_selection[] =
 	{FILE_SELECTED_EV, 		player, 				Player_InitState},
 	//{CHANGE_MODE_EV, 		effects, 				Effects_InitState},
 
-	{FILL_BUFFER_EV, 		file_selection,			Audio_updateBuffer},
+	{FILL_BUFFER_EV, 		file_selection,			Audio_updateAll},
 	{NEXT_SONG_EV, 			file_selection,			FileSelection_PlayNextSong},
 
 	{FIN_TABLA, 			file_selection, 		do_nothing}
@@ -124,7 +130,7 @@ STATE player[] =
 	{SD_OUT_EV, 			idle, 					Idle_InitState},
 	{TIMEOUT_EV,			idle,	 				Idle_InitState},//??
 
-	{FILL_BUFFER_EV, 		player,					Audio_updateBuffer},
+	{FILL_BUFFER_EV, 		player,					Audio_updateAll},
 	{NEXT_SONG_EV, 			player,					Player_PlayNextSong},
 
 	{FIN_TABLA, 			player, 				do_nothing}

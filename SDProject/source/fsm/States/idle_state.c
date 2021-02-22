@@ -31,6 +31,7 @@ typedef enum
  * PRIVATE VARIABLES WITH FILE LEVEL SCOPE
  ******************************************************************************/
 int timeCallbackId = -1;
+
 /*******************************************************************************
  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
  ******************************************************************************/
@@ -38,10 +39,6 @@ int timeCallbackId = -1;
  * @brief Shows the current time on the display.
  */
 static void showTime(void);
-/**
- * @brief Stops showing the time on the display.
- */
-static void stopShowingTime(void);
 
 /**
  * @brief Changes the energy consumption mode of the device.
@@ -49,10 +46,16 @@ static void stopShowingTime(void);
  */
 static void setEnergyConsumptionMode(EnergyConsumptionMode_t energyConsumptionMode);
 
-/**
- * @brief Fetches the current time and shows it on the display.
+
+/*
+ *@brief Callback after init idle to change to low power mode
  */
-static void updateDisplayTime();
+static void changePowerMode(void);
+
+/*
+ *@brief Callback after changing to high power mode
+ */
+static void emitStartEv(void);
 
 /*******************************************************************************
  *******************************************************************************
@@ -62,72 +65,84 @@ static void updateDisplayTime();
 
 void Idle_InitState(void)
 {
-  setEnergyConsumptionMode(LOW_CONSUMPTION);
-  Audio_deinit();
-  //LCD_UpdateClock();
-  //showTime();
+	Audio_deinit();
+
+	LCD_clearDisplay();
+
+	timeCallbackId = Timer_AddCallback(changePowerMode, 1000, true); //Delay until related stuff is finished
+
 }
 
 void Idle_OnUserInteraction(void)
 {
 	if (!Mm_IsSDPresent())
 		return;
-
 	setEnergyConsumptionMode(HIGH_CONSUMPTION);
-	//PowerMode_SetRunMode();
-	stopShowingTime();
-	//LCD_UpdateClock();
-	emitEvent(START_EV);
+
+	if(timeCallbackId != -1)
+	{
+		Timer_Delete(timeCallbackId);
+		timeCallbackId = -1;
+	}
+	TimeService_Disable();
+
+
+	timeCallbackId = Timer_AddCallback(emitStartEv, 3000, true); //Delay until clock stabilizes
+
 }
+
+void Idle_UpdateTime()
+{
+	TimeServiceDate_t date = TimeService_GetCurrentDateTime();
+
+	char dateString[16];
+	char timeString[16];
+	snprintf(dateString, sizeof(dateString), "   %02hd-%02hd-%04hd     ", date.day, date.month, date.year);
+	snprintf(timeString, sizeof(timeString), "     %02hd:%02hd        ", date.hour,
+		   date.minute);
+
+
+	LCD_writeStrInPos(timeString, 15, 0, 0);
+	LCD_writeStrInPos(dateString, 15, 1, 0);
+}
+
 
 /*******************************************************************************
  *******************************************************************************
                         LOCAL FUNCTION DEFINITIONS
  *******************************************************************************
  ******************************************************************************/
-static void showTime(void)
+
+static void changePowerMode(void)
 {
-  updateDisplayTime();
-  timeCallbackId = Timer_AddCallback(updateDisplayTime, 100, false);
+	setEnergyConsumptionMode(LOW_CONSUMPTION);
+	timeCallbackId = -1;
+
+	LCD_UpdateClock();
+	TimeService_Enable();
+
 }
 
-static void updateDisplayTime()
+static void emitStartEv(void)
 {
-	return;
-  TimeServiceDate_t date = TimeService_GetCurrentDateTime();
-
-  char dateString[15];
-  char timeString[15];
-  snprintf(dateString, sizeof(dateString), "%02hd-%02hd-%04hd", date.day, date.month, date.year);
-  snprintf(timeString, sizeof(timeString), "%02hd:%02hd", date.hour,
-		   date.minute);
-
-  LCD_clearDisplay();
-  LCD_writeStrInPos(timeString, 10, 0, 0);
-  LCD_writeStrInPos(dateString, 5, 1, 0);
-  printf("%s\n%s\n", timeString, dateString);
-}
-
-static void stopShowingTime(void)
-{
-  Timer_Delete(timeCallbackId);
-  //LCD_clearDisplay();
-
+	timeCallbackId = -1;
+	LCD_UpdateClock();
+	emitEvent(START_EV);
 }
 
 static void setEnergyConsumptionMode(EnergyConsumptionMode_t energyConsumptionMode)
 {
-  switch (energyConsumptionMode)
-  {
-  case LOW_CONSUMPTION:
-	  PowerMode_SetVLPRMode();
-    break;
+	  switch (energyConsumptionMode)
+	  {
+	  case LOW_CONSUMPTION:
+		  PowerMode_SetVLPRMode();
+		break;
 
-  case HIGH_CONSUMPTION:
-	  PowerMode_SetRunMode();
-    break;
+	  case HIGH_CONSUMPTION:
+		  PowerMode_SetRunMode();
+		break;
 
-  default:
-    break;
-  }
+	  default:
+		break;
+	  }
 }

@@ -127,7 +127,7 @@ static inline void SDMMCHOST_SendCardActive(sdmmchost_t *host)
  */
 static inline uint32_t SDMMCHOST_SetCardClock(sdmmchost_t *host, uint32_t targetClock)
 {
-    return SDHC_SetSdClock(host->hostController.base, host->hostController.sourceClock_Hz, targetClock);
+    return SDHC_SetSdClock(host->hostController.base, CLOCK_GetFreq(kCLOCK_CoreSysClk), targetClock);
 }
 
 /*!

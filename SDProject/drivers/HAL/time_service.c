@@ -10,6 +10,8 @@
 #include "clock_config.h"
 #include "fsl_rtc.h"
 #include "time_service.h"
+#include "Timer.h"
+
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -27,12 +29,13 @@
 static void EXAMPLE_WaitOSCReady(uint32_t delay_ms);
 #endif
 
+static void TimeService_FinishInit(void);
 
 /*******************************************************************************
  * PRIVATE VARIABLES WITH FILE LEVEL SCOPE
  ******************************************************************************/
-rtc_datetime_t date;
-
+static rtc_datetime_t date;
+void (*rtc_callback)(void);
 /*******************************************************************************
  *******************************************************************************
                         GLOBAL FUNCTION DEFINITIONS
@@ -41,7 +44,7 @@ rtc_datetime_t date;
 /*!
  * @brief Main function
  */
-void TimeService_Init(void)
+void TimeService_Init(void (*callback)(void))
 {
 	/* Set a start date time */
 	date = (rtc_datetime_t) {.year = 2021U,
@@ -64,7 +67,6 @@ void TimeService_Init(void)
     RTC_GetDefaultConfig(&rtcConfig);
     RTC_Init(RTC, &rtcConfig);
 
-#if !(defined(FSL_FEATURE_RTC_HAS_NO_CR_OSCE) && FSL_FEATURE_RTC_HAS_NO_CR_OSCE)
     /* If the oscillator has not been enabled. */
     if (0U == (RTC->CR & RTC_CR_OSCE_MASK))
     {
@@ -72,33 +74,15 @@ void TimeService_Init(void)
         RTC_SetClockSource(RTC);
 
         /* Wait for OSC clock steady. */
-        EXAMPLE_WaitOSCReady(EXAMPLE_OSC_WAIT_TIME_MS);
+        Timer_AddCallback(TimeService_FinishInit, 1000, true);
     }
-#endif /* FSL_FEATURE_RTC_HAS_NO_CR_OSCE */
-#if (defined(EXAMPLE_CAP_LOAD_VALUE) && EXAMPLE_CAP_LOAD_VALUE)
-#if (defined(FSL_FEATURE_RTC_HAS_OSC_SCXP) && FSL_FEATURE_RTC_HAS_OSC_SCXP)
-    /* Change the RTC oscillator capacity load value. */
-    RTC_SetOscCapLoad(RTC, EXAMPLE_CAP_LOAD_VALUE);
-#endif /* FSL_FEATURE_RTC_HAS_OSC_SCXP */
-#endif /* EXAMPLE_CAP_LOAD_VALUE */
-
-
-
-    /* RTC time counter has to be stopped before setting the date & time in the TSR register */
-    RTC_StopTimer(RTC);
-
-    /* Set RTC time to default */
-    RTC_SetDatetime(RTC, &date);
-
-    /* Enable RTC alarm interrupt */
-    RTC_EnableInterrupts(RTC, kRTC_AlarmInterruptEnable);
-
-    /* Enable at the NVIC */
-    EnableIRQ(RTC_IRQn);
-
-    /* Start the RTC time counter */
-    RTC_StartTimer(RTC);
+    else
+    {
+    	TimeService_FinishInit();
+    }
+    rtc_callback = callback;
 }
+
 
 TimeServiceDate_t TimeService_GetCurrentDateTime(void)
 {
@@ -119,11 +103,58 @@ TimeServiceDate_t TimeService_GetCurrentDateTime(void)
 	return &dateTime[0];*/
 }
 
+void TimeService_Enable(void)
+{
+
+    /* Enable RTC second interrupt */
+    RTC_EnableInterrupts(RTC, kRTC_SecondsInterruptEnable);
+
+}
+
+void TimeService_Disable(void)
+{
+	/* Disable RTC second interrupt */
+	RTC_DisableInterrupts(RTC, kRTC_SecondsInterruptEnable);
+}
+
+/*!
+ * @brief ISR for Alarm interrupt
+ *
+ * This function changes the state of busyWait.
+ */
+void RTC_Seconds_IRQHandler(void)
+{
+    if (rtc_callback != NULL)
+    	rtc_callback();
+
+    SDK_ISR_EXIT_BARRIER;
+}
+
+
 /*******************************************************************************
  *******************************************************************************
                         LOCAL FUNCTION DEFINITIONS
  *******************************************************************************
  ******************************************************************************/
+static void TimeService_FinishInit(void)
+{
+
+    /* RTC time counter has to be stopped before setting the date & time in the TSR register */
+    RTC_StopTimer(RTC);
+
+    /* Set RTC time to default */
+    RTC_SetDatetime(RTC, &date);
+
+    /* Disable Interrupts */
+    TimeService_Disable();
+
+    /* Enable at the NVIC */
+    EnableIRQ(RTC_Seconds_IRQn);
+
+    /* Start the RTC time counter */
+    RTC_StartTimer(RTC);
+}
+
 
 #if !(defined(FSL_FEATURE_RTC_HAS_NO_CR_OSCE) && FSL_FEATURE_RTC_HAS_NO_CR_OSCE)
 /*!
