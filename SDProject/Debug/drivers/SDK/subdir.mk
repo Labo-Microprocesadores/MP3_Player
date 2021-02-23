@@ -17,6 +17,7 @@ C_SRCS += \
 ../drivers/SDK/fsl_rtc.c \
 ../drivers/SDK/fsl_smc.c \
 ../drivers/SDK/fsl_sysmpu.c \
+../drivers/SDK/fsl_uart.c \
 ../drivers/SDK/power_mode_switch.c 
 
 OBJS += \
@@ -33,6 +34,7 @@ OBJS += \
 ./drivers/SDK/fsl_rtc.o \
 ./drivers/SDK/fsl_smc.o \
 ./drivers/SDK/fsl_sysmpu.o \
+./drivers/SDK/fsl_uart.o \
 ./drivers/SDK/power_mode_switch.o 
 
 C_DEPS += \
@@ -49,6 +51,7 @@ C_DEPS += \
 ./drivers/SDK/fsl_rtc.d \
 ./drivers/SDK/fsl_smc.d \
 ./drivers/SDK/fsl_sysmpu.d \
+./drivers/SDK/fsl_uart.d \
 ./drivers/SDK/power_mode_switch.d 
 
 

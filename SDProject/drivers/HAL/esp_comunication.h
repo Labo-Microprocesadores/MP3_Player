@@ -12,10 +12,7 @@
 void esp_Init(void);
 
 void esp_Send(char code, char * msg, char len);
-/*
-bool esp_IsAnyMsg(void);
 
-void esp_sendMsg(const char* msg, uint8_t cant);
-uint8_t esp_getMsg(char* buffer, uint8_t max_cant);
-*/
+void esp_Read(void);
+
 #endif /* ESP_COMMUNICATION_H_ */

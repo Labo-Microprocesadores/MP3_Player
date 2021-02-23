@@ -231,16 +231,9 @@ void UART_rx_tx_irq_handler(UART_Type * p_uart, uint8_t id)
 			if(msg_len == 1) //Clear tie interrupt when buffer is empty
 				p_uart->C2 = (p_uart->C2 & ~UART_C2_TIE_MASK);
 		}
-		else
-		{
-			//ERROR no message to send,
-		}
 
 	}
-	if(ISR_TC(tmp)) //creo que no vale la pena usarlo
-	{
 
-	}
 	if(ISR_RDRF(tmp))
 	{
 		rx_data=p_uart->D;
@@ -250,28 +243,8 @@ void UART_rx_tx_irq_handler(UART_Type * p_uart, uint8_t id)
 			buffer_in[i][p_in_rear[i]] = rx_data;
 		}
 
-		if(my_callback)
-			my_callback();
-
-	}
-	if(ISR_IDLE(tmp)) //creo que no vale la pena usarlo
-	{
-
-	}
-	if(ISR_OR(tmp))
-	{
-
-	}
-	if(ISR_NF(tmp))
-	{
-
-	}
-	if(ISR_FE(tmp))
-	{
-
-	}
-	if(ISR_PF(tmp))
-	{
+		//if(my_callback)
+		//	my_callback();
 
 	}
 }

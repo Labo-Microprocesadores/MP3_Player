@@ -97,8 +97,7 @@ void Idle_UpdateTime()
 	char dateString[16];
 	char timeString[16];
 	snprintf(dateString, sizeof(dateString), "   %02hd-%02hd-%04hd     ", date.day, date.month, date.year);
-	snprintf(timeString, sizeof(timeString), "     %02hd:%02hd        ", date.hour,
-		   date.minute);
+	snprintf(timeString, sizeof(timeString), "    %02hd:%02hd:%02hd      ", date.hour,date.minute, date.second);
 
 
 	LCD_writeStrInPos(timeString, 15, 0, 0);
