@@ -12,9 +12,7 @@
 #include "core_cm4.h"
 #include "hardware.h"
 
-#ifdef TESTPOINT
-#define __TP__ PORTNUM2PIN(PC,4)
-#endif
+#include "board.h"
 
 /*******************************************************************************
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
@@ -124,9 +122,8 @@ bool PORT_ClearInterruptFlag(pin_t pin)
 
 void interruptHandler(uint8_t port)
 {
-	#ifdef TESTPOINT
-	gpioWrite(__TP__, HIGH);
-	#endif
+	gpioToggle(TP);
+
 	int i;
 	uint32_t isfr = ports[port]->ISFR;
 	for (i = 0; i < 32; i++)
@@ -139,9 +136,9 @@ void interruptHandler(uint8_t port)
 		}
 		isfr >>= 1;
 	}
-	#ifdef TESTPOINT
-	gpioWrite(__TP__, LOW);
-	#endif
+
+	gpioToggle(TP);
+
 }
 
 __ISR__ PORTA_IRQHandler(void)

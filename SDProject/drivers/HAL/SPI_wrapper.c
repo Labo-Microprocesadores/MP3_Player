@@ -170,24 +170,13 @@ void SPI_Send(spi_id_t id, spi_slave_t slave, const char *msg, uint16_t len, voi
 	DSPI_StartTransfer(p_spi[id]);
 }
 
+#include "gpio.h"
+#include "board.h"
+
 #ifndef TEST
 void SPI0_IRQHandler(void)
 {
-	/*if (masterRxCount < TRANSFER_SIZE)
-    {
-        while (DSPI_GetStatusFlags(EXAMPLE_DSPI_MASTER_BASEADDR) & kDSPI_RxFifoDrainRequestFlag)
-        {
-            masterRxData[masterRxCount] = DSPI_ReadData(EXAMPLE_DSPI_MASTER_BASEADDR);
-            ++masterRxCount;
-
-            DSPI_ClearStatusFlags(EXAMPLE_DSPI_MASTER_BASEADDR, kDSPI_RxFifoDrainRequestFlag);
-
-            if (masterRxCount == TRANSFER_SIZE)
-            {
-                break;
-            }
-        }
-    }*/
+	gpioToggle(TP);
 
 	while (DSPI_GetStatusFlags(p_spi[0]) & kDSPI_TxFifoFillRequestFlag)
 	{
@@ -220,6 +209,9 @@ void SPI0_IRQHandler(void)
 		/* Complete the transfer and disable the interrupts */
 		DSPI_DisableInterrupts(p_spi[0], kDSPI_TxFifoFillRequestInterruptEnable);
 	}
+
+	gpioToggle(TP);
+
 	SDK_ISR_EXIT_BARRIER;
 }
 #endif

@@ -113,7 +113,7 @@ void Effects_NextOption(void)
     }
     else
     {
-        uint8_t max = OPTIONS_COUNT;
+        uint8_t max = OPTIONS_COUNT - 1;
         if (currentOptionIndex == max - 1)
             currentOptionIndex = 0;
         else
@@ -139,7 +139,7 @@ void Effects_PreviousOption(void)
     }
     else
     {
-        uint8_t max = OPTIONS_COUNT;
+        uint8_t max = OPTIONS_COUNT - 1;
         if (currentOptionIndex == 0)
             currentOptionIndex = max - 1;
         else

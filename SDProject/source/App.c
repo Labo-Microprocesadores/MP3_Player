@@ -22,6 +22,8 @@
 
 
 #include "gpio.h"
+#include "board.h"
+
 #include "SysTick.h"
 #include "queue.h"
 #include "Timer.h"
@@ -30,7 +32,7 @@
 #include "AudioPlayer.h"
 #include "vumeterRefresh.h"
 #include "decoder.h"
-#include "board.h"
+
 #include "button.h"
 #include "encoder.h"
 #include "power_mode_switch.h"
@@ -145,6 +147,12 @@ void App_Init(void)
 	esp_Init();
 	initQueue();
 	currentState = FSM_GetInitState();
+
+	gpioMode(TP, OUTPUT);
+	gpioMode(TP2, OUTPUT);
+
+	gpioWrite(TP, false);
+	gpioWrite(TP2, false);
 }
 
 void App_Run(void)

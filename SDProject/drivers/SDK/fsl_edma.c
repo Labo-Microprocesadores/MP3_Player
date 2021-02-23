@@ -1350,8 +1350,13 @@ void EDMA_AbortTransfer(edma_handle_t *handle)
  *
  * param handle eDMA handle pointer.
  */
+#include "gpio.h"
+#include "board.h"
+
 void EDMA_HandleIRQ(edma_handle_t *handle)
 {
+	gpioToggle(TP);
+
     assert(handle != NULL);
 
     bool transfer_done;
@@ -1442,6 +1447,9 @@ void EDMA_HandleIRQ(edma_handle_t *handle)
             }
         }
     }
+
+    gpioToggle(TP);
+
 }
 
 #if defined(FSL_FEATURE_EDMA_MODULE_CHANNEL_IRQ_ENTRY_SHARED_OFFSET) && \

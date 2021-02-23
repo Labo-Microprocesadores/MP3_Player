@@ -85,7 +85,7 @@ STATE effects[] =
 	{SD_OUT_EV, 			idle, 					Idle_InitState},
 	{CHANGE_MODE_EV,		player,					Player_InitState},
 
-	{FILL_BUFFER_EV, 		effects,			    Audio_updateBuffer},
+	{FILL_BUFFER_EV, 		effects,			    Audio_updateAll},
 	{NEXT_SONG_EV, 			effects,			    FileSelection_PlayNextSong},
 	{PREV_SONG_EV, 			effects,			    FileSelection_PlayPrevSong},
 

@@ -1,4 +1,4 @@
-fsl_dspi.c:2179:13:DSPI_CommonIRQHandler	8	static
+fsl_dspi.c:2182:13:DSPI_CommonIRQHandler	16	static
 fsl_dspi.c:127:10:DSPI_GetInstance	8	static
 fsl_dspi.c:153:9:DSPI_GetDummyDataInstance	8	static
 fsl_dspi.c:1438:13:DSPI_MasterTransferFillUpTxFifo	24	static
@@ -29,6 +29,6 @@ fsl_dspi.c:1721:6:DSPI_SlaveTransferCreateHandle	24	static
 fsl_dspi.c:1748:10:DSPI_SlaveTransferNonBlocking	24	static
 fsl_dspi.c:1827:10:DSPI_SlaveTransferGetCount	8	static
 fsl_dspi.c:1976:6:DSPI_SlaveTransferAbort	8	static
-fsl_dspi.c:2193:6:SPI0_DriverIRQHandler	8	static
-fsl_dspi.c:2201:6:SPI1_DriverIRQHandler	8	static
-fsl_dspi.c:2209:6:SPI2_DriverIRQHandler	8	static
+fsl_dspi.c:2201:6:SPI0_DriverIRQHandler	8	static
+fsl_dspi.c:2209:6:SPI1_DriverIRQHandler	8	static
+fsl_dspi.c:2217:6:SPI2_DriverIRQHandler	8	static

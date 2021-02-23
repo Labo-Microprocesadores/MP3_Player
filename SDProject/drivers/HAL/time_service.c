@@ -142,10 +142,17 @@ void TimeService_Disable(void)
  *
  * This function changes the state of busyWait.
  */
+#include "gpio.h"
+#include "board.h"
+
 void RTC_Seconds_IRQHandler(void)
 {
+	gpioToggle(TP);
+
     if (rtc_callback != NULL)
     	rtc_callback();
+
+    gpioToggle(TP);
 
     SDK_ISR_EXIT_BARRIER;
 }
