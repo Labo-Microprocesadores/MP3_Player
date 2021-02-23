@@ -201,6 +201,15 @@ void Effects_Back(void)
 		emitEvent(CHANGE_MODE_EV);
 	}
 }
+
+void Effects_SetEffect(char option)
+{
+	currentOptionIndex = option;
+	for (int i = 0; i < OPTION_VALUES_ARRAY_SIZE; i++)
+	{
+		equalizer_set_band_gain(i+1, optionValues[currentOptionIndex][i]);
+	}
+}
 /*******************************************************************************
  *******************************************************************************
                         LOCAL FUNCTION DEFINITIONS

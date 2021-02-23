@@ -87,6 +87,7 @@ STATE effects[] =
 
 	{FILL_BUFFER_EV, 		effects,			    Audio_updateBuffer},
 	{NEXT_SONG_EV, 			effects,			    FileSelection_PlayNextSong},
+	{PREV_SONG_EV, 			effects,			    FileSelection_PlayPrevSong},
 
 	{FIN_TABLA, 			effects, 				do_nothing}
 };
@@ -114,6 +115,7 @@ STATE file_selection[] =
 
 	{FILL_BUFFER_EV, 		file_selection,			Audio_updateAll},
 	{NEXT_SONG_EV, 			file_selection,			FileSelection_PlayNextSong},
+	{PREV_SONG_EV, 			file_selection,			FileSelection_PlayPrevSong},
 
 	{FIN_TABLA, 			file_selection, 		do_nothing}
 };
@@ -138,6 +140,7 @@ STATE player[] =
 
 	{FILL_BUFFER_EV, 		player,					Audio_updateAll},
 	{NEXT_SONG_EV, 			player,					Player_PlayNextSong},
+	{PREV_SONG_EV, 			player,					Player_PlayPreviousSong},
 
 	{FIN_TABLA, 			player, 				do_nothing}
 };

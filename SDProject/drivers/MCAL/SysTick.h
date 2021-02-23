@@ -12,9 +12,7 @@
 /*******************************************************************************
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
  ******************************************************************************/
-#define SYSTICK_ISR_PERIOD 100000L //1ms
-#define INITIAL_SYSTICK_ELEMENTS_ARRAY_LENGTH 20
-#define MS_TO_TICK_CONVERTION 100000 //1ms
+
 /*******************************************************************************
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
  ******************************************************************************/
@@ -100,6 +98,8 @@ SystickError Systick_ChangeCallbackPeriod(int id, int newPeriod);
  * @brief Get whether that timer has been called or not
  */
 bool Systick_GetStatus(int id);
+
+void SysTick_UpdateClk(void);
 /*******************************************************************************
  ******************************************************************************/
 #endif

@@ -15,9 +15,11 @@
 #include "AudioPlayer.h"
 #include "vumeterRefresh.h"
 #include "decoder.h"
+#include "equalizer.h"
 
 #include "fsl_common.h"
 #include "queue.h"
+#include "esp_comunication.h"
 
 /******************************************************************************
  * DEFINES
@@ -42,6 +44,7 @@ SDK_ALIGN(static short decoder_buffer[2*BUFFER_SIZE], SD_BUFFER_ALIGN_SIZE);
 static float effects_in[BUFFER_SIZE], effects_out[BUFFER_SIZE];
 
 static uint8_t vol = 15;
+static char vol2send = 15 + 40;
 /******************************************************************************
  *
  ******************************************************************************/
@@ -97,6 +100,25 @@ void Audio_playNextFile(void)
 
 	Audio_updateBuffer();
 
+	char * name = Audio_getCurrentName();
+	esp_Send(1, name, strlen(name));
+}
+
+void Audio_playPrevFile(void)
+{
+	playingFile = FileSystem_GetPreviousFile(playingFile);
+
+	decoder_MP3LoadFile(playingFile.path);
+	/* Primeros dos buffer constante, no hay sonido */
+	memset(g_bufferRead, 0x08, sizeof(g_bufferRead));
+
+	/* Podria buscar el sample rate y mandarlo */
+	AudioPlayer_LoadSongInfo(g_bufferRead, 44100);
+
+	Audio_updateBuffer();
+
+	char * name = Audio_getCurrentName();
+	esp_Send(1, name, strlen(name));
 }
 
 void Audio_selectFile(void)
@@ -111,6 +133,9 @@ void Audio_selectFile(void)
 	AudioPlayer_LoadSongInfo(g_bufferRead, 44100);
 
 	Audio_updateBuffer();
+
+	char * name = Audio_getCurrentName();
+	esp_Send(1, name, strlen(name));
 }
 
 char * Audio_getCurrentName(void)
@@ -245,14 +270,26 @@ char * Audio_getYear(void)
 void Audio_IncVolume(void)
 {
 	vol += (vol >= MAX_VOLUME)? 0 : 1;
+	vol2send = vol+40;
+	esp_Send(2, &vol2send, 1);
 }
 
 void Audio_DecVolume(void)
 {
 	vol -= (vol > 0) ? 1 : 0;
+	vol2send = vol+40;
+	esp_Send(2, &vol2send, 1);
 }
 
 char Audio_getVolume(void)
 {
 	return (char)vol;
+}
+
+void Audio_setVolume(char value)
+{
+	if(vol <= 40 && vol >=0)
+	{
+		vol = value;
+	}
 }

@@ -69,7 +69,7 @@ void LCD_writeShiftingStr(char * str, uint8_t len, uint8_t row, lcd_shift_speed_
 /**
  * @brief Write a string in the display that bounce between begin and the end of the string
  */
-void LCD_writeBouncingStr(char * str, uint8_t len, uint8_t row, uint8_t begin, lcd_shift_speed_t speed);
+//void LCD_writeBouncingStr(char * str, uint8_t len, uint8_t row, uint8_t begin, lcd_shift_speed_t speed);
 
 /**
  * @brief Clean one line of the display

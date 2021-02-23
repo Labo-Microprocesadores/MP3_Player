@@ -12,6 +12,11 @@
 #include <stdbool.h>
 #include "SysTick.h"
 #include "hardware.h"
+#include "fsl_clock.h"
+
+#define SYSTICK_ISR_PERIOD 100000L //1ms
+#define INITIAL_SYSTICK_ELEMENTS_ARRAY_LENGTH 20
+#define MS_TO_TICK_CONVERTION 100000 //1ms
 
 /*******************************************************************************
  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
@@ -39,6 +44,8 @@ static SysTickElement sysTickElements[INITIAL_SYSTICK_ELEMENTS_ARRAY_LENGTH];
 static int idCounter;
 /*Flag indicating initialization completed*/
 static bool alreadyInit = false;
+
+static uint32_t freq;
 /*******************************************************************************
  *******************************************************************************
                         GLOBAL FUNCTION DEFINITIONS
@@ -46,10 +53,11 @@ static bool alreadyInit = false;
  ******************************************************************************/
 bool SysTick_Init(void)
 {
+	freq = CLOCK_GetFreq(kCLOCK_CoreSysClk) / 1000 ;
 	if(!alreadyInit)
 	{
 		SysTick->CTRL = 0x00;
-		SysTick->LOAD = SYSTICK_ISR_PERIOD - 1;
+		SysTick->LOAD = freq - 1;
 		SysTick->VAL = 0x00;
 		SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk;
 
@@ -59,6 +67,21 @@ bool SysTick_Init(void)
 	return true;
 }
 
+void SysTick_UpdateClk(void)
+{
+    /* Disable SysTick. */
+    SysTick->CTRL &= ~(SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk);
+    SysTick->LOAD = 0UL;
+    SysTick->VAL  = 0UL;
+
+    freq = CLOCK_GetFreq(kCLOCK_CoreSysClk) / 1000 ;
+
+    SysTick->CTRL = 0x00;
+	SysTick->LOAD = freq - 1;
+	SysTick->VAL = 0x00;
+	SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk;
+
+}
 
 int SysTick_AddCallback(void (*newCallback)(void), int period)
 {

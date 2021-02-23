@@ -78,13 +78,13 @@ void FileSelection_InitState(void)
 void FileSelection_NextFile(void)
 {
 	Audio_nextFile();
-	printFileInfo(); //TODO: add file parameter.
+	printFileInfo();
 }
 
 void FileSelection_PreviousFile(void)
 {
 	Audio_prevFile();
-	printFileInfo(); //TODO: add file parameter.
+	printFileInfo();
 }
 
 void FileSelection_SelectFile(void)
@@ -101,7 +101,11 @@ void FileSelection_PlayNextSong(void)
 	Audio_play();
 }
 
-
+void FileSelection_PlayPrevSong(void)
+{
+	Audio_playPrevFile();
+	Audio_play();
+}
 /*******************************************************************************
  *******************************************************************************
  *                         LOCAL FUNCTION DEFINITIONS

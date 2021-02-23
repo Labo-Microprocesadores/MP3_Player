@@ -6,17 +6,20 @@
 C_SRCS += \
 ../drivers/MCAL/SysTick.c \
 ../drivers/MCAL/ftm.c \
-../drivers/MCAL/gpio.c 
+../drivers/MCAL/gpio.c \
+../drivers/MCAL/uart.c 
 
 OBJS += \
 ./drivers/MCAL/SysTick.o \
 ./drivers/MCAL/ftm.o \
-./drivers/MCAL/gpio.o 
+./drivers/MCAL/gpio.o \
+./drivers/MCAL/uart.o 
 
 C_DEPS += \
 ./drivers/MCAL/SysTick.d \
 ./drivers/MCAL/ftm.d \
-./drivers/MCAL/gpio.d 
+./drivers/MCAL/gpio.d \
+./drivers/MCAL/uart.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
