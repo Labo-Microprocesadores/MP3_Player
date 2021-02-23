@@ -11,6 +11,7 @@ C_SRCS += \
 ../drivers/HAL/button.c \
 ../drivers/HAL/decoder.c \
 ../drivers/HAL/encoder.c \
+../drivers/HAL/esp_comunication.c \
 ../drivers/HAL/matrix_display.c \
 ../drivers/HAL/memory_manager.c \
 ../drivers/HAL/time_service.c 
@@ -23,6 +24,7 @@ OBJS += \
 ./drivers/HAL/button.o \
 ./drivers/HAL/decoder.o \
 ./drivers/HAL/encoder.o \
+./drivers/HAL/esp_comunication.o \
 ./drivers/HAL/matrix_display.o \
 ./drivers/HAL/memory_manager.o \
 ./drivers/HAL/time_service.o 
@@ -35,6 +37,7 @@ C_DEPS += \
 ./drivers/HAL/button.d \
 ./drivers/HAL/decoder.d \
 ./drivers/HAL/encoder.d \
+./drivers/HAL/esp_comunication.d \
 ./drivers/HAL/matrix_display.d \
 ./drivers/HAL/memory_manager.d \
 ./drivers/HAL/time_service.d 

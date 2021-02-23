@@ -1,0 +1,3 @@
+esp_comunication.c:13:13:parse_msg	16	static
+esp_comunication.c:44:6:esp_Init	16	static
+esp_comunication.c:51:6:esp_Send	24	static

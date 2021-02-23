@@ -14,7 +14,7 @@
 #include "time_service.h"
 #include "Timer.h"
 #include "memory_manager.h"
-
+#include "SysTick.h"
 #include "audio_manager.h"
 #include "LCD_GDM1602A.h"
 
@@ -68,7 +68,6 @@ void Idle_InitState(void)
 	Audio_deinit();
 
 	LCD_clearDisplay();
-
 	timeCallbackId = Timer_AddCallback(changePowerMode, 1000, true); //Delay until related stuff is finished
 
 }
@@ -120,13 +119,14 @@ static void changePowerMode(void)
 
 	LCD_UpdateClock();
 	TimeService_Enable();
-
+	SysTick_UpdateClk();
 }
 
 static void emitStartEv(void)
 {
 	timeCallbackId = -1;
 	LCD_UpdateClock();
+	SysTick_UpdateClk();
 	emitEvent(START_EV);
 }
 

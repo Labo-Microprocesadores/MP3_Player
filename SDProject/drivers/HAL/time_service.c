@@ -46,6 +46,7 @@ void (*rtc_callback)(void);
  */
 void TimeService_Init(void (*callback)(void))
 {
+
 	/* Set a start date time */
 	date = (rtc_datetime_t) {.year = 2021U,
 			.month = 2U,
@@ -53,6 +54,25 @@ void TimeService_Init(void (*callback)(void))
 			.hour = 19U,
 			.minute = 41U,
 			.second = 0};
+
+	/*char *ptr = strtok(__TIME__, ':');
+	int i = 0;
+	while(ptr != NULL)
+	{
+		if (i==0)
+			date.hour = atoi(ptr); //Guardar hour = ptr  st -> to int
+		else if (i == 1)
+			date.minute = atoi(ptr);//Guardar minute = ptr  st -> to int
+		else if (i == 2)
+			date.second = atoi(ptr);//Guardar second = ptr  st -> to int
+		ptr = strtok(NULL, ':');
+		i++;
+	}*/
+
+	date.hour = (__TIME__[0] - '0')*10 + (__TIME__[1]-'0');
+	date.minute = (__TIME__[3] - '0')*10 + (__TIME__[4]-'0');
+	date.second = (__TIME__[6] - '0')*10 + (__TIME__[7]-'0');
+	date.day = (__DATE__[4] - '0')*10 + (__DATE__[5]-'0');
 
     rtc_config_t rtcConfig;
 

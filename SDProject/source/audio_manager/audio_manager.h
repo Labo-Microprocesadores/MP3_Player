@@ -17,6 +17,8 @@ void Audio_prevFile(void);
 
 void Audio_selectFile(void);
 
+void Audio_playPrevFile(void);
+
 void Audio_playNextFile(void);
 
 char * Audio_getCurrentName(void);
@@ -45,5 +47,7 @@ void Audio_IncVolume(void);
 void Audio_DecVolume(void);
 
 char Audio_getVolume(void);
+
+void Audio_setVolume(char value);
 
 #endif /* AUDIO_MANAGER_AUDIO_MANAGER_H_ */

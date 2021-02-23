@@ -43,4 +43,6 @@ void Effects_SelectOption(void);
  */
 void Effects_Back(void);
 
+void Effects_SetEffect(char option);
+
 #endif /* EFFECTS_STATE_H */

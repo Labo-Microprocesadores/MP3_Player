@@ -36,6 +36,8 @@
 #include "power_mode_switch.h"
 #include "time_service.h"
 #include "equalizer.h"
+#include "esp_comunication.h"
+
 #include "States/idle_state.h"
 
 /*******************************************************************************
@@ -139,6 +141,7 @@ void App_Init(void)
 	buttonConfiguration(PIN_SW_D, LKP, 20);
 	buttonConfiguration(ENCODER_SW, LKP, 20);
 
+	esp_Init();
 	initQueue();
 	currentState = FSM_GetInitState();
 }

@@ -39,4 +39,6 @@ void FileSelection_SelectFile(void);
  */
 void FileSelection_PlayNextSong(void);
 
+void FileSelection_PlayPrevSong(void);
+
 #endif //FILE_SELECTION_STATE_H

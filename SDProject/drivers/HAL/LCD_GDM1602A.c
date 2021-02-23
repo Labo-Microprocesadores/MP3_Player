@@ -266,12 +266,14 @@ void LCD_writeBouncingStr(char * str, uint8_t len, uint8_t row, uint8_t begin, l
 		lcdLines[row].direction = true;
 	}
 }*/
-
+/*
 void LCD_changeState(bool state)
 {
-	LCD_writeInstruction(DISPLAY(state,CURSOR_VISIBLE,CURSOR_BLINK));
+	volatile uint8_t val = DISPLAY(state,CURSOR_VISIBLE,CURSOR_BLINK);
+	printf("Alguien esta matando todo");
+	LCD_writeInstruction(val);
 }
-
+*/
 
 /****************************************************************
  * 		FUNCTIONS WITH FILE LEVEL SCOPE
